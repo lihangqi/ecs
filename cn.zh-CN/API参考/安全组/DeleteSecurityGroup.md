@@ -1,55 +1,69 @@
-# DeleteSecurityGroup {#DeleteSecurityGroup .reference}
+# DeleteSecurityGroup {#doc_api_Ecs_DeleteSecurityGroup .reference}
 
-删除一个安全组。删除安全组之前，请确保安全组内不存在实例，并且没有其他安全组与该安全组有授权行为（[DescribeSecurityGroupReferences](intl.zh-CN/API参考/安全组/DescribeSecurityGroupReferences.md#)），否则 `DeleteSecurityGroup` 请求失败。
+调用DeleteSecurityGroup删除一个安全组。删除安全组之前，请确保安全组内不存在实例，并且没有其他安全组与该安全组有授权行为（DescribeSecurityGroupReferences），否则 DeleteSecurityGroup 请求失败。
 
-## 请求参数 {#RequestParameter .section}
+## 调试 {#apiExplorer .section}
 
-|名称|类型|是否必需|描述|
-|:-|:-|:---|:-|
-|Action|String|是|系统规定参数。取值：DeleteSecurityGroup|
-|SecurityGroupId|String|是|安全组 ID。|
-|RegionId|String|是|地域 ID。您可以调用 [DescribeRegions](intl.zh-CN/API参考/地域/DescribeRegions.md#) 查看最新的阿里云地域列表。|
+前往【[API Explorer](https://api.aliyun.com/#product=Ecs&api=DeleteSecurityGroup)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
 
-## 返回参数 {#section_f54_lk5_xdb .section}
+## 请求参数 {#parameters .section}
 
-全是公共返回参数。参阅 [公共参数](intl.zh-CN/API参考/调用方式/公共参数.md#commonResponseParameters)。
+|名称|类型|是否必选|示例值|描述|
+|--|--|----|---|--|
+|RegionId|String|是|cn-hangzhou|地域 ID。您可以调用 [DescribeRegions](~~25609~~) 查看最新的阿里云地域列表。
 
-## 示例 { .section}
+ |
+|SecurityGroupId|String|是|sg-securitygroupid1|安全组 ID。
 
-**请求示例** 
+ |
+|Action|String|否|DeleteSecurityGroup|系统规定参数。取值：DeleteSecurityGroup
 
-```
+ |
+
+## 返回数据 {#resultMapping .section}
+
+|名称|类型|示例值|描述|
+|--|--|---|--|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID。
+
+ |
+
+## 示例 {#demo .section}
+
+请求示例
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DeleteSecurityGroup
 &RegionId=cn-hangzhou
-&SecurityGroupId=sg-F876FF7BA
+&SecurityGroupId=sg-F876FF7**
 &<公共请求参数>
 ```
 
-**返回示例** 
+正常返回示例
 
-**XML 格式**
+`XML` 格式
 
-```
+``` {#xml_return_success_demo}
 <DeleteSecurityGroupResponse>
-     <RequestId>CEF72CEB-54B6-4AE8-B225-F876FF7BA984</RequestId>
+  <RequestId>CEF72CEB-54B6-4AE8-B225-F876FF7BA984</RequestId>
 </DeleteSecurityGroupResponse>
-```
-
- **JSON 格式** 
 
 ```
+
+`JSON` 格式
+
+``` {#json_return_success_demo}
 {
-    "RequestId":"CEF72CEB-54B6-4AE8-B225-F876FF7BA984"
+	"RequestId":"CEF72CEB-54B6-4AE8-B225-F876FF7BA984"
 }
 ```
 
-## 错误码 {#ErrorCode .section}
+## 错误码 { .section}
 
-以下为本接口特有的错误码。更多错误码，请访问 [API 错误中心](https://error-center.alibabacloud.com/status/product/Ecs)。
+|HttpCode|错误码|错误信息|描述|
+|--------|---|----|--|
+|403|DependencyViolation|There is still instance\(s\) in the specified security group.|安全组中还有未释放的实例，请您先释放实例再进行该操作。|
+|403|DependencyViolation|The specified security group has been authorized in another one.|指定的安全组已在另一个组中授权，不允许重复授权。|
 
-|错误代码|错误信息|HTTP 状态码|说明|
-|:---|:---|:-------|:-|
-|DependencyViolation|There is still instance\(s\) in the specified security group.|403|指定的安全组仍在管理实例。|
-|DependencyViolation|The specified security group has been authorized in another one.|403|指定安全组被其他安全组授权。|
-|InvalidRegionId.NotFound|The specified RegionId does not exist.|404|指定的 `RegionId` 不存在。|
+访问[错误中心](https://error-center.aliyun.com/status/product/Ecs)查看更多错误码。
 

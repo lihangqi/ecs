@@ -8,7 +8,7 @@
 
 **说明：** 
 
-由于 AccessKey 权限过大，为防止错误操作，建议您 [创建 RAM 用户](../../intl.zh-CN/快速入门/创建 RAM 用户.md#)，并使用 RAM 子账号 [创建 AccessKey](https://help.aliyun.com/document_detail/53045.html)。
+由于 AccessKey 权限过大，为防止错误操作，建议您 [创建 RAM 用户](../../../../intl.zh-CN/快速入门/创建 RAM 用户.md#)，并使用 RAM 子账号 [创建 AccessKey](https://help.aliyun.com/document_detail/53045.html)。
 
 ## 步骤一. 安装 Packer {#section_j5g_gdm_xdb .section}
 
@@ -16,14 +16,7 @@
 
 **在 Linux 服务器上安装 Packer**
 
-1.  连接并登录到 Linux 服务器。如果您的服务器为 ECS Linux 实例，可参阅文档 [使用用户名密码验证连接 Linux 实例](intl.zh-CN/用户指南/连接实例/使用用户名密码验证连接 Linux 实例.md#)。
-2.  执行命令 `cd /usr/local/bin` 进入 /usr/local/bin 目录。
-
-    **说明：** /usr/local/bin 目录为环境变量目录，您可以将 Packer 安装到该目录下或其他已添加到环境变量的目录下。
-
-3.  执行命令 `wget https://releases.hashicorp.com/packer/1.1.1/packer_1.1.1_linux_amd64.zip` 获取 Packer 安装包。您可以访问 [Packer 下载页面](https://www.packer.io/downloads.html) 获取其他版本 Packer 安装包。
-4.  执行命令 `unzip packer_1.1.1_linux_amd64.zip` 解压文件。
-5.  执行命令 `packer -v` 验证 Packer 安装状态。若 Linux 服务器返回 Packer 版本号，表示您已正确安装 Packer；若 Linux 服务器提示 **command not found** 表示 Packer 未正确安装。
+配置文件 配置说明 修改该配置文件的风险 /etc/issue\*, /etc/\*-release, /etc/\*\_version 系统发行版信息配置文件 修改 /etc/issue\* 会导致系统发行版无法被正常识别，导致系统创建失败。 /boot/grub/menu.lst, /boot/grub/grub.conf 系统引导启动配置文件 修改 /boot/grub/menu.lst 会导致内核无法正确加载，导致系统无法启动。 /etc/fstab 系统启动挂载分区配置文件 修改该文件会导致异常分区无法被加载，导致系统无法启动。 /etc/shadow 系统密码相关配置文件 修改该文件为只读会导致无法修改密码文件，导致系统创建失败。 /etc/selinux/config 系统安全策略配置文件 修改 /etc/selinux/config 开启SELinux导致系统无法启动。
 
 **在 Windows 服务器上安装 Packer**
 
@@ -80,7 +73,7 @@
 **说明：** 您需要自定义以下参数的值。
 
 |参数|获取位置|
-|access\_key|您的 AccessKeyID。更多详情，参阅[创建 AccessKey](https://help.aliyun.com/document_detail/53045.html)。|
+|access\_key|您的 AccessKeyID。更多详情，参阅 [创建 AccessKey](https://help.aliyun.com/document_detail/53045.html)。|
 |secret\_key|您的 AccessKeySecret。更多详情，[创建 AccessKey](https://help.aliyun.com/document_detail/53045.html)。|
 |region|创建自定义镜像时使用临时资源的地域|
 |image\_name|自定义镜像的名称|
@@ -122,7 +115,7 @@ cn-beijing: m-2ze12578be1oa4ovs6r9
 
 ## 后续操作 {#section_chp_qdv_ydb .section}
 
-您可以使用该自定义镜像创建 ECS 实例，具体步骤参阅文档[使用自定义镜像创建实例](intl.zh-CN/用户指南/实例/创建实例/使用自定义镜像创建实例.md#)。
+您可以使用该自定义镜像创建 ECS 实例，具体步骤参阅文档 [使用自定义镜像创建实例](intl.zh-CN/用户指南/实例/创建实例/使用自定义镜像创建实例.md#)。
 
 ## 参考链接 {#section_ntx_rdv_ydb .section}
 

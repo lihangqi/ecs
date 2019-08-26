@@ -1,75 +1,121 @@
-# DescribeInstanceRamRole {#DescribeInstanceRamRole .reference}
+# DescribeInstanceRamRole {#doc_api_1161572 .reference}
 
-Query information related to the [instance RAM role](../../../../intl.en-US/User Guide/Instances/Instance RAM roles/What is the RAM role of an instance.md#).
+You can call this operation to query RAM roles attached to one or more ECS instances.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DescribeInstanceRamRole|
-|InstanceIds|String|Yes|Instance ID set. A maximum of 100 instances are supported, in the format of \["instanceId1", "instanceId2",  "instanceId3"…\].|
-|RamRoleName|String|No|Queries all the ECS instances to which the specified RAM role is attached. You can use *RAM* API [ListRoles](../../../../intl.en-US//Role Management Interface/ListRoles.md#) to query your available instance RAM role.|
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DescribeInstanceRamRole) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Return parameters {#ResponseParameter .section}
+## Request parameters {#parameters .section}
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|InstanceRamRoleSets|Array|Information set of Instance RAM role \([InstanceRamRoleSetType](intl.en-US/API Reference/Data type/InstanceRamRoleSetType.md#)\)|
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-hangzhou| The region ID of the RAM role. You can call the [DescribeRegions](~~25609~~) operation to view the latest region list.
 
-## Example { .section}
+ |
+|Action|String|No|DescribeInstanceRamRole| The operation that you want to perform. Set the value to **DescribeInstanceRamRole**.
 
-**Request example** 
+ |
+|InstanceIds|String|No|\["instanceId1", "instanceId2", "instanceId3"…\]| The instance ID set. A maximum of 100 instances can be entered at a time.
 
-```
+ |
+|PageNumber|Integer|No|1| The page number.
+
+ This value starts from 1.
+
+ Default value: 1.
+
+ |
+|PageSize|Integer|No|10| The number of rows per page.
+
+ Maximum value: 50.
+
+ Default value: 10.
+
+ |
+|RamRoleName|String|No|FinanceDeptOnly| All ECS instances to which the specified RAM role is attached. You can call the [ListRoles](~~28713~~) operation to view RAM roles for the specified instance.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|InstanceRamRoleSets| | | The returned RAM role information. It is an array that consists of **InstanceRamRoleSetType** data.
+
+ |
+|└InstanceId|String|i-instance1| The ID of the instance.
+
+ |
+|└RamRoleName|String|FinanceDeptOnly| The list of RAM role names.
+
+ |
+|RegionId|String|cn-hangzhou| The region ID of the RAM role. You can call the [DescribeRegions](~~25609~~) operation to view the latest region list.
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The request ID.
+
+ |
+|TotalCount|Integer|1| The total number of RAM roles.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
+
 https://ecs.aliyuncs.com/?Action=DescribeInstanceRamRole
-&RegionId=cn-hangzhou
-&InstanceIds=["i-instance1"]
+&RegionId=cn-hangzhou 
+&InstanceIds=["i-instance1"] 
+&PageNumber=1 
+&PageSize=10 
+&RamRoleName=FinanceDeptOnly
 &<Common request parameters>
 
 ```
 
-**Response sample** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DescribeInstanceRamRoleResponse>
-    <RequestId>8F4CAE3F-7892-4662-83A5-2C2FFD639553</RequestId>
-    <InstanceRamRoleSets>
-        <InstanceRamRoleSet>
-             <InstanceId>i-instance1</InstanceId>
-              <RamRoleName>RamRoleTest</RamRoleName>
-        </InstanceRamRoleSet>
-    </InstanceRamRoleSets>
-    <TotalCount>1</TotalCount>
+  <RequestId>8F4CAE3F-7892-4662-83A5-2C2FFD639553</RequestId>
+  <InstanceRamRoleSets>
+    <InstanceRamRoleSet>
+      <InstanceId>i-instance1</InstanceId>
+      <RamRoleName>RamRoleTest</RamRoleName>
+    </InstanceRamRoleSet>
+  </InstanceRamRoleSets>
+  <TotalCount>1</TotalCount> 
 </DescribeInstanceRamRoleResponse>
-```
-
- **JSON format** 
 
 ```
+
+`JSON` format
+
+``` {#json_return_success_demo}
 {
-    "RequestId": "8F4CAE3F-7892-4662-83A5-2C2FFD639553",
-    "InstanceRamRoleSets": {
-        "InstanceRamRoleSet": [
-            {
-                "InstanceId": "i-instance1",
-                "RamRoleName": "RamRoleTest"
-            }
-        ]
-    },
-    "TotalCount": 1
+	"TotalCount":1,
+	"RequestId":"8F4CAE3F-7892-4662-83A5-2C2FFD639553",
+	"InstanceRamRoleSets":{
+		"InstanceRamRoleSet":[
+			{
+				"InstanceId":"i-instance1",
+				"RamRoleName":"RamRoleTest"
+			}
+		]
+	}
 }
 ```
 
-## Error codes {#ErrorCode .section}
+## Error codes {#section_gk8_cnm_4a9 .section}
 
-Error codes specific to this interface are as follows. For more error codes, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|403|InvalidParameter.AllEmpty|%s|The error message returned when a required parameter is not specified.|
 
-|Error code|Error message|HTTP status code|Note|
-|:---------|:------------|:---------------|:---|
-|InvalidInstanceIds.Malformed|The specified InstanceIds is not valid.|400|The specified `InstanceIds` are not valid.|
-|InvalidNetworkType.MismatchRamRole|The Ram role cannot be attached to instances of Classic network type.|403|RAM roles cannot be attached to `InstanceIds` of Classic network type. Ram role cannot be attached to instances of Classic network.|
-|InvalidInstanceId.NotFound|The specified InstanceId does not exist.|404|The specified InstanceIds does not exist.|
-|InvalidRamRole.NotFound|The specified RamRoleName does not exist.|404|The specified `RamRoleName` does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

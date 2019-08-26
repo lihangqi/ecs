@@ -1,6 +1,6 @@
 # AttachClassicLinkVpc {#AttachClassicLinkVpc .reference}
 
-将一台经典网络类型实例连接到 [专有网络 VPC](../../cn.zh-CN/产品简介/什么是专有网络.md#) 中，使经典网络类型实例可以和 VPC 中的云资源私网互通。更多详情，请参阅 *VPC* 文档 [ClassicLink 迁移概述](../../cn.zh-CN/用户指南/ClassicLink/ClassicLink概述.md#)。
+将一台经典网络类型实例连接到 [专有网络 VPC](../../../../../cn.zh-CN/产品简介/什么是专有网络.md#) 中，使经典网络类型实例可以和 VPC 中的云资源私网互通。更多详情，请参阅 *VPC* 文档 [ClassicLink 迁移概述](../../../../../cn.zh-CN/用户指南/ClassicLink/ClassicLink概述.md#)。
 
 ## 描述 {#section_brt_tjn_ydb .section}
 
@@ -8,7 +8,7 @@
 
 -   连接经典网络类型实例前，实例必须处于 **运行中**（`Running`）或者 **已停止**（`Stopped`）状态。
 
--   目标 VPC 必须已 [开启 ClassicLink 功能](../../cn.zh-CN/用户指南/ClassicLink/建立ClassicLink连接.md#)。
+-   目标 VPC 必须已 [开启 ClassicLink 功能](../../../../../cn.zh-CN/用户指南/ClassicLink/建立ClassicLink连接.md#)。
 
 -   经典网络类型实例和 VPC 必须在同一个阿里云地域。
 
@@ -20,11 +20,11 @@
 |Action|String|是|系统规定参数。取值：AttachClassicLinkVpc|
 |RegionId|String|是|实例所属的地域 ID。您可以调用 [DescribeRegions](cn.zh-CN/API参考/地域/DescribeRegions.md#) 查看最新的阿里云地域列表。|
 |InstanceId|String|是|经典网络类型实例 ID。您可以调用 [DescribeInstances](cn.zh-CN/API参考/实例/DescribeInstances.md#) 查看您可用的实例。|
-|VpcId|String|是|开启 ClassicLink 的 VPC ID。您可以调用 [DescribeVpcs](../../cn.zh-CN/API 参考/专有网络（VPC）/DescribeVpcs.md#) 查看您可用的 VPC。|
+|VpcId|String|是|开启 ClassicLink 的 VPC ID。您可以调用 [DescribeVpcs](../../../../../cn.zh-CN/API参考/专有网络（VPC）/DescribeVpcs.md#) 查看您可用的 VPC。|
 
 ## 返回参数 {#section_f54_lk5_xdb .section}
 
-全是公共返回参数。参阅 [公共参数](cn.zh-CN/API参考/调用方式/公共参数.md#commonResponseParameters)。
+全是公共返回参数。参阅 [公共参数](cn.zh-CN/API参考/HTTP调用方式/公共参数.md#commonResponseParameters)。
 
 ## 示例 { .section}
 

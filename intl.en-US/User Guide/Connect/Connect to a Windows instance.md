@@ -1,6 +1,6 @@
 # Connect to a Windows instance {#concept_n31_wyx_wdb .concept}
 
-If your Windows instance can access Internet, you can use remote connection tools to connect to it. Otherwise, you can [Terminal](intl.en-US/User Guide/Connect/Terminal.md#).
+If your Windows instance can access Internet, you can use remote connection tools to connect to it. Otherwise, you can [Terminal](intl.en-US/User Guide/Connect/Connect to an instance by using the Management Terminal.md#).
 
 ## Prerequisites {#section_hxc_qcy_wdb .section}
 
@@ -12,7 +12,7 @@ Before you start, complete the following:
     -   In a VPC, a public IP address is assigned to the instance or [an EIP address is bound to the instance](https://www.alibabacloud.com/help/doc-detail/27714.htm).
     -   In the classic network, a public IP address is assigned to the instance by using either of the following methods:
         -   For a Subscription or a Pay-As-You-Go instance, you can select Assign public IP when creating the instance.
-        -   For a Subscription instance without public IP address, you can [Overview of configuration changes](intl.en-US/User Guide/Instances/Change configurations/Overview of configuration changes.md#) assign one by upgrading bandwidth.
+        -   For a Subscription instance without public IP address, you can assign one by [upgrading bandwidth](intl.en-US/User Guide/Instances/Change configurations/Overview of configuration changes.md#).
 -   The following security group rules must be added to the security group that the instance joins \(for more information, see [Add security group rules](intl.en-US/User Guide/Security groups/Add security group rules.md#)\).
 
     |Network Type|NIC|Rule Direction|Authorization Policy|Protocol Type|Port Range|Authorization Type|Authorization Object|Priority|

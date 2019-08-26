@@ -1,111 +1,187 @@
-# DescribeTags {#DescribeTags .reference}
+# DescribeTags {#doc_api_1006035 .reference}
 
-Describes one or more of your available tags. You can set criteria to match tags, such as by specifying the ECS resource types, resource IDs, tag keys, or tag values. We use the AND \(&&\) operator for your conditions and return a specific list of results from your operation.
+Queries available tags. You can query the tags by specifying the ECS resource types, resource IDs, tag keys, or tag values. The system uses the Boolean operator AND \(&&\) between theses specified filtering conditions and returns a specific list of results from the operation.
 
-## Description {#section_zxn_2ph_ydb .section}
+## Description {#description .section}
 
-In particular, if a tag key \(`Tag.n.Key`\) is specified, but no tag value \(`Tag.n.Value`\) is specified, all tags related to the tag-key are queried. If the tag key-value is specified, tag that exactly matches the queried key-value.
+When a tag key is specified and no tag value is specified, all tags related to the tag key are queried. When both the tag key and tag value are specified, tags that exactly match the key-value are queried.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DescribeTags|
-|RegionId|String|Yes|Regional ID. For more information, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|ResourceType|String|Yes|The type of the ECS resource. Value range:-   disk
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DescribeTags) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
+
+## Request parameters {#parameters .section}
+
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-hangzhou| The ID of the region. You can call [DescribeRegions](~~25609~~) to view the latest regions of Alibaba Cloud.
+
+ |
+|Action|String|No|DescribeTags| The operation that you want to perform. Set the value to DescribeTags.
+
+ |
+|PageNumber|Integer|No|1| The page number of the tag list. Starting value: 1.
+
+ Default value: 1.
+
+ |
+|PageSize|Integer|No|50| The number of entries per page. Maximum value: 100.
+
+ Default value: 50.
+
+ |
+|ResourceId|String|No|s-946ntx4wr| The ID of the resource to which the tag is bound. When the retrieved resources are instances, this parameter can be interpreted as InstanceId.
+
+ |
+|ResourceType|String|No|snapshot| The type of the resource. Valid values:
+
+ -   disk
 -   instance
 -   image
 -   securitygroup
 -   snapshot
 
-Values are case-sensitive.|
-|ResourceId|String|No|The resource ID. For example, if you set the `ResourceType` to `instance`, the ResourceId the ResourceId can be interpreted as InstanceId.|
-|Tag.n.Key|String|No|The tag key where `n` ranges from 1 to 5.|
-|Tag.n.Value|String|No|The tag value where `n` ranges from 1 to 5.|
-|PageNumber|Integer|No| Displays the tags on several pages. 
-
- Initial value: 1.
-
- Default value: 1.
+ All values must be lowercase.
 
  |
-|PageSize|Integer|No| The maximum entries on a page.
+|Tag.N.Key|String|No|Finance| The tag key of the resource. Valid values of N: 1 to 20.
 
- Maximum: 100
+ |
+|Tag.N.Value|String|No|Finance| The tag value of the resource. Valid values of N: 1 to 20.
 
- Default: 50
+ |
+|Tag.N.key|String|No|Finance| The tag key of the resource.
+
+ **Note:** This parameter will be removed in the future. We recommend that you use the Tag.N.Key parameter to ensure compatibility.
+
+ |
+|Tag.N.value|String|No|Finance| The tag value of the resource.
+
+ **Note:** This parameter will be removed in the future. We recommend that you use the Tag.N.Value parameter to ensure compatibility.
 
  |
 
-## Return parameters {#ResponseParameter .section}
+## Response parameters {#resultMapping .section}
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|Tags|[TagSetItem](intl.en-US/API Reference/Data type/TagSetItem.md#)|Returns a specific list of tags.|
-|TotalCount|Integer|The total number of tags.|
-|PageSize|Integer|The maximum entries on a page.|
-|PageNumber|Integer|Displays the tags on several pages.|
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|PageNumber|Integer|1| The page number of the tag list.
 
-## Example { .section}
+ |
+|PageSize|Integer|50| The number of entries per page.
 
-**Request example** 
+ |
+|RequestId|String|B04B8CF3-4489-432D-83BA-6F128E4F2295| The ID of the request.
 
-```
+ |
+|Tags| | | The tags that match all the criteria.
+
+ |
+|└ResourceTypeCount| | | The number of resource types.
+
+ |
+|└Ddh|Integer|1| The number of dedicated hosts to which the tag is bound.
+
+ |
+|└Disk|Integer|15| The number of disks to which the tag is bound.
+
+ |
+|└Eni|Integer|5| The number of ENIs to which the tag is bound.
+
+ |
+|└Image|Integer|6| The number of images to which the tag is bound.
+
+ |
+|└Instance|Integer|45| The number of instances to which the tag is bound.
+
+ |
+|└KeyPair|Integer|17| The number of key pairs to which the tag is bound.
+
+ |
+|└LaunchTemplate|Integer|6| The number of launch templates to which the tag is bound.
+
+ |
+|└Securitygroup|Integer|4| The number of security groups to which the tag is bound.
+
+ |
+|└Snapshot|Integer|15| The number of snapshots to which the tag is bound.
+
+ |
+|└Volume|Integer|6| The number of extended volumes to which the tag is bound.
+
+ |
+|└TagKey|String|test| The key of the tag.
+
+ |
+|└TagValue|String|api| The value of the tag.
+
+ |
+|TotalCount|Integer|1| The total number of tags.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DescribeTags
-&ResourceType=snapshot
-&ResourceId=s-946ntx4wr
-&RegionId=cn-hangzhou
-&Tag. 1. Key=test
-&Tag. 1. Value=api
-&<Common Request Parameters>
+&RegionId=cn-hangzhou 
+&PageSize=50 
+&PageNumber=1 
+&ResourceType=snapshot 
+&ResourceId=s-946ntx4wr 
+&Tag.1.Key=Finance
+&Tag.1.Value=Finance
+&<Common request parameters>
 ```
 
-**Response sample** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
-<DescribeTagsResponse>
-    <RequestId>B04B8CF3-4489-432D-83BA-6F128E4F2295</RequestId>
-    <PageNumber>1</PageNumber>
-    <PageSize>50</PageSize>
-    <Tags>
-        <Tag>
-            <TagKey>test</TagKey>
-            <TagValue>api</TagValue>
-        </Tag>
-    </Tags>
-    <TotalCount>1</TotalCount>
+``` {#xml_return_success_demo}
+<DescribeTagsResponse> 
+  <RequestId>B04B8CF3-4489-432D-83BA-6F128E4F2295</RequestId>
+  <PageNumber>1</PageNumber> 
+  <PageSize>50</PageSize> 
+  <Tags> 
+    <Tag>
+      <TagKey>test</TagKey> 
+      <TagValue>api</TagValue> 
+    </Tag>
+  </Tags> 
+  <TotalCount>1</TotalCount>
 </DescribeTagsResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-  "PageNumber": 1,
-  "PageSize": 50,
-  "RequestId": "B04B8CF3-4489-432D-83BA-6F128E4F2295",
-  "Tags": {
-    "Tag": [
-      {
-        "TagKey": "test",
-        "TagValue": "api"
-      }
-    ]
-  },
-  "TotalCount": 1
+	"Tags":{
+		"Tag":[
+			{
+				"TagValue":"api",
+				"TagKey":"test"
+			}
+		]
+	},
+	"PageNumber":1,
+	"TotalCount":1,
+	"PageSize":50,
+	"RequestId":"B04B8CF3-4489-432D-83BA-6F128E4F2295"
 }
 ```
 
-## Error codes {#ErrorCode .section}
+## Error codes {#section_ggx_15e_5iz .section}
 
-Error codes specific to this interface are as follows. For more error codes, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|404|InvalidRegionId.NotFound|The specified RegionId does not exist.|The error message returned when the specified Region ID does not exist. Check whether the service is available in this region.|
+|404|InvalidResourceType.NotFound|The ResourceType provided does not exist in our records.|The error message returned when the specified resource does not exist.|
+|400|InvalidTagCount|The specified tags are beyond the permitted range.|The error message returned when the specified tags are outside of the valid range.|
+|400|InvalidTagKey.Malformed|The parameter Tag.n.Key is illegal.|The error message returned when the Tag.n.Key parameter is invalid.|
 
-|Error code|Error message|HTTP status code |Meaning|
-|:---------|:------------|:----------------|:------|
-|invalidTagKey.Malformed|The parameter Tag.n.Key is illegal.|400|The specified `Tag.n.Key` is invalid.|
-|InvalidTagValue.Malformed|The parameter Tag.n.Value is illegal.|400|The specified `Tag.n.Value` is invalid.|
-|InvalidRegionId.NotFound|The RegionId provided does not exist in our records.|404|The specified `RegionId` does not exist.|
-|InvalidResourceType.NotFound|The ResourceType provided does not exist in our records.|404|The specified `ResourceType` does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

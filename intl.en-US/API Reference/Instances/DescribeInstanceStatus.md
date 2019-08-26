@@ -1,95 +1,129 @@
-# DescribeInstanceStatus {#DescribeInstanceStatus .reference}
+# DescribeInstanceStatus {#doc_api_1161574 .reference}
 
-Obtain the list of all your instances in batches with status information.
+Obtains the states of multiple instances.
 
-## Description {#section_yfq_yps_xdb .section}
+## Description {#description .section}
 
--   See [Instance status table](intl.en-US/API Reference/Appendix/Instance status table.md#) for the possibly queried instance status.
--   You can use this API to get a list of instances.
+-   The states of all instances are returned. For more information, see [Instance states](~~25687~~)。
+-   You can also call this operation to obtain the instance list.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|Operation interface name, required parameter. Value: DescribeInstanceStatus.|
-|RegionId|String|Yes|The Region ID of instance. You can call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|ZoneId|String|No|ID of the zone to which an instance belongs.|
-|PageNumber|Integer|No|Page number of the instance status list. The start value is 1.The default value is 1.
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DescribeInstanceStatus) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-|
-|PageSize|Integer|No|Sets the number of lines per page for queries per page. The maximum value is 50.The default value is 10.
+## Request parameters {#parameters .section}
 
-|
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-hangzhou| The region ID of the instance. You can call the [DescribeRegions](~~25609~~) operation to view the latest region list.
 
-## Response parameters {#ResponseParameter .section}
+ |
+|Action|String|No|DescribeInstanceStatus| The operation that you want to perform. Set the value to DescribeInstanceStatus.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|TotalCount|Integer|The total number of instances.|
-|PageNumber|Integer|The page number of the instance list.|
-|PageSize|Integer|The number of lines per page set during input.|
-|InstanceStatuses|Array|An array format composed of InstanceStatusItemType. It returns the status information of an instance.|
+ |
+|ClusterId|String|No|cls-clusterid1| The ID of the cluster to which the instance belongs.
 
-## Examples { .section}
+ **Note:** This parameter will be removed in the future. We recommend that you use other parameters to ensure compatibility.
 
-**Request example** 
+ |
+|PageNumber|Integer|No|1| The page number. This value starts from 1.
 
-```
+ Default value: 1.
+
+ |
+|PageSize|Integer|No|10| The number of rows per page. Valid values: 1 to 50.
+
+ Default value: 10
+
+ |
+|ZoneId|String|No|cn-hangzhou-d| The zone ID of the instance.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|InstanceStatuses| | | The returned instance state information. It is an array that consists of InstanceStatusSetType data.
+
+ |
+|└InstanceId|String|i-instance1| The ID of the instance.
+
+ |
+|└Status|String|Running| The state of the instance.
+
+ |
+|PageNumber|Integer|1| The page number.
+
+ |
+|PageSize|Integer|10| The number of rows per page.
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The request ID.
+
+ |
+|TotalCount|Integer|2| The total number of instances.
+
+ |
+
+## Examples {#demo .section}
+
+Sample request
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DescribeInstanceStatus
-&RegionId=cn-hangzhou
-&<Common Request Parameters>
+&RegionId=cn-hangzhou 
+&ZoneId=cn-hangzhou-d
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DescribeInstanceStatusResponse>
-    <RequestId>6EF60BEC-0242-43AF-BB20-270359FB54A7</RequestId>
-    <TotalCount>2</TotalCount>
-    <PageNumber>1</PageNumber>
-    <PageSize>10</PageSize>
-    <InstanceStatuses>
-        <InstanceStatus>
-            <InstanceId>i-instance1</InstanceId>
-                <Status>Running</Status>
-            </InstanceStatus>
-            <InstanceStatus>
-                <InstanceId>i-ae4r89pp</InstanceId>
-                <Status>Stopped</Status>
-        </InstanceStatus>
-    </InstanceStatuses>
+  <RequestId>6EF60BEC-0242-43AF-BB20-270359FB54A7</RequestId> 
+  <TotalCount>2</TotalCount> 
+  <PageNumber>1</PageNumber> 
+  <PageSize>10</PageSize> 
+  <InstanceStatuses>
+    <InstanceStatus>
+      <InstanceId>i-instance1</InstanceId>
+      <Status>Running</Status>
+    </InstanceStatus>
+    <InstanceStatus>
+      <InstanceId>i-ae4r89pp</InstanceId>
+      <Status>Stopped</Status>
+    </InstanceStatus>
+  </InstanceStatuses>
 </DescribeInstanceStatusResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"PageNumber":1,
+	"InstanceStatuses":{
+		"InstanceStatus":[
+			{
+				"Status":"Running",
+				"InstanceId":"i-instance1"
+			},
+			{
+				"Status":"Stopped",
+				"InstanceId":"i-ae4r89pp"
+			}
+		]
+	},
+	"TotalCount":2,
+	"PageSize":10,
+	"RequestId":"6EF60BEC-0242-43AF-BB20-270359FB54A7"
+}
 ```
 
-"RequestId": "6EF60BEC-0242-43AF-BB20-270359FB54A7",
-"TotalCount": 2,
-"Pagenumber": 1,
-"PageSize": 10,
-"InstanceStatuses": {
-    "InstanceStatus": [{
-        "InstanceId": "i-instance1",
-            "Status": "Running"
-        
-        
-            "InstanceId": "i-ae4r89pp",
-            "Status": "Stopped"
-        
-    }
+## Error codes { .section}
 
-```
-
-## Error codes {#ErrorCode .section}
-
-Error codes specific to this interface are as follows. For more information, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message |HTTP status code|Description|
-|:---------|:-------------|:---------------|:----------|
-|InvalidRegionId.NotFound|The specified RegionId does not exist.|404|RegionId value missing.|
-|InvalidZoneId.NotFound|The ZoneId provided does not exist in our records.|404|ZoneId value missing.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

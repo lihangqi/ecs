@@ -1,104 +1,138 @@
-# DescribeImageSharePermission {#DescribeImageSharePermission .reference}
+# DescribeImageSharePermission {#doc_api_1091446 .reference}
 
-Queries all the authorized users to whom one of your custom image is shared. The responded information can be displayed on several pages. By default, 10 entries of record are displayed on each page.
+Queries the accounts to which a custom image is shared. The response can be displayed over several pages. Ten entries are displayed on each page by default.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DescribeImageSharePermission.|
-|RegionId|String|Yes|ID of the region to where the custom image belongs. You can call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|ImageId|String|Yes|ID of your custom image.|
-|PageNumber|Integer|No|The page number of the responded information. Initial value: 1.Default value: 1.
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DescribeImageSharePermission) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-|
-|PageSize|Integer|No|The number of entries on each page for the responded information. Maximum value: 50.Default value: 10.
+## Request parameters {#parameters .section}
 
-|
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|ImageId|String|Yes|m-imageid1| The ID of the custom image.
 
-## Response parameters {#ResponseParameter .section}
+ |
+|RegionId|String|Yes|cn-hangzhou| The ID of the region to which the custom image belongs. You can call [DescribeRegions](~~25609~~) to view the latest regions of Alibaba Cloud.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|ImageId|String|ID of the custom image.|
-|RegionId|String|Region ID of the custom image.|
-|ShareGroups|[ShareGroupType](intl.en-US/API Reference/Data type/ShareGroupType.md#)|Type of the shared group.|
-|Accounts|[AccountType](intl.en-US/API Reference/Data type/AccountType.md#)|Type of the Alibaba Cloud user account.|
-|TotalCount|Integer|Total number of entries.|
-|PageNumber|Integer|Page number.|
-|PageSize|Integer|Maximum number of entries on each page.|
+ |
+|Action|String|No|DescribeImageSharePermission| The operation that you want to perform. Set the value to DescribeImageSharePermission.
 
-## Examples { .section}
+ |
+|PageNumber|Integer|No|1| The page number that you query in the account list. Starting value: 1. Default value: 1.
 
-**Request example** 
+ |
+|PageSize|Integer|No|10| The number of entries on each page. Maximum value: 50. Default value: 10.
 
-```
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|Accounts| | | The type of an Alibaba Cloud account.
+
+ |
+|└AliyunId|String|155780923770| The ID of an Alibaba Cloud account.
+
+ |
+|ImageId|String|m-imageid2| The ID of the custom image.
+
+ |
+|PageNumber|Integer|1| The page number that you query in the account list.
+
+ |
+|PageSize|Integer|10| The number of entries on each page.
+
+ |
+|RegionId|String|cn-hangzhou| The ID of the region to which the image belongs.
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request. This parameter is returned regardless of whether the operation is successful.
+
+ |
+|ShareGroups| | | The type of the shared group.
+
+ |
+|└Group|String|all| The shared group.
+
+ |
+|TotalCount|Integer|1| The total number of entries.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DescribeImageSharePermission
-&RegionId=cn-qingdao
-&ImageId=m-282dzntc7
-&<Common Request Parameters>
+&ImageId=m-imageid1
+&RegionId=cn-hangzhou 
+&PageNumber=1 
+&PageSize=10 
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DescribeImageSharePermissionResponse>
-    <ImageId>m-282dzntc7</ImageId>
-    <PageNumber>1</PageNumber>
-    <PageSize>10</PageSize>
-    <RegionId>cn-qingdao</RegionId>
-    <TotalCount>1</TotalCount>
-    <RequestId>441CF898-42FF-47CF-9348-3C3BFF557278</RequestId>
-    <ShareGroups>
-        <ShareGroup>
-            <Group>all</Group>
-        </ShareGroup>
-    </ShareGroups>
-    <Accounts>
-        <Account>
-            <AliyunId>1886508529898586</AliyunId>
-        </Account>
-    </Accounts>
+  <ImageId>m-282dzntc7</ImageId>
+  <PageNumber>1</PageNumber> 
+  <PageSize>10</PageSize> 
+  <RegionId>cn-qingdao</RegionId> 
+  <TotalCount>1</TotalCount> 
+  <RequestId>441CF898-42FF-47CF-9348-3C3BFF557278</RequestId>
+  <ShareGroups>
+    <ShareGroup>
+      <Group>all</Group>
+    </ShareGroup>
+  </ShareGroups>
+  <Accounts> 
+    <Account> 
+      <AliyunId>155780923770</AliyunId>
+    </Account>
+  </Accounts> 
 </DescribeImageSharePermissionResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"Accounts":{
+		"Account":[
+			{
+				"AliyunId":"155780923770"
+			}
+		]
+	},
+	"PageNumber":1,
+	"ImageId":"m-282dzntc7",
+	"TotalCount":1,
+	"PageSize":10,
+	"RequestId":"9AD96F49-0BE5-4868-A66A-224352549CEC",
+	"RegionId":"cn-qingdao",
+	"ShareGroups":{
+		"ShareGroup":[
+			{
+				"Group":"all"
+			}
+		]
+	}
+}
 ```
 
-    "ShareGroups": {
-        "ShareGroup": [
-            
-                "Group": "all"
-            
-        
-    
-    "Accounts": {
-        "Account": [
-            
-                "AliyunId": "1886508529898586"
-            
-        
-    
-    "ImageId": "m-282dzntc7",
-    "PageNumber": 1,
-    "PageSize": 10,
-    "RegionId": "cn-qingdao",
-    "TotalCount": 1,
-    "RequestId": "9AD96F49-0BE5-4868-A66A-224352549CEC"
+## Error codes {#section_hcf_igj_rmw .section}
 
-```
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|400|MissingParameter|The input parameter RegionId that is mandatory for processing this request is not supplied.|The error message returned when the required RegionId parameter is not specified.|
+|400|MissingParameter|The input parameter ImageId that is mandatory for processing this request is not supplied.|The error message returned when the required ImageId parameter is not specified.|
+|404|InvalidImageId.NotFound|The specified image does not exist.|The error message returned when the specified image does not exist under this account. Check whether the image ID is correct.|
 
-## Error codes {#ErrorCode .section}
-
-Error codes specific to this interface are as follows. For more information, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message |HTTP status code |Meaning|
-|:---------|:-------------|:----------------|:------|
-|MissingParameter|The input parameter “RegionId “ that is mandatory for processing this request is not supplied.|400|You must specify the `RegionId`. |
-|MissingParameter|The input parameter “ImageId “ that is mandatory for processing this request is not supplied.|400|You must specify the `ImageId`.|
-|InvalidRegionId.NotFound|The specified region does not exist.|404|The specified `RegionId` does not exist.|
-|InvalidImageId.NotFound|The specified ImageId does not exist.|404|The specified ImageId does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

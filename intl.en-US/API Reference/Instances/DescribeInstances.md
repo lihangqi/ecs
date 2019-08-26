@@ -4,82 +4,90 @@ Describes the details of one or more instances.
 
 ## Description {#section_phb_mrs_xdb .section}
 
-The request parameters are filters used for describing a specific list of results. The filters use the \(`AND`\) logic, which matches a set of resources by specific criteria, such as IDs, billing methods, or tags.  A parameter with null value does not play the role of a filter However, if the `InstanceIds`  parameter is a null JSON array InstanceIds= `[]`, it is regarded as a valid filter and the responded value is null.
+The request parameters are filters used for describing a specific list of results. The filters use the \(`AND`\) logic, which matches a set of resources by specific criteria, such as IDs, billing methods, or tags. A parameter with null value does not play the role of a filter. However, if the `InstanceIds` parameter is a null JSON array `InstanceIds=[]`, it is regarded as a valid filter and the responded value is null.
 
 ## Request parameters {#RequestParameter .section}
 
 |Name|Type|Required|Description|
 |:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DescribeInstances|
-|RegionId|String|Yes|Regional ID. For more information, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
+|Action|String|Yes|The name of this interface. Value: Description instances.|
+|RegionId|String|No|Regional ID. For more information, call [DescribeRegions](../reseller.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
 |VpcId|String|No|VPC ID. |
 |VSwitchId|String|No|VSwitch ID.|
-|ZoneId|String|No|Zone ID.|
-|InstanceIds|String|No|Instance ID.  The value can contain an array of up to 100 instance IDs. The IDs are displayed in the format of \["i-xxxxxxxxx", "i-yyyyyyyyy", … "i-zzzzzzzzz"\] and are separated by commas \(`,`\).|
-|InstanceType|String|No|Instance type. |
-|InstanceTypeFamily |String|No|Instance type family.|
-|InstanceNetworkType|String|No|Network type of the instance. Optional values:-   Classic: Classic network
--   vpc: VPC
+|ZoneId|String|No|The default value is blank, which indicates a query of disks in all zones.|
+|InstanceIds|String|No|Instance ID. The value can contain an array of up to 100 instance IDs. The IDs are displayed in the format of \["i-xxxxxxxxx", "i-yyyyyyyyy", … "i-zzzzzzzzz"\] and are separated by commas \(`,`\).|
+|InstanceType|String|No|Instance type.|
+|CreditSpecification|String|No| The running mode of an unlimited credit enabled t5 instance. Optional values:
+
+ -   Standard: The standard running mode. For more information, see [t5 standard instances](../reseller.en-US/Instances/Instance type families/Burstable performance instances/t5 standard instances.md#).
+-   Unlimited: The unlimited running mode. For more information, see [t5 unlimited instances](../reseller.en-US/Instances/Instance type families/Burstable performance instances/t5 unlimited instances.md#).
+
+ Default value: null.
+
+ |
+|InstanceTypeFamily|String|No|Instance type family.|
+|InstanceNetworkType|String|No|Network type of the instance. Optional values:-   classic: Classic network.
+-   vpc: Private network.
 
 |
 |PrivateIpAddresses|String|No|List of private IP addresses of VPC-Connected instances. This parameter is effective when `InstanceNetworkType=vpc`. The value can contain an array of up to 100 IP addresses. The IP addresses are displayed in the format of \["172.16.1.1", "172.16.2.1", … "172.16.10.1"\] and are separated by commas \(`,`\).|
-|InnerIpAddresses|String|No|List of private IP addresses of classic network-connected instances. This parameter is effective when `InstanceNetworkType=classic`. The value can contain an array of up to 100 IP addresses.  The IP addresses are displayed in the format of \["10.16.1.1", "10.16.2.1", … "10.16.10.1"\] and are separated by commas \(`,`\).|
-|PublicIpAddresses |String|No|List of public IP addresses of classic network-connected instances.  This parameter is effective when `InstanceNetworkType=classic`. The value can contain an array of up to 100 IP addresses. The IP addresses are displayed in the format of \["42.1.1.1", "42.1.2.1", … "42.1.10.1"\] and are separated by commas \(`,`\).|
+|InnerIpAddresses|String|No|List of private IP addresses of classic network-connected instances. This parameter is effective when `InstanceNetworkType=classic`. The value can contain an array of up to 100 IP addresses. The IP addresses are displayed in the format of \["10.16.1.1", "10.16.2.1", … "10.16.10.1"\] and are separated by commas \(`,`\).|
+|PublicIpAddresses|String|No|List of public IP addresses of classic network-connected instances. The PublicIpAddresses is valid when `InstanceNetworkType=classic`. The value can contain an array of up to 100 IP addresses. The IP addresses are displayed in the format of \["42.1.1.1", "42.1.2.1", … "42.1.10.1"\] and are separated by commas \(`,`\).|
 |SecurityGroupId|String|No|Security group to which the instances belong.|
-|InstanceChargeType |String|No|Billing method of the instances. Optional values:-   PrePaid: Subscribed instances
--   PostPaid: Pay-As-You-Go instances
+|InstanceChargeType|String|No|Billing method of the instances. Optional values:-   PrePaid: Subscribed instances.
+-   PostPaid: Pay-As-You-Go instances.
 
 |
-|SpotStrategy|String|No|The spot strategy of a Pay-As-You-Go instance, This parameter is effective when `InstanceChargeType=PostPaid`. Optional values:-   NoSpot: standard Pay-As-You-Go instance
--   SpotWithPriceLimit: sets an example of a bid for a maximum price.
--   SpotAsPriceGo: the system will automatically bid and pay the highest price.
+|SpotStrategy|String|No|The spot price you are willing to accept for preemptible instances. This parameter is effective for `InstanceChargeType=PostPaid`. Optional values:-   NoSpot: A normal Pay-As-You-Go instance.
+-   SpotWithPriceLimit: Sets the maximum price for a spot instance.
+-   SpotAsPriceGo: A price that is based on the highest Pay-As-You-Go instance.
 
-Default: NoSpot|
-|InternetChargeType|String|No|Billing method of the instance bandwidth. Optional value:-   PayByTraffic
+Default value: NoSpot.|
+|InternetChargeType|String|No|Billing method of the instance bandwidth. Optional values:-   PayByTraffic: You are billed based on the traffic.
 
 |
-|InstanceName|String|No|Instance ID. You can use wildcard for fuzzy search.|
-|ImageId|String|No|Image ID|
+|InstanceName|String|No|The name of the instance. You can use wildcard \(\*\) for fuzzy search.|
+|ImageId|String|No|Image ID.|
 |DeploymentSetId|String|No|Deployment Set ID.|
-|Status|String|No|Status of the instances.  Optional value:-   Running
+|Status|String|No|Status of the instances. Optional values:-   Running
 -   Starting
 -   Stopping
 -   Stopped
 
 |
-|IoOptimized|String|No|Whether an instance is I/O optimized. Optional values:-   True
--   False
+|IoOptimized|String|No|Whether an instance is I/O optimized. Optional values:-   true
+-   false
 
 |
-|Tag.n.Key|String|No|The key of a tag. The valid range of n is \[1, 5\]. Supports up to 64 characters. It cannot begin with aliyun, acs, http://, or https://.|
-|Tag.n.Value|String|No|The value of a tag. The valid range of n is \[1, 5\]. Supports up to 128 characters. It cannot begin with aliyun, acs, http://, or https://.|
-|PageNumber|Integer|No|Page number of the instance status list. Initial value: 1.Default value: 1.
+|Tag.n.Key|String|No|The key of a tag of which n is from 1 to 20. Once you use this parameter, it cannot be a null string. It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://".|
+|Tag.n.Value|String|No|The value of a tag of which n is a number from 1 to 20. Once you use this parameter, it can be a null string. It can be up to 128 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://".|
+|PageNumber|Integer|No|Displays the instances on several pages. Start value: 1.Default: 1.
 
 |
-|PageSize|Integer|No|The maximum entries on a page. Maximum: 100Default value: 10.
+|PageSize|Integer|No|The number of rows per page. Maximum value: 100Default: 10.
 
 |
 
-## Return parameters {#ResponseParameter .section}
+## Response parameters {#ResponseParameter .section}
 
 |Name|Type|Description|
 |:---|:---|:----------|
 |TotalCount|Integer|Total number of instances.|
-|PageNumber|Integer|Page number of the instance list|
-|PageSize|Integer|Number of lines per page set during input|
-|Instances|[InstanceAttributesType](intl.en-US/API Reference/Data type/InstanceAttributesType.md#)|Array format composed of InstanceAttributesType, which returns instance information.|
+|PageNumber|Integer|Page number of the instance list.|
+|PageSize|Integer|Number of lines per page set during input.|
+|Instances|[InstanceAttributesType](reseller.en-US/API Reference/Data type/InstanceAttributesType.md#)|Array format composed of InstanceAttributesType, which returns instance information.|
 
-## Example { .section}
+## Examples { .section}
 
 **Request example** 
 
 ```
 https://ecs.aliyuncs.com/?Action=DescribeInstances
 &RegionId=cn-hangzhou
-&<Common Request Parameters>
+&<Common Response Parameters>
 ```
 
-**Response sample** 
+**Response example** 
 
 **XML format**
 
@@ -173,7 +181,7 @@ https://ecs.aliyuncs.com/?Action=DescribeInstances
 </DescribeInstancesResponse>
 ```
 
- **JSON format** 
+**JSON format** 
 
 ```
 {
@@ -186,7 +194,7 @@ https://ecs.aliyuncs.com/?Action=DescribeInstances
         "ExpiredTime": "2011-09-08T16:00Z",
         "HostName": "iZ94t3s0jxkZ",
         "ImageId": "centos6u5_64_20G_aliaegis_20150130.vhd",
-        "Innipaddress ":{
+        "InnerIpAddress": {
           "IpAddress": [
             "10.170. XX.XXX"
           ]
@@ -226,7 +234,7 @@ https://ecs.aliyuncs.com/?Action=DescribeInstances
     ]
   },
   "PageNumber": "1",
-  "PageSize": "10",
+  "PageSize": 10,
   "RequestId": "14A07460-EBE7-47CA-9757-12CC4761D47A",
   "TotalCount": "1"
 }
@@ -234,14 +242,12 @@ https://ecs.aliyuncs.com/?Action=DescribeInstances
 
 ## Error codes {#ErrorCode .section}
 
-Error codes specific to this interface are as follows. For more error codes, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message|HTTP status code |Description|
-|:---------|:------------|:----------------|:----------|
+|Error code|Error messages|HTTP status code |Description|
+|:---------|:-------------|:----------------|:----------|
+|InvalidTag.Mismatch|The specified Tag.n.Key and Tag.n.Value are not match.|400|The specified `Tag.n.Key` and `Tag.n.Value` must be key-value matched.|
+|InvalidTagCount|The specified tags are beyond the permitted range.|400|You can add up to five tags to the specified ECS resource in this query request.|
 |InvalidInstanceChargeType.NotFound|The InstanceChargeType does not exist in our records.|404|The specified `InstanceChargeType` does not exist.|
-|InvalidInternetChargeType.ValueNotSupported|The specified InternetChargeType is not valid|404|The specified `InternetChargeType` is not legal.|
+|InvalidInternetChargeType.ValueNotSupported|The specified InternetChargeType is not valid|404|The specified `InternetChargeType` is invalid.|
 |InvalidNetworkType.NotFound|The specified InstanceNetworkType is not found|404|The specified `InstanceNetworkType` does not exist.|
-|InvalidStatus.NotFound|The specified Status is not found|404|The specified`Status`  does not exist.|
-|InvalidTag.Mismatch|The specified Tag.n.Key and Tag.n.Value are not match.|400|`Tag.n.Key` and`Tag.n.Value`specified 必须键值匹配。|
-|InvalidTagCount|The specified tags are beyond the permitted range.|400|You can specify a maximum of five tags.|
+|InvalidStatus.NotFound|The specified Status is not found|404|The specified`Status` does not exist.|
 

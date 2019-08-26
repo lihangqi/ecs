@@ -6,9 +6,9 @@
 
 调用该接口时，您需要注意：
 
--   删除 SSH 密钥对后，您将无法通过 [DescribeKeyPairs](intl.zh-CN/API参考/SSH 密钥对/DescribeKeyPairs.md#) 查询该 SSH 密钥对。
+-   删除 SSH 密钥对后，您将无法通过 [DescribeKeyPairs](cn.zh-CN/API参考/SSH 密钥对/DescribeKeyPairs.md#) 查询该 SSH 密钥对。
 
--   查询实例信息时（[DescribeInstances](intl.zh-CN/API参考/实例/DescribeInstances.md#)），会显示 SSH 密钥对名称（`KeyPairNames`），不再显示该 SSH 密钥对的其他信息。
+-   查询实例信息时（[DescribeInstances](cn.zh-CN/API参考/实例/DescribeInstances.md#)），会显示 SSH 密钥对名称（`KeyPairNames`），不再显示该 SSH 密钥对的其他信息。
 
 
 ## 请求参数 {#RequestParameter .section}
@@ -16,12 +16,12 @@
 |名称|类型|是否必需|描述|
 |:-|:-|:---|:-|
 |Action|String|是|系统规定参数。取值：DeleteKeyPairs|
-|RegionId|String|是|SSH 密钥对所在的地域。您可以调用 [DescribeRegions](intl.zh-CN/API参考/地域/DescribeRegions.md#) 查看最新的阿里云地域列表。|
+|RegionId|String|是|SSH 密钥对所在的地域。您可以调用 [DescribeRegions](cn.zh-CN/API参考/地域/DescribeRegions.md#) 查看最新的阿里云地域列表。|
 |KeyPairNames|String|是|SSH 密钥对名称。取值可以由多个 SSH 密钥对名称组成一个 JSON 数组，格式为 \["key-xxxxxxxxx", "key-yyyyyyyyy", … "key-zzzzzzzzz"\]，最多支持 100 对 SSH 密钥对，名称之间用半角逗号（,）隔开。|
 
 ## 返回参数 {#section_f54_lk5_xdb .section}
 
-全是公共返回参数。参阅 [公共参数](intl.zh-CN/API参考/调用方式/公共参数.md#)。
+全是公共返回参数。参阅 [公共参数](cn.zh-CN/API参考/HTTP调用方式/公共参数.md#)。
 
 ## 示例 { .section}
 
@@ -54,7 +54,7 @@ https://ecs.aliyuncs.com/?Action=DeleteKeyPairs
 
 ## 错误码 {#ErrorCode .section}
 
-以下为本接口特有的错误码。更多错误码，请访问 [API 错误中心](https://error-center.alibabacloud.com/status/product/Ecs)。
+以下为本接口特有的错误码。更多错误码，请访问 [API 错误中心](https://error-center.aliyun.com/status/product/Ecs)。
 
 |错误代码|错误信息|HTTP 状态码|说明|
 |:---|:---|:-------|:-|

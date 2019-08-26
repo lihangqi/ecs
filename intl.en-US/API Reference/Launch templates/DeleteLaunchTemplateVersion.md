@@ -1,59 +1,78 @@
-# DeleteLaunchTemplateVersion {#DeleteLaunchTemplateVersion .reference}
+# DeleteLaunchTemplateVersion {#doc_api_999544 .reference}
 
-Deletes a specified instance launch template version. However, if the instance launch template version you intend to delete is the default version, you must use the [DeleteLaunchTemplate](intl.en-US/API Reference/Launch templates/DeleteLaunchTemplate.md#) API to delete the entire instance launch template. 
+Deletes an instance launch template version. This operation does not delete the default version of an instance launch template. To delete the default version, you must call DeleteLaunchTemplate to delete the instance launch template.
 
-## Request parameters  {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name  |Type |Required|Description |
-|:-----|:----|:-------|:-----------|
-|Action |String |Yes |The name of this interface.  Value: DeleteLaunchTemplateVersion. |
-|RegionId |String|Yes|Region ID of the template.  For more information, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to view the latest list of Alibaba Cloud regions. |
-|DeleteVersion.n |Long |Yes|Template version number. Value range of \`n\`: \[1,29\]. For more information, call [DescribeLaunchTemplateVersions](intl.en-US/API Reference/Launch templates/DescribeLaunchTemplateVersions.md#) to query the template version list.|
-|LaunchTemplateId|String |No |Template ID.  Either the `LaunchTemplateId` or the `LaunchTemplateName` must be specified to determine the template.|
-|LaunchTemplateName|String |No |Template name.|
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DeleteLaunchTemplateVersion) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Response parameters {#ResponseParameter .section}
+## Request parameters {#parameters .section}
 
-All are common response parameters. See [common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#commonResponseParameters).
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|DeleteVersion.N|RepeatList|Yes|2| The version number of the template. Valid values of N: 1 to 29. You can call [DescribeLaunchTemplateVersions](~~73761~~) to query all versions of an instance launch template.
 
-## Example { .section}
+ |
+|RegionId|String|Yes|cn-hangzhou| The ID of the region to which the template belongs. You can call [DescribeRegions](~~25609~~) to view the latest regions of Alibaba Cloud.
 
-**Request example** 
+ |
+|Action|String|No|DeleteLaunchTemplateVersion| The operation that you want to perform. Set the value to DeleteLaunchTemplateVersion.
 
-```
+ |
+|LaunchTemplateId|String|No|lt-bp1apo0bbbkuy0rj3b9X| The ID of the instance launch template. For more information, call [DescribeLaunchTemplates](~~73759~~).
+
+ |
+|LaunchTemplateName|String|No|JoshuaWinPostPaid| The name of the instance launch template.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DeleteLaunchTemplateVersion
-&RegionId=cn-hangzhou
-&LaunchTemplateName=lt-name1
-&DeleteVersion. 1=1
-&<Common Request Parameters>
+&DeleteVersion. 1=2
+&RegionId=cn-hangzhou 
+&LaunchTemplateId=lt-bp1apo0bbbkuy0rj3b9X 
+&LaunchTemplateName=JoshuaWinPostPaid 
+&<Common request parameters>
 ```
 
-**Response example ** 
+Successful response examples
 
-**XML format **
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DeleteLaunchTemplateVersionResponse>
-    <RequestId>04F0F334-1335-436C-A1D7-6C044FExxxxx</RequestId>
+  <RequestId>04F0F334-1335-436C-A1D7-6C044FExxxxx</RequestId>
 </DeleteLaunchTemplateVersionResponse>
 ```
 
- **JSON format ** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"RequestId":"04F0F334-1335-436C-A1D7-6C044FExxxxx"
+}
 ```
 
-    "RequestId": "04F0F334-1335-436C-A1D7-6C044FExxxxx",
+## Error codes { .section}
 
-```
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|400|InvalidRegion.NotExist|%s|The error message returned when the specified region does not exist.|
+|400|MissingParameter|%s|The error message returned when a required parameter is not specified.|
+|400|InvalidParameter|%s|The error message returned when the parameter format is invalid.|
+|403|InnerServiceFailed|%s|The error message returned when an internal service failed to be called.|
 
-## Error codes {#ErrorCode .section}
-
-The following error codes are specific to this interface.  For more error codes, visit the [API error center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code |Error message|HTTP status code |Description |
-|:----------|:------------|:----------------|:-----------|
-|MissingParameter|The input parameter “\{0\}” that is mandatory for processing this request is not supplied.|400|A required parameter is missing.|
-|InvalidParameter|the parameter\(s\) “\{0\}” provided is\(are\) invalid.|400 |The specified parameter is invalid.|
-|InnerServiceFailed|call inner service failed|403 |Internal server error.|
-|InvalidOperation.DeleteDefaultVersion|Delete default version from template is not allowed. |403 |You cannot delete the default template version directly.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

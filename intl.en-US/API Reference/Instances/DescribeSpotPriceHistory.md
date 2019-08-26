@@ -1,121 +1,192 @@
-# DescribeSpotPriceHistory {#DescribeSpotPriceHistory .reference}
+# DescribeSpotPriceHistory {#doc_api_1161581 .reference}
 
-Query the price history of the spot instance. You can query the price records within 30 days at most, that is, the specified parameter EndTime minus StartTime must be less than or equal to 30.
+Queries the price history of the last 30 days for a preemptible instance.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DescribeSpotPriceHistory|
-|RegionId|String|Yes|The region ID of the instance. For more information, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|ZoneId|String|Yes|Zone ID.|
-|NetworkType| String|Yes|Network type of the bid instance. Optional values:-   classic: the spot instance is in the classic network.
--   vpc: the spot instance is in the VPC.
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DescribeSpotPriceHistory) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-|
-|InstanceType|String|Yes|Instance type.|
-|IoOptimized|String|No|Whether it is an I/O-optimized instance.  Value range:-   optimized: the spot instance is I/O optimized.
--   none: indicates that the bid instance is not an I/O optimization instance
+## Request parameters {#parameters .section}
 
-Series I instance default: none
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|InstanceType|String|Yes|ecs.t1.xsmall| The type of the instance.
 
-Series II instance default: optimized Series III Default instance : optimized
+ |
+|NetworkType|String|Yes|VPC| The network type of the preemptible instance. Valid values:
 
-|
-|StartTime|String|No|Query the start time of the historical price of the bid instance. The StartTime is based on [ISO8601](intl.en-US/API Reference/Appendix/ISO 8601 time format.md#) with a format of YYYY-MM-DDTHH:mm:ssZ. The default value is null, and null indicates three days earlier before the EndTime. The maximum value of StartTime cannot be 30 days earlier than the specified EndTime.|
-|EndTime|String|No|Query the end time of the price record of the spot instance. The EndTime is based on ISO8601 with a format of YYYY-MM-DDTHH:MM:SSZ, and the UTC time is required .It is null by default, and null indicates the current time.
+ -   classic.
+-   vpc.
 
-|
-|Offset|Integer|No|Query the start line.Default: 0
+ |
+|RegionId|String|Yes|cn-hangzhou| The region ID of the instance. You can call the [DescribeRegions](~~25609~~) operation to view the latest region list.
 
-|
+ |
+|Action|String|No|DescribeSpotPriceHistory| The operation that you want to perform. Set the value to DescribeSpotPriceHistory.
 
-## Return parameters {#ResponseParameter .section}
+ |
+|EndTime|String|No|2017-08-22T08:45:08Z| The end time of the query. The time follows the [ISO 8601](~~25696~~) standard and is in UTC time. Format: yyyy-MM-ddTHH:mm:ssZ.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|NextOffset|Integer|The start line of the next page. Queries data for the next page. The specified value of the parameter Offset is the value.|
-|SpotPrices |[SpotPriceType ](intl.en-US/API Reference/Data type/SpotPriceType.md#)|The price information of the spot instance.|
+ Default value: null. If this parameter is empty, the current time is used.
 
-## Example  { .section}
+ |
+|IoOptimized|String|No|none| Specifies whether the instance is an I/O optimized instance. Valid values:
 
-**Request example** 
+ -   optimized.
+-   none.
 
-```
-https://ecs.aliyuncs.com/?Action=DescribeSpotHistory
-&RegionId=cn-hangzhou
-&ZoneId=cn-hanghzhou-c
-&NetworkType=vpc
-&InstanceType=ecs.t1.xsmall
-&IoOptimized=none
-&UtcStartTime=2017-08-22T08:45:08Z...
+ Default value: none for generation I instances,
+
+ optimized for generations II and III instances.
+
+ |
+|OSType|String|No|Linux| The type of the operating system platform.
+
+ |
+|Offset|Integer|No|0| The start row of the query.
+
+ Default value: 0
+
+ |
+|StartTime|String|No|2017-08-22T08:45:08Z| The start time of the query. The time follows the [ISO 8601](~~25696~~) standard and is in UTC time. Format: yyyy-MM-ddTHH:mm:ssZ.
+
+ Default value: null. If this parameter is empty, the start time is defined as three days before the specified EndTime. You can specify a StartTime value of up to 30 days before the specified EndTime.
+
+ |
+|ZoneId|String|No|cn-hangzhou-g| The zone ID of the instance.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|Currency|String|CNY| The currency unit of the price.
+
+ |
+|NextOffset|Integer|1000| The start row of the next page. It is the value of **Offset**.
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The request ID.
+
+ |
+|SpotPrices| | | The details of the price.
+
+ |
+|└InstanceType|String|ecs.t1.xsmall| The instance type.
+
+ |
+|└IoOptimized|String|none| Indicates whether it is an optimized instance.
+
+ |
+|└NetworkType|String|PayByTraffic| The network type of the preemptible instance.
+
+ |
+|└OriginPrice|Float|0.028| The original price of the Pay-As-You-Go instance.
+
+ |
+|└SpotPrice|Float|0.006| The spot price of the preemptible instance.
+
+ |
+|└Timestamp|String|2017-09-18T11:00:00Z| The time for the price. Format: yyyy-MM-ddTHH:MM:SS.
+
+ |
+|└ZoneId|String|cn-hangzhou-c| The zone ID of the preemptible instance.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
+https://ecs.aliyuncs.com/?Action=DescribeSpotPriceHistory
+&NetworkType=vpc 
+&RegionId=cn-hangzhou 
+&InstanceType=ecs.t1.xsmall 
+&IoOptimized=none 
+&Offset=0 
+&StartTime=2017-08-22T08:45:08Z
 &<Common request parameters>
 ```
 
-**Response sample** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DescribeSpotPriceHistoryResponse>
-    <RequestId>xxxxxxxxxxxxxx</RequestId>
-    <NextOffset>1000</NextOffset>
-    <SpotPrices>
-        <SpotPriceType>
-            <IoOptimized>none</IoOptimized>
-            <OriginPrice>0.028</OriginPrice>
-            <NetworkType>classic</NetworkType>
-            <Timestamp>2017-09-18T11:00:00Z</Timestamp>
-            <ZoneId>cn-hangzhou-c</ZoneId>
-            <SpotPrice>0.006</SpotPrice>
-            <InstanceType>ecs.t1.xsmall</InstanceType>
-        </SpotPriceType>
-        <SpotPriceType>
-            <IoOptimized>none</IoOptimized>
-            <OriginPrice>0.028</OriginPrice>
-            <NetworkType>classic</NetworkType>
-            <Timestamp>2017-09-18T12:00:00Z</Timestamp>
-            <ZoneId>cn-hangzhou-c</ZoneId>
-            <SpotPrice>0.006</SpotPrice>
-            <InstanceType>ecs.t1.xsmall</InstanceType>
+  <RequestId>xxxxxxxxxxxxxx</RequestId>
+  <NextOffset>1000</NextOffset>
+  <SpotPrices>
+    <SpotPriceType>
+      <IoOptimized>none</IoOptimized>
+      <OriginPrice>0.028</OriginPrice>
+      <NetworkType>classic</NetworkType>
+      <Timestamp>2017-09-18T11:00:00Z</Timestamp>
+      <ZoneId>cn-hangzhou-c</ZoneId>
+      <SpotPrice>0.006</SpotPrice>
+      <InstanceType>ecs.t1.xsmall</InstanceType> 
     </SpotPriceType>
-</SpotPrices>
+    <SpotPriceType>
+      <IoOptimized>none</IoOptimized>
+      <OriginPrice>0.028</OriginPrice>
+      <NetworkType>classic<NetworkType>
+      <Timestamp>2017-09-18T12:00:00Z</Timestamp>
+      <ZoneId>cn-hangzhou-c</ZoneId>
+      <SpotPrice>0.006</SpotPrice>
+      <InstanceType>ecs.t1.xsmall</InstanceType> 
+    </SpotPriceType>
+  </SpotPrices>
 </DescribeSpotPriceHistoryResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "RequestId":"xxxxxxxxxxxxxx",
-    "NextOffset":1000,
-    "SpotPrices":
-    {
-        "SpotPriceType":[
-        {
-            "IoOptimized":"none",
-            "OriginPrice":0.028,
-            "NetworkType":"classic",
-            "Timestamp":"2017-09-18T11:00:00Z",
-            "ZoneId":"cn-hangzhou-c","SpotPrice":0.006,
-            "InstanceType":"ecs.t1.xsmall"
-            }
-        ]
-    }
+	"RequestId":"xxxxxxxxxxxxxx",
+	"SpotPrices":{
+		"SpotPriceType":[
+			{
+				"IoOptimized":"none",
+				"NetworkType":"classic",
+				"OriginPrice":0.028,
+				"ZoneId":"cn-hangzhou-c",
+				"Timestamp":"2017-09-18T11:00:00Z",
+				"InstanceType":"ecs.t1.xsmall",
+				"SpotPrice":0.006
+			}
+		]
+	},
+	"NextOffset":1000
 }
 ```
 
-## Error codes {#ErrorCode .section}
+## Error codes { .section}
 
-Error codes specific to this interface are as follows. For more error codes, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|403|InvalidUserType.NotSupported|%s|The error message returned when your account type is not supported.|
+|403|Abs.InvalidAccount.NotFound|%s|The error message returned when your Alibaba Cloud account does not exist or your AccessKey is expired.|
+|400|MissingParameter|%s|The error message returned when a required parameter is not specified.|
+|403|Forbidden.NotSupportRAM|%s|The error message returned when RAM users are not allowed to perform this operation.|
+|403|Forbidden.SubUser|%s|The error message returned when RAM users are not allowed to perform this operation.|
+|400|InvalidParameter|%s|The error message returned when the parameter format is incorrect.|
+|400|InvalidInstanceId.MalFormed|%s|The error message returned when the instance ID format is incorrect.|
+|400|InvalidParams.StartTime|%s|The error message returned when the StartTime format is incorrect.|
+|400|InvalidParams.EndTime|%s|The error message returned when the EndTime format is incorrect.|
+|400|Abs.Abs.InvalidSpotInstanceUID|%s|The error message returned when the preemptible instance ID format is incorrect.|
+|400|InvalidParams.NetworkType|%s|The error message returned when the network type of the instance is incorrect.|
+|400|InvalidParams.IoOptimized|%s|The error message returned when the IoOptimized parameter of the instance is incorrect.|
+|400|InvalidParams.OSType|%s|The error message returned when the OSType parameter of the instance is incorrect.|
+|400|Abs.IoOptimized.ValueNotSupported|%s|The error message returned when the IoOptimized parameter of the instance is incorrect.|
+|400|InvalidParams.ZoneId|%s|The error message returned when the ZoneId parameter of the instance is incorrect.|
+|400|InvalidParams.RegionId|%s|The error message returned when the RegionId parameter of the instance is incorrect.|
+|400|InvalidParams.InstanceType|%s|The error message returned when the InstanceType parameter is incorrect.|
+|400|InvalidParams.PageSize|%s|The error message returned when the PageSize parameter of the instance is incorrect.|
+|400|InvalidParams.Offset|%s|The error message returned when the Offset parameter of the instance is incorrect.|
+|400|InvalidInstanceType.ValueNotSupported|%s|The error message returned when the InstanceType parameter is incorrect.|
 
-|Error code|Error message|HTTP status code|Note|
-|:---------|:------------|:---------------|:---|
-|InvalidParams.EndTime|The format of the specified parameter EndTime is invalid.|400|The format of `EndTime` must abide by ISO8601.|
-|InvalidParams.InstanceType| The specified parameter InstanceType is required.|400|You must specify the value of the parameter `InstanceType`.|
-|InvalidParams.IoOptimized|The value of specified parameter IoOptimized is invalid.|400| The value of `IoOptimized` is invalid.|
-|InvalidParams.NetworkType| The value of specified parameter NetworkType is invalid.|400|The value of `NetworkType` is invalid.|
-|InvalidParams.RegionId|The specified parameter RegionId is required.|400|You must specify the value of the parameter `RegionId`.|
-|InvalidParams.StartTime|The format of the specified parameter startup is invalid.|400|The format of `StartTime` must abide by ISO8601.|
-|InvalidParams.ZoneId|The specified parameter ZoneId is required.|400|You must specify the value of the parameter `ZoneId`.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

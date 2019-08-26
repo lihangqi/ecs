@@ -1,6 +1,6 @@
 # DescribeUserdata {#DescribeUserdata .reference}
 
-Query the  [user-defined data](../../../../intl.en-US/User Guide/Instances/User-defined data and metadata/User data.md#) of an ECS instance.
+Describes the  [user data](../../../../intl.en-US/User Guide/Instances/User-defined data and metadata/User data.md#) of an ECS instance.
 
 ## Description {#section_jwv_kws_xdb .section}
 
@@ -61,9 +61,9 @@ https://ecs.example.com/?Action= DescribeUserdata
 ```
 {
     "RequestId": "473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
-    " UserData ": " userdata1"
-    " InstanceId ": " i-instance1"
-    " RegionId": "cn-shenzhen"
+    "UserData": "userdata1"
+    "InstanceId": "i-instance1"
+    "RegionId": "cn-shenzhen"
 }
 ```
 

@@ -1,0 +1,106 @@
+# VMware迁移至阿里云 {#concept_cjl_wzp_fgb .concept}
+
+您可以参考本文档中的步骤，将您的VMware虚拟机迁移至阿里云ECS实例。迁移完成后，阿里云端的目标实例不再需要VMware自带的服务工具VMtools。
+
+## VMWare Windows系统迁移至阿里云 {#section_fww_mhp_fgb .section}
+
+**准备工作**
+
+1.  创建快照以备份数据。
+2.  确保系统时间与所在地域的标准时间一致。
+3.  确保您的待迁移虚拟机能访问下列网址及端口。
+    1.  ECS：`https://ecs.aliyuncs.com:443`。
+
+        **说明：** 更多地域的ECS API接入地址，请参见[接入地址](../../../../../cn.zh-CN/API参考/HTTP调用方式/请求结构.md#section_mtp_xvb_wdb)。
+
+    2.  VPC：`https://vpc.aliyuncs.com:443`。
+    3.  STS：`https://sts.aliyuncs.com:443`。
+    4.  中转实例：端口8080和8703。
+
+        **说明：** 中转实例是迁云工具在其运行过程中自动创建的临时实例。迁云过程中出现网络连接问题时，您需要运行以下命令确认待迁移虚拟机可以访问中转实例的8080和8703端口。
+
+        ```
+        telnet xxx.xx.xxx.xx 8080  #xxx.xx.xxx.xx为中转实例公网IP地址。当使用VPC内网迁移时，xxx.xx.xxx.xx为中转实例私网IP地址。
+        telnet xxx.xx.xxx.xx 8703  #xxx.xx.xxx.xx为中转实例公网IP地址。当使用VPC内网迁移时，xxx.xx.xxx.xx为中转实例私网IP地址。
+        ```
+
+4.  检查并确保Windows系统VSS服务为启动状态 。
+5.  检查是否安装了qemu-agent工具。如果安装了此工具，您需要先卸载。卸载的具体步骤，请参见[迁云工具FAQ](cn.zh-CN/迁移服务/P2V 迁云工具/迁云工具FAQ.md#)。
+6.  检查授权应用。您的虚拟机迁移到阿里云后，系统底层硬件设备会发生变化，可能会导致一些跟硬件绑定的应用许可证（license）失效，您需要做好检查。
+7.  建议您先使用测试机，按照本文中介绍的迁云操作步骤进行测试演练。
+
+**操作步骤**
+
+1.  下载并安装迁云工具到待迁移的服务器。具体步骤请参见[下载并安装迁云工具](../../../../../cn.zh-CN/迁移服务/P2V 迁云工具/使用迁云工具迁移服务器至阿里云.md#section_twq_sxz_jfb)。
+2.  配置user\_config.json。
+
+    user\_config.json配置文件的主要配置项包括：
+
+    -   阿里云账号AccessKey信息
+    -   迁移目标区域、目标镜像名称
+    -   （可选）目标系统盘大小、目标数据盘配置
+    -   迁移源系统平台、架构
+    各配置项的详细配置方法，请参见[配置迁移源和迁移目标](../../../../../cn.zh-CN/迁移服务/P2V 迁云工具/使用迁云工具迁移服务器至阿里云.md#section_p5x_xzz_jfb)。
+
+3.  （可选）配置无需迁移的目录或文件。具体配置方法，请参见[（可选）排除不迁移的文件或目录](../../../../../cn.zh-CN/迁移服务/P2V 迁云工具/使用迁云工具迁移服务器至阿里云.md#section_tzq_sxz_jfb)。
+4.  运行迁云工具主程序。
+
+    以管理员身份运行go2aliyun\_client.exe或go2aliyun\_gui.exe。如果是GUI版本，则需要单击start按钮开始迁移。
+
+
+## VMWare Linux系统迁云前的准备工作 {#section_lld_spp_fgb .section}
+
+**准备工作**
+
+1.  创建快照以备份数据。
+2.  确保系统时间与所在地域的标准时间一致。
+3.  确保您的待迁移虚拟机能访问下列网址及端口。
+    1.  ECS：`https://ecs.aliyuncs.com:443`。
+
+        **说明：** 更多地域的ECS API接入地址，请参见[接入地址](../../../../../cn.zh-CN/API参考/HTTP调用方式/请求结构.md#section_mtp_xvb_wdb)。
+
+    2.  VPC：`https://vpc.aliyuncs.com:443`。
+    3.  STS：`https://sts.aliyuncs.com:443`。
+    4.  中转实例：端口8080和8703。
+
+        **说明：** 中转实例是迁云工具在其运行过程中自动创建的临时实例。迁云过程中出现网络连接问题时，您需要运行以下命令确认待迁移虚拟机可以访问中转实例的8080和8703端口。
+
+        ```
+        telnet xxx.xx.xxx.xx 8080  #xxx.xx.xxx.xx为中转实例公网IP地址。当使用VPC内网迁移时，xxx.xx.xxx.xx为中转实例私网IP地址。
+        telnet xxx.xx.xxx.xx 8703  #xxx.xx.xxx.xx为中转实例公网IP地址。当使用VPC内网迁移时，xxx.xx.xxx.xx为中转实例私网IP地址。
+        ```
+
+4.  下载并安装迁云工具。具体操作步骤，请参见[下载和安装迁云工具](../../../../../cn.zh-CN/迁移服务/P2V 迁云工具/使用迁云工具迁移服务器至阿里云.md#section_twq_sxz_jfb)。
+5.  进入迁移工具所在目录，运行 `./Check/client_check --check` 命令检查待迁移虚拟机是否满足迁移条件。如果所有的检测项都为 `OK`，您可以开始迁移。否则，您需要进行下列检查：
+    1.  检查SELinux。对于CentOS/Red Hat系列内核系统，一般需要检查SELinux服务是否禁用或关闭。如果没有关闭，您可以采用下列方法之一将其关闭。
+        1.  运行 `setenforce 0` 命令临时将其关闭。
+        2.  修改`/etc/selinux/config` 文件，配置 `SELINUX=disabled` 永久禁用SELinux；
+    2.  检查虚拟化驱动。具体请参见[安装virtio驱动](../../../../../cn.zh-CN/镜像/自定义镜像/导入镜像/安装virtio驱动.md#)。
+    3.  检查GRUB引导程序。部分低内核版本如CentOS 5/Red Hat 5、Debian 7需要将GRUB升级至1.99及以上版本。具体操作步骤，请参见[如何为 Linux 服务器安装 GRUB](https://help.aliyun.com/knowledge_detail/62807.html)。
+6.  检查授权应用。迁移到阿里云后，系统底层硬件设备会发生变化，可能会导致一些跟硬件绑定的应用许可证（license）失效，您需要做好检查。
+
+**操作步骤**
+
+1.  配置user\_config.json。
+
+    user\_config.json配置文件的主要配置项包括：
+
+    -   阿里云账号AccessKey信息
+    -   迁移目标区域、目标镜像名称
+    -   （可选）目标系统盘大小、目标数据盘配置
+    -   迁移源系统平台、架构
+    各配置项的详细配置方法，请参见[配置迁移源和迁移目标](../../../../../cn.zh-CN/迁移服务/P2V 迁云工具/使用迁云工具迁移服务器至阿里云.md#section_p5x_xzz_jfb)。
+
+2.  （可选）配置无需迁移的目录或文件。具体配置方法，请参见[（可选）排除不迁移的文件或目录](../../../../../cn.zh-CN/迁移服务/P2V 迁云工具/使用迁云工具迁移服务器至阿里云.md#section_tzq_sxz_jfb)。
+3.  使用root权限运行以下命令，为迁云工具主程序添加可执行权限并执行该程序。
+
+    ```
+    chmod +x go2aliyun_client
+    ./go2aliyun_client
+    ```
+
+4.  等待迁云工具运行完成。当运行迁云工具的界面上提示Go to Aliyun Finished!时，表示迁移完成。如下图所示。
+
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/65301/155142408338196_zh-CN.png)
+
+

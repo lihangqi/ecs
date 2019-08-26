@@ -1,24 +1,24 @@
 # Create a template {#concept_pzl_ww5_xdb .concept}
 
-You can create a template using the following methods:
+You can create a launch template using the following methods:
 
--   If you do not want to create instances at this time, you can still [Create a template in the ECS console](#console) create templates using the ECS console, and then create instances using your required template in one click when needed.
+-   [Create a launch template in the ECS console](#console) if you want to create launch templates first, and then create instances using a specific launch template in one click.
 
--   If you want to create an instance and save its configuration information, [Create a template on the ECS buy page](#commonbuy) go to the ECS buy page to create templates.
+-   [Create a launch template on the ECS buy page](#commonbuy) to create an instance and save its configuration information as a launch template.
 
 
 **Note:** 
 
--   In each region, one user account can only create a maximum of 30 launch templates.
--   All parameters are optional when you create a template using the ECS console.  However, if the template that you want to use to create an instance does not have all required parameters \(such as an image\), then you must specify the required parameters at instance creation.
--   A template cannot be modified once you have created it.
+-   Each account can create a maximum of 30 launch templates per region.
+-   All parameters are optional when you create a template using the ECS console. However, if the template that you want to use to create an instance does not have all required parameters \(such as an image\), then you must specify the required parameters at instance creation.
+-   A template cannot be modified after it is created.
 
 ## Create a template in the ECS console {#console .section}
 
-1.  Log on to the [ECS console](https://ecs.console.aliyun.com/?spm=a2c4g.11186623.2.9.FNEORG#/home).
-2.  In the left-side navigation pane, select **Launch Template**, and then click **Create Template**.
+1.  Log on to the [ECS console](https://partners-intl.console.aliyun.com/#/ecs).
+2.  In the left-side navigation pane, select **Launch Templates**, and then click **Create Template**.
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/13805/5347_en-US.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/13805/15429604265347_en-US.png)
 
 3.  Go to the Launch Template page and complete the basic configurations and advanced configurations.
 
@@ -26,17 +26,18 @@ You can create a template using the following methods:
 
 4.  On the Confirm Configuration page, enter a template name and description, and then click **Create Launch Template**.
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/13805/5348_en-US.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/13805/15429604265348_en-US.png)
 
-    **Note:** All parameters are optional when you create a template. On the Confirm Configuration page, we recommend that you configure the required parameters so that you can create instances in one click later. You can also leave the parameter settings unchanged.
+    **Note:** All parameters are optional when you create a template. However, on the Confirm Configuration page, we recommend that you configure the required parameters so that you can create instances in one click as needed.
 
-5.  In the Activated dialog box, click **View Template** to view the template you have created.
+
+Click **View Template** in the Activated dialog box to view the template you have created.
 
 ## Create a template on the ECS buy page {#commonbuy .section}
 
-1.  Go to the [ECS product details page](https://www.alibabacloud.com/product/ecs), and then click **Buy Now**.
-2.  On the ECS buy page, configure the parameters.
-3.  On the Preview page, click **Save as launch template**.
-4.  In the dialog box that appears, select **Create Template**, enter a template name and description, and then click **Save**.
-5.  In the Activated dialog box, click **View Template** to view the template you have created.
+1.  Go to the ECS product details page, and then click **Buy Now**.
+2.  Configure the required parameters, and then click **Save as launch template**..
+3.  In the dialog box that appears, select **Create Template**, enter a template name and description, and then click **Save**.
+
+Click **View Template** in the Activated dialog box to view the template you have created.
 

@@ -1,59 +1,53 @@
 # Export custom images {#concept_wfq_vdt_xdb .concept}
 
-You can export custom images to a local device for test purposes or to offline private stack. This topic describes the limits of the image export function, and provides instructions on how to export images in the ECS console.
+You can export custom images for on-premises testing or for Apsara stack environments.
 
 **Note:** 
 
-Note that exported images are stored in your OSS bucket, which must be in the same region as the custom images. You are biiled for the data used of for OSS storage and downloading.
+-   The time it takes to export an image depends on the size of the image file and the number of export tasks in the queue.
+-   Exported images are stored in your [OSS](../../../../../reseller.en-US/Product Introduction/What is OSS?.md#) bucket. This means you are billed for the OSS storage and download traffic. For more information, see OSS [billing items](../../../../../reseller.en-US/Pricing/Billing items.md#).
 
-## Limits {#section_mcn_12t_xdb .section}
+## Limitations {#section_mcn_12t_xdb .section}
 
-Currently, the image export function has the following constraints and restrictions:
+Currently, the image export function has the following limitations:
 
--   The image export function is usable before it is [whitelisted](https://workorder-intl.console.aliyun.com/#/ticket/createIndex).
--   You cannot export the custom images that are created by a system disk snapshot from the marketplace.
--   You can export the custom images that contain four snapshots of data disks at most, and for a single data disk, the maximum volume must be less than 500 GB.
--   The default format of exported image files is RAW.
-
-## Precautions {#section_nkx_d2t_xdb .section}
-
--   When you export images that contain data disk snapshot, the snapshot and image files are shown in your OSS bucket.
-    -   A snapshot of the system disk has a system in the file name.
-    -   A snapshot of the data disk has data in the file name. The data disk snapshot will have the identity corresponding to the data disk, which is the mount point of the data disk, such as xvdb or xvdc.
--   When using exported images [EN-US\_TP\_9626.md\#](intl.en-US/User Guide/Instances/Create an instance/Create an instance of the same configuration.md#), you need to confirm that the file device recorded in /etc/fstab records corresponds to the exported data disk snapshot information.
+-   You cannot export custom images that are created by a system disk snapshot from the [Alibaba Cloud Marketplace](reseller.en-US/User Guide/Images/Marketplace images.md#).
+-   You can export the custom images that contain four snapshots of data disks at most, and for a single data disk, the maximum volume must be no greater than 500 GiB.
+-   When using exported custom images to [create an instance by using the wizard](reseller.en-US/User Guide/Instances/Create an instance/Create an instance of the same configuration.md#), you must confirm that the file device recorded in /etc/fstab corresponds to the exported data disk snapshot information.
 
 ## Prerequisites {#section_b41_g2t_xdb .section}
 
-Before exporting a custom mirror, you need to do the following:
+Before exporting a custom image, you must:
 
--   [Open a ticket](https://workorder-intl.console.aliyun.com/#/ticket/createIndex) to activate the image export feature. Describe the use cases of the exported images in the ticket.
--   Activate OSS and make sure that the region where your custom images are located has an available OSS bucket.  See [Create a bucket](../../intl.en-US/Quick Start/Create a bucket.md#).  to create an OSS bucket.
+-   Open a ticket to activate the image export feature, and describe the use cases of the exported images in the ticket.
+-   Activate OSS and make sure that the region where your custom images are located has an available OSS bucket. For more information, see [create a bucket](../../../../../reseller.en-US/Quick Start/Create a bucket.md#).
 
 ## Procedure {#section_wwm_h2t_xdb .section}
 
-1.  Log on to the [ECS console](https://ecs.console.aliyun.com/#/home).
-2.  Select a region.
-3.  \(Optional\) Authorize the ECS service to access your OSS bucket:
-    1.  Choose  **Snapshots & Images** \> **Images**in the left-side navigation pane.
-    2.  Find the custom image you want to export. In the **Action** column,  click **Export** Image.
-    3.  In the Export Image  dialog box, click **Confirm Address** in Step 3 of the prompt message.
-    4.  In the Cloud Resource Access Authorization window, click **Confirm Authorization Policy**. Return to the ECS console homepage.
-4.  In the left-side navigation pane, choose **Snapshot & Images** \> **Images**.
-5.  Find the custom image you want to export, In the **Action**  column, click **Export Image**.
+To export a custom image in the ECS console, follow these steps:
+
+1.  Log on to the [ECS console](https://partners-intl.console.aliyun.com/#/ecs).
+2.  In the left-side navigation pane, choose **Snapshot & Images** \> **Images**.
+3.  Select the target region.
+4.  Find the custom image you want to export and then, in the **Actions** column, click **Export Image**.
+    1.  In the Export Image dialog box, click **Conform Address**.
+    2.  In the Cloud Resource Access Authorization window, click **Confirm Authorization Policy** to allow ECS to access your OSS resources.
+5.  Return to the ECS console homepage. In the **Actions** column of the Images page, click **Export Image** again.
 6.  In the Export Image dialog box:
     -   Select the OSS bucket in the specified region.
-    -   Set the prefix of the object name of the exported image. For example, if you set Demo as the prefix, then the exported image file displayed in the OSS bucket is named  Demo-\[automatically generated file name\].
-7.  Click **OK** to export the image.
+    -   Set the prefix of the object name of the exported image. For example, if you set Demo as the prefix, then the exported image file displayed in the OSS bucket is named Demo-\[automatically generated file name\].
+7.  Click **OK**.
+8.  \(Optional\) Cancel the image export task. Before the task is completed, you can go to the [**Tasks**](https://partners-intl.console.aliyun.com/#/ecs/task/region/cn-qingdao) management page in the ECS console, find the relevant task in the specified region and cancel the task.
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9712/4655_en-US.png)
+You can also use the ECS APIs [ExportImage](../../../../../reseller.en-US/API Reference/Images/ExportImage.md#) and [CancelTask](../../../../../reseller.en-US/API Reference/Others/CancelTask.md#) to perform the preceding operations.
 
+## Next steps {#section_qlv_v2t_xdb .section}
 
-The duration of exporting depends on the size of the image file and the number of other export tasks in the queue. Be patient. You can go to the [**Manage Tasks**](https://ecs.console.aliyun.com/#/task/region/cn-qingdao) page in the ECS console to query the task progress based on the task ID.  When  the **Task Status** is Task **Completed**, the image is successfully exported.
+When an exported custom image contains a data disk snapshot, multiple files appear in your OSS. The file name with `system` indicates a system disk shapshot and the file name with `data` indicates a data disk snapshot. A data disk snapshot has an identifier corresponding to the data disk, which is the mount point of the data disk, such as xvdb or xvdc.
 
-To cancel the export task, go to the [**Manage Tasks**](https://ecs.console.aliyun.com/#/task/region/cn-qingdao) page and find the task.
+1.  Log on to the [OSS console](https://partners-intl.console.aliyun.com/#/oss) to query the export result.
+2.  After the custom image is exported successful, [download the object](../../../../../reseller.en-US/Console User Guide/Manage objects/Download an object.md#) and then download the custom image file.
 
-## Next step {#section_qlv_v2t_xdb .section}
+    **Note:** The format of the image file is RAW by default. However, the .tar.gz format is also available during the gated launch period, and the file is in the .raw format after you unzip the .tar.gz file. If you are using Mac OS X operating system, the agent gnu-tar is recommended to unzip the file.
 
--   To query the export result, log on to the [OSS console](https://oss.console.aliyun.com/index#/).
--   To download the exported image file, log on to the OSS console [Get object URL](../../intl.en-US/Console User Guide/Manage objects/Get object URL.md#) and Get object URL.
 

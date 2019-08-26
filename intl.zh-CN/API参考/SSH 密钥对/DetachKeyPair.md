@@ -1,67 +1,139 @@
-# DetachKeyPair {#DetachKeyPair .reference}
+# DetachKeyPair {#doc_api_999668 .reference}
 
 为一台或者多台 Linux 实例解绑 SSH 密钥对。
 
-## 描述 {#section_a1k_4qn_ydb .section}
+## 描述 {#description .section}
 
 使用该接口时，请注意：
 
--   解绑 SSH 密钥对后，您需要重启实例（[RebootInstance](intl.zh-CN/API参考/实例/RebootInstance.md#)）使更改生效。
-
+-   解绑 SSH 密钥对后，您需要重启实例（[RebootInstance](~~25502~~)）使更改生效。
 -   解绑 SSH 密钥对后，实例默认使用用户名和密码的验证方式。
 
+## 调试 {#apiExplorer .section}
 
-## 请求参数 {#RequestParameter .section}
+前往【[API Explorer](https://api.aliyun.com/#product=Ecs&api=DetachKeyPair)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
 
-|名称|类型|是否必需|描述|
-|:-|:-|:---|:-|
-|Action|String|是|系统规定参数。取值：DetachKeyPair|
-|RegionId|String|是|SSH 密钥对所在的地域 ID。您可以调用 [DescribeRegions](intl.zh-CN/API参考/地域/DescribeRegions.md#) 查看最新的阿里云地域列表。|
-|KeyPairName|String|是|SSH 密钥对名称。|
-|InstanceIds|String|否|解绑 SSH 密钥对的实例 ID。取值可以由多台实例 ID 组成一个 JSON 数组，格式为 \["i-xxxxxxxxx", "i-yyyyyyyyy", … "i-zzzzzzzzz"\]，最多支持 50 个 ID，ID 之间用半角逗号（,）隔开。|
+## 请求参数 {#parameters .section}
 
-## 返回参数 {#section_f54_lk5_xdb .section}
+|名称|类型|是否必选|示例值|描述|
+|--|--|----|---|--|
+|InstanceIds|String|是|\["i-xxxxxxxxx", "i-yyyyyyyyy", … "i-zzzzzzzzz"\]|解绑 SSH 密钥对的实例 ID。取值可以由多台实例 ID 组成一个 JSON 数组，最多支持 50 个 ID，ID 之间用半角逗号（,）隔开。
 
-全是公共返回参数。参阅 [公共参数](intl.zh-CN/API参考/调用方式/公共参数.md#)。
+ |
+|KeyPairName|String|是|FinanceJoshuaV26|SSH 密钥对名称。
 
-## 示例 { .section}
+ |
+|RegionId|String|是|cn-hangzhou|SSH 密钥对所在的地域 ID。您可以调用 [DescribeRegions](~~25609~~) 查看最新的阿里云地域列表。
 
-**请求示例** 
+ |
+|Action|String|否|DetachKeyPair|系统规定参数。取值：DetachKeyPair
 
-```
+ |
+
+## 返回参数 {#resultMapping .section}
+
+|名称|类型|示例值|描述|
+|--|--|---|--|
+|FailCount|String|0|解绑密钥对失败的实例数量。
+
+ |
+|KeyPairName|String|FinanceJoshuaV26|密钥对的名称。
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID。无论调用接口成功与否，我们都会返回请求 ID。
+
+ |
+|Results| | |解绑密钥对是否成功或失败的结果集合。
+
+ |
+|└Code|String|200|传递的操作状态码，其中200表示操作成功。
+
+ |
+|└InstanceId|String|i-instanceid1|实例ID。
+
+ |
+|└Message|String|successful|传递的操作信息，当code=200时，message为successful。
+
+ |
+|└Success|String|true|此次操作是否成功。
+
+ |
+|TotalCount|String|2|解绑密钥对的实例总数量
+
+ |
+
+## 示例 {#demo .section}
+
+请求示例
+
+``` {#request_demo}
+
 https://ecs.aliyuncs.com/?Action=DetachKeyPair
 &RegionId=cn-qingdao
 &InstanceIds=["i-xxxxxxx", "i-yyyyyyy"]
 &KeyPairName=test
 &<公共请求参数>
-```
-
-**返回示例** 
-
-**XML 格式**
 
 ```
+
+正常返回示例
+
+`XML` 格式
+
+``` {#xml_return_success_demo}
 <DetachKeyPairResponse>
-    <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
+  <TotalCount>2</TotalCount>
+  <RequestId>834B3E6B-2D1D-482F-81A4-810C327D4735</RequestId>
+  <Results>
+    <Result>
+      <Message>successful</Message>
+      <InstanceId>i-m5eg7be9ndloji64jknv</InstanceId>
+      <Success>true</Success>
+      <Code>200</Code>
+    </Result>
+    <Result>
+      <Message>successful</Message>
+      <InstanceId>i-m5e25x2mwr0hk33dwv0h</InstanceId>
+      <Success>true</Success>
+      <Code>200</Code>
+    </Result>
+  </Results>
+  <FailCount>0</FailCount>
 </DetachKeyPairResponse>
-```
-
- **JSON 格式** 
 
 ```
+
+`JSON` 格式
+
+``` {#json_return_success_demo}
 {
-    "RequestId": "473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
+	"TotalCount":2,
+	"RequestId":"834B3E6B-2D1D-482F-81A4-810C327D4735",
+	"Results":{
+		"Result":[
+			{
+				"Message":"successful",
+				"InstanceId":"i-m5eg7be9ndloji64jknv",
+				"Success":true,
+				"Code":"200"
+			},
+			{
+				"Message":"successful",
+				"InstanceId":"i-m5e25x2mwr0hk33dwv0h",
+				"Success":true,
+				"Code":"200"
+			}
+		]
+	},
+	"FailCount":0
 }
 ```
 
-## 错误码 {#ErrorCode .section}
+## 错误码 { .section}
 
-以下为本接口特有的错误码。更多错误码，请访问 [API 错误中心](https://error-center.alibabacloud.com/status/product/Ecs)。
+|HttpCode|错误码|错误信息|描述|
+|--------|---|----|--|
+|403|DependencyViolation.WindowsInstance|The instance creating is windows, cannot use ssh key pair to login|指定的windows实例不支持解绑keypair。|
 
-|错误代码|错误信息|HTTP 状态码|说明|
-|:---|:---|:-------|:-|
-|MissingParameter|The input parameter “RegionId” that is mandatory for processing this request is not supplied.|400|您需要指定参数 `RegionId`。或者您暂时无法使用该地域的资源。|
-|DependencyViolation.WindowsInstance|The instance creating is windows, cannot use ssh key pair to login|403|Windows 实例不支持 SSH 密钥对。|
-|InvalidKeyPairName.NotFound|The specified KeyPairName does not exist.|404|指定的 `KeyPairName` 不存在。|
-|InvalidRegionId.NotFound|The specified RegionId does not exist.|404|指定的 `RegionId` 不存在。|
+[查看本产品错误码](https://error-center.aliyun.com/status/product/Ecs)
 

@@ -18,9 +18,9 @@
 |名称|类型|是否必需|描述|
 |:-|:-|:---|:-|
 |Action|String|是|系统规定参数。取值：DescribeClassicLinkInstances|
-|RegionId|String|是|实例所属的地域 ID。您可以调用 [DescribeRegions](intl.zh-CN/API参考/地域/DescribeRegions.md#) 查看最新的阿里云地域列表。|
+|RegionId|String|是|实例所属的地域 ID。您可以调用 [DescribeRegions](cn.zh-CN/API参考/地域/DescribeRegions.md#) 查看最新的阿里云地域列表。|
 |InstanceId|String|否|实例 ID。最多指定 100 台实例 ID，并使用半角逗号（`,`）隔开。示例格式为 `InstanceId=i-XXX, i-XXX, i-XXX, i-XXX, ...`。|
-|VpcId|String|否|VPC ID。目标 VPC 必须已 [开启 ClassicLink 功能](../../intl.zh-CN/用户指南/ClassicLink/建立ClassicLink连接.md#) 功能。|
+|VpcId|String|否|VPC ID。目标 VPC 必须已 [开启 ClassicLink 功能](../../../../../cn.zh-CN/用户指南/ClassicLink/建立ClassicLink连接.md#) 功能。|
 |PageNumber|Integer|否|当前页码。起始值：1默认值：1
 
 |
@@ -35,7 +35,7 @@
 |TotalCount|Integer|连接总数|
 |PageNumber|Integer|连接列表的页码|
 |PageSize|Integer|输入时设置的每页行数|
-|Links|[Link](intl.zh-CN/API参考/数据类型/Link.md#)|返回经典网络类型实例和 VPC 连接信息|
+|Links|[Link](cn.zh-CN/API参考/数据类型/Link.md#)|返回经典网络类型实例和 VPC 连接信息|
 
 ## 示例 { .section}
 
@@ -95,7 +95,7 @@ https://ecs.aliyuncs.com/?Action=DescribeClassicLinkInstances
 
 ## 错误码 {#ErrorCode .section}
 
-以下为本接口特有的错误码。更多错误码，请访问 [API 错误中心](https://error-center.alibabacloud.com/status/product/Ecs)。
+以下为本接口特有的错误码。更多错误码，请访问 [API 错误中心](https://error-center.aliyun.com/status/product/Ecs)。
 
 |错误代码|错误信息|HTTP 状态码|说明|
 |:---|:---|:-------|:-|

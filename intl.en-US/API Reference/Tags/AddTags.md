@@ -1,83 +1,108 @@
-# AddTags {#AddTags .reference}
+# AddTags {#doc_api_1023339 .reference}
 
-Adds or overwrites one or more tags to your ECS resource. You can add tags to ECS resources such as instances, disks, snapshots, images, and security groups for easier and customizable operation and management.
+Adds or overwrites one or more tags on your ECS resource. You can add tags to ECS resources such as instances, disks, snapshots, images, and security groups to manage resources easier.
 
-## Description {#section_av1_byg_ydb .section}
+## Description {#description .section}
 
-When you call this interface, consider the following:
+When you call this operation, note that:
 
--   Up to 10 tags can be added to each ECS resource.
--   The key \(`Tag.n.Key`\) and value \(`Tag.n.Value`\) of the tag must be key-value matched.
+-   Up to 20 tags can be added to each ECS resource.
+-   The tag key \(`Tag.n.Key`\) must match the tag value \(`Tag.n.Value`\).
+-   If the tag key \(`Tag.n.Key`\) already exists on the specified resource, the new tag value \(`Tag.n.Value`\) automatically overwrites the old one.
 
--   If the key \(`Tag.n.Key`\) is already added for the specified resource, the former value \(`Tag.n.Value`\) is overwritten with the new one.
+## Debugging {#apiExplorer .section}
 
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=AddTags) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Request parameters {#section_mzx_3yg_ydb .section}
+## Request parameters {#parameters .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: AddTags|
-|RegionId|String|Yes|The ID of the region to which the ECS resource belongs. For more information, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|ResourceType|String|Yes| The type of the ECS resource. Value range:-   disk
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-hangzhou| The ID of the region to which the ECS resource belongs. You can call [DescribeRegions](~~25609~~) to view the latest regions of Alibaba Cloud.
+
+ |
+|ResourceId|String|Yes|i-instanceid1| The ID of the resource to which you want to bind the tags. When the resources are instances, this parameter can be interpreted as InstanceId.
+
+ |
+|ResourceType|String|Yes|instance| The type of the resource. Valid values:
+
+ -   disk
 -   instance
 -   image
 -   securitygroup
 -   snapshot
 
-All values must be lowercase.|
-|ResourceId|String|Yes|The resource ID.  For example, if you set the `ResourceType` to `instance`, the ResourceId can be interpreted as InstanceId.|
-|Tag.n.Key|String|Yes|The tag key where `n` ranges from 1 to 5. Tag names can be up to 64 characters in length. Cannot begin with aliyun, acs, http:// or https://. Cannot be a null string.|
-|Tag.n.Value|String|Yes|The tag value where `n` ranges from 1 to 5. Tag names can be up to 128 characters in length. Cannot begin with aliyun, acs, http:// or https://. Can be a null string.|
+ All values must be lowercase.
 
-## Response parameters {#section_f54_lk5_xdb .section}
+ |
+|Action|String|No|AddTags| The operation that you want to perform. Set the value to AddTags.
 
-All are common parameters. See [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#commonResponseParameters).
+ |
+|Tag.N.Key|String|No|Finance| The tag key of the resource. Valid values of N: 1 to 20. It cannot be a null string. It can be a maximum of 64 characters in length. It cannot start with aliyun, acs:, http://, or https://.
 
-## Example { .section}
+ |
+|Tag.N.Value|String|No|FinanceJoshua| The tag value of the resource. Valid values of N: 1 to 20. It can be a null string. It can be a maximum of 128 characters in length. It cannot start with aliyun or acs:. It cannot contain http:// or https://.
 
-**Request example** 
+ |
+|Tag.N.key|String|No|Finance| The tag key of the resource.
 
-```
+ **Note:** This parameter will be removed in the future. We recommend that you use the Tag.N.Key parameter to ensure compatibility.
+
+ |
+|Tag.N.value|String|No|FinanceJoshua| The tag value of the resource.
+
+ **Note:** This parameter will be removed in the future. We recommend that you use the Tag.N.Value parameter to ensure compatibility.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=AddTags
-&ResourceId=s-946ntx4wr
-&ResourceType=snapshot
-&RegionId=cn-shenzhen
-&Tag. 1. Key=test
-&Tag. 1. Value=api
-&<Common Request Parameters>
+&RegionId=cn-hangzhou 
+&ResourceId=i-instanceid1
+&ResourceType=instance
+&Tag.1.Key=Finance
+&Tag.1.Value=FinanceJoshua
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
-<AddTagsResponse>
-    <RequestId>C46FF5A8-C5F0-4024-8262-B16B639225A0</RequestId>
+``` {#xml_return_success_demo}
+<AddTagsResponse> 
+  <RequestId>C46FF5A8-C5F0-4024-8262-B16B639225A0</RequestId>
 </AddTagsResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-  "RequestId": "C46FF5A8-C5F0-4024-8262-B16B639225A0"
+	"RequestId":"C46FF5A8-C5F0-4024-8262-B16B639225A0"
 }
 ```
 
-## Error codes {#ErrorCode .section}
+## Error codes {#section_her_l8w_rdi .section}
 
-Error codes specific to this interface are as follows. For more error codes, visit the [API error center](https://error-center.alibabacloud.com/status/product/Ecs).
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|404|InvalidRegionId.NotFound|The specified RegionId does not exist.|The error message returned when the specified Region ID does not exist. Check whether the service is available in this region.|
+|404|InvalidResourceType.NotFound|The ResourceType provided does not exist in our records.|The error message returned when the specified resource type does not exist.|
+|400|InvalidTag.Mismatch|The specified Tag.n.Key and Tag.n.Value are not match.|The error message returned when the specified tag key does not match the tag value.|
+|400|InvalidTagCount|The specified tags are beyond the permitted range.|The error message returned when the specified tags are outside of the valid range.|
 
-|Error codes|Error message|HTTP status code|Description|
-|:----------|:------------|:---------------|:----------|
-|InvalidTag.Mismatch|The specified Tag.n.Key and Tag.n.Value are not match.|400|The key \(`Tag.n.Key`\) and value \(`Tag.n.Value`\) of the tag must match key values.|
-|InvalidTagCount|The specified tags are beyond the permitted range.|400|You can specify a maximum of five tags.|
-|InvalidTagKey.Malformed|The specified Tag.n.Key is not valid.|400|The specified `Tag.n.Key` is invalid.|
-|InvalidTagValue.Malformed|The specified Tag.n.Value is not valid.|400|The specified `Tag.n.Value` is invalid.|
-|OperationDenied.QuotaExceed|The quota of tags on resource is beyond permitted range.|400|Up to 10 tags can be added to each ECS resource.|
-|InvalidResourceId.NotSupported|The specified ResourceId does not support tagging.|403|You cannot add tags to the specified ECS resource.|
-|InvalidRegionId.NotFound|The RegionId provided does not exist in our records.|404|The specified `RegionId` does not exist.|
-|InvalidResourceId.NotFound|The specified ResourceId is not found in our records.|404|The specified `ResourceId` does not exist.|
-|InvalidResourceType.NotFound|The ResourceType provided does not exist in our records.|404|The specified `ResourceType` does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

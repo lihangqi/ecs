@@ -1,94 +1,143 @@
-# DescribeKeyPairs {#DescribeKeyPairs .reference}
+# DescribeKeyPairs {#doc_api_1006038 .reference}
 
-Describes one or more of your SSH key pairs.
+Queries one or more key pairs.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DescribeKeyPairs.|
-|RegionId|String|Yes| The ID of the region to which your SSH key pairs belong. For more information, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|KeyPairFingerPrint|String|No|The fingerprint of the key pair. The public key fingerprint format is defined in RFC4716 and uses the MD5 message digest algorithm. For more information, see [RFC4716](http://tools.ietf.org/html/rfc4716).|
-|KeyPairName|String|No|The key pair name. You can use the regular expression and the symbol `*` for fuzzy string search of a key pair name. Sample patterns:-    `*SshKey`: Matches the string set ending with *SshKey*, including *SshKey*.
--    `SshKey*`: Matches the string set beginning with *SshKey*, including *SshKey*.
--    `*SshKey*`: Matches the string set with *SshKey* within, including *SshKey*.
--    `SshKey`: Matches the string set *SshKey*.
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DescribeKeyPairs) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-|
-|PageNumber|Integer|No|Displays the SSH key pairs on several pages.  Start value: 1. Default value: 1.
+## Request parameters {#parameters .section}
 
-|
-|PageSize|Integer|No|The maximum entries on a page. Maximum value: 50.Default value: 10.
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-hangzhou| The ID of the region where a key pair resides. You can call [DescribeRegions](~~25609~~) to view the latest list of Alibaba Cloud regions.
 
-|
+ |
+|Action|String|No|DescribeKeyPairs| The operation that you want to perform. Set the value to DescribeKeyPairs.
 
-## Response parameters {#ResponseParameter .section}
+ |
+|KeyPairFingerPrint|String|No|XXXXXXXXXX| The fingerprint of the key pair. The message-digest algorithm 5 \(MD5\) is used based on the public key fingerprint format defined in RFC 4716. For more information, see [RFC 4716](https://tools.ietf.org/html/rfc4716).
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|TotalCount|Integer|The total number of key pairs.|
-|PageNumber|Integer| The current page.|
-|PageSize|Integer|The maximum entries on a page.|
-|RegionId|String|The region of the key pair.|
-|KeyPairs|[KeyPairItemType](intl.en-US/API Reference/Data type/KeyPairItemType.md#)|Information about key pairs, a set composed by KeyPairItemType.|
+ |
+|KeyPairName|String|No|\*Finance\*| The name of the key pair. The asterisk \(\*\) symbol can be used as a wild card in regular expressions to query key pairs by fuzzy match. Sample patterns:
 
-## Example { .section}
+ -   `` \*SshKey: queries key pair names ending with SshKey, including SshKey.
+-   ``SshKey \*: queries key pair names starting with SshKey, including SshKey.
+-   ``\* SshKey \*: queries key pair names that contain SshKey.
+-   ``SshKey: queries SshKey by exact match.
 
-**Request example** 
+ |
+|PageNumber|Integer|No|1| The page number to be queried in the SSH key pair list. Starting value: 1.
 
-```
+ Default value: 1.
+
+ |
+|PageSize|Integer|No|10| The number of entries per page. Maximum Value: 50
+
+ Default value: 10
+
+ |
+|ResourceGroupId|String|No|rg-resourcegroupid1| The ID of the resource group that hosts the key pair.
+
+ |
+|Tag.N.Key|String|No|FinanceDept| The tag key of the key pair. Valid values of N: 1 to 20. It cannot be an empty string. It must be no more than 64 characters in length. It cannot start with aliyun or acs:. It cannot contain http:// or https://.
+
+ |
+|Tag.N.Value|String|No|FinanceDept.Joshua| The tag value of the key pair. Valid values of N: 1 to 20. It can be an empty string. It can be a maximum of 64 characters in length. It cannot start with aliyun or acs:. It cannot contain http:// or https://.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|KeyPairs| | | A set of key pairs.
+
+ |
+|└KeyPairFingerPrint|String|xxxxxxxxxx| The fingerprint of the key pair.
+
+ |
+|└KeyPairName|String|FinanceJoshuaV27| The name of the key pair.
+
+ |
+|└ResourceGroupId|String|rg-resourcegroupid1| The ID of the resource group.
+
+ |
+|└Tags| | | The tags of the key pair.
+
+ |
+|└TagKey|String|FinanceDept| The tag key of the key pair.
+
+ |
+|└TagValue|String|FinanceDept.Joshua| The tag value of the key pair.
+
+ |
+|PageNumber|Integer|1| The current page number.
+
+ |
+|PageSize|Integer|10| The number of entries per page.
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request. This parameter is returned regardless of whether the operation is successful.
+
+ |
+|TotalCount|Integer|1| The total number of key pairs.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DescribeKeyPairs
 &RegionId=cn-qingdao
 &KeyPairFingerPrint=xxxxxxxxxx
 &KeyPairName=test
 &PageNumber=1
 &PageSize=20
-&<Common Request Parameters>
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DescribeKeyPairsResponse>
-    <PageNumber>1</PageNumber>
-    <PageSize>2</PageSize>
-    <TotalCount>1</TotalCount>
-    <KeyPairs>
-        <KeyPair>
-            <KeyPairName>test</KeyPairName >
-            <KeyPairFingerPrint>xxxxxxxxxx</KeyPairFingerPrint>
-        </KeyPair>
-    </KeyPairs>
-    <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
+  <PageNumber>1</PageNumber>
+  <PageSize>2</PageSize>
+  <TotalCount>1</TotalCount>
+  <KeyPairs>
+    <KeyPair>
+      <KeyPairName>test</KeyPairName>
+      <KeyPairFingerPrint>xxxxxxxxxx</KeyPairFingerPrint>
+    </KeyPair>
+  </KeyPairs>
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
 </DescribeKeyPairsResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"PageNumber":1,
+	"TotalCount":1,
+	"KeyPairs": {
+		"KeyPair":{
+			{
+				"KeyPairFingerPrint": "xxxxxxxxxx",
+				"KeyPairName": "test"
+			}
+		]
+	},
+	"PageSize":2,
+	"RequestId": "473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
+}
 ```
 
-    "PageNumber": 1,
-    "PageSize": 2,
-    "TotalCount": 1,
-    "KeyPairs": {
-        "KeyPair":[{
-            "KeyPairName": "test",
-            "KeyPairFingerPrint": "xxxxxxxxxx"
-        
-    
-    "RequestId": "473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
+## Error codes {#section_4wu_aa8_gxi .section}
 
-```
-
-## Error codes {#ErrorCode .section}
-
-Error codes specific to this interface are as follows. For more information, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message|HTTP status code|Meaning|
-|:---------|:------------|:---------------|:------|
-|MissingParameter|The input parameter “RegionId” that is mandatory for processing this request is not supplied.|400| The `RegionId` parameter must be specified.|
-|InvalidParameter|The specified parameter “PageNumber” is not valid.|400|The specified `PageNumber` parameter is invalid.|
-|InvalidParameter|The specified parameter “PageSize” is not valid.|400| The specified `PageSize` parameter is invalid.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

@@ -1,67 +1,97 @@
-# DeleteNetworkInterface {#DeleteNetworkInterface .reference}
+# DeleteNetworkInterface {#doc_api_1000116 .reference}
 
-Remove the elastic network card \(ENI \).
+Deletes an Elastic Network Interface \(ENI\).
 
-## Description {#section_tyd_kj4_ydb .section}
+## Description {#description .section}
 
--   The ENI must be in the `Available` status.
--   If the ENI has been attached to an ECS instance, you must first detach it from the ECS instance \([DetachNetworkInterface](intl.en-US/API Reference/Elastic network interfaces/DetachNetworkInterface.md#)\) and then delete it.
--   After the ENI is removed:
-    -   The primary private IP address of the ENI \(`PrimaryIpAddress`\) is automatically released.
-    -   The deleted ENI automatically exits from its security group.
+-   The ENI must be in the Available state.
+-   If the ENI is already attached to an ECS instance, you can delete the ENI only after it is detached from the ECS instance \([DetachNetworkInterface](~~58514~~)\).
+-   After the ENI is removed,
+    -   the primary private IP address of the ENI is automatically released.
+    -   The deleted ENI is automatically removed from all security groups it was added to.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DeleteNetworkInterface|
-|RegionId|String|Yes|Region ID. For more information of the region ID list, view the region list by calling the [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#).|
-|NetworkInterfaceId|String|Yes|ENI ID.|
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DeleteNetworkInterface) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can call APIs, dynamically generate SDK example code, and quickly retrieve APIs.
 
-## Response parameters {#section_f54_lk5_xdb .section}
+## Request parameters {#parameters .section}
 
-All are common response parameters. For more information, see [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#commonResponseParameters).
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|NetworkInterfaceId|String|Yes|eni-myeni| The ID of an ENI.
 
-## Examples { .section}
+ |
+|RegionId|String|Yes|cn-hangzhou| The ID of the region that hosts the ENI. You can call [DescribeRegions](~~25609~~) to view the latest regions of Alibaba Cloud.
 
-**Request example** 
+ |
+|Action|String|No|DeleteNetworkInterface| The operation that you want to perform. Set the value to DeleteNetworkInterface.
 
-```
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DeleteNetworkInterface
-&RegionId=cn-hangzhou
-&NetworkInterfaceId=[networkInterfaceId]
-&<Common Request Parameters>
+&NetworkInterfaceId=eni-myeni
+&RegionId=cn-hangzhou 
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DetachNetworkInterface>
-    <RequestId>04F0F334-1335-436C-A1D7-6C044FExxxxx</RequestId>
+  <RequestId>04F0F334-1335-436C-A1D7-6C044FExxxxx</RequestId>
 </DetachNetworkInterface>
 ```
 
- **JSON format** 
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "RequestId": "04F0F334-1335-436C-A1D7-6C044FExxxxx",
+	"RequestId":"04F0F334-1335-436C-A1D7-6C044FExxxxx"
 }
 ```
 
-## Error codes {#ErrorCode .section}
+## Error codes {#section_ogw_a8n_8yt .section}
 
-Error codes specific to this interface are as follows. For more error codes, visit the [API error center](https://error-center.alibabacloud.com/status/product/Ecs).
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|403|InvalidUserType.NotSupported|%s|The error message returned when your account type is not supported.|
+|403|Abs.InvalidAccount.NotFound|%s|The error message returned when the specified Alibaba Cloud account does not exist or your AccessKey has expired.|
+|400|MissingParameter|%s|The error message returned when a required parameter is not specified.|
+|403|Forbidden.NotSupportRAM|%s|The error message returned when RAM users are not allowed to perform this operation.|
+|400|UnsupportedParameter|%s|The error message returned when a parameter is not supported.|
+|403|Forbidden.SubUser|%s|The error message returned when a RAM user is not authorized to perform operations on this resource.|
+|400|InvalidParameter|%s|The error message returned when the parameter format is invalid.|
+|400|InvalidInstanceId.MalFormed|%s|The error message returned when the instance ID format is invalid.|
+|400|InvalidOperation.InvalidEcsState|%s|The error message returned when the private IP address cannot be released under the instance state.|
+|400|InvalidOperation.InvalidEniState|%s|The error message returned when the private IP address cannot be released under the ENI state.|
+|400|InvalidOperation.DetachPrimaryEniNotAllowed|%s|The error message returned when the primary ENI cannot be detached from its instance.|
+|404|InvalidEcsId.NotFound|%s|The error message returned when the specified instance ID does not exist.|
+|404|InvalidEniId.NotFound|%s|The error message returned when the specified ENI ID does not exist.|
+|404|InvalidVSwitchId.NotFound|%s|The error message returned when the specified VSwitch ID does not exist.|
+|404|InvalidSecurityGroupId.NotFound|%s|The error message returned when the specified security group ID does not exist.|
+|403|EniPerInstanceLimitExceeded|%s|The error message returned when the number of ENIs exceeds the upper limit for the specified instance type.|
+|403|InvalidOperation.AvailabilityZoneMismatch|%s|The error message returned when the specified VSwitch, ENI, and instance are not in the same zone.|
+|403|InvalidOperation.VpcMismatch|%s|The error message returned when the specified ENI and security group do not belong to the same VPC.|
+|403|SecurityGroupInstanceLimitExceed|%s|The error message returned when the number of instances in the specified security group exceeds the upper limit.|
+|403|InvalidSecurityGroupId.NotVpc|%s|The error message returned when the specified security group is not VPC-connected.|
+|403|InvalidOperation.InvalidEniType|%s|The error message returned when the ENI type is not supported.|
+|400|Forbidden.RegionId|%s|The error message returned when this function is not supported in the region.|
+|400|InvalidParams.EniId|%s|The error message returned when the format of the specified ENI ID is invalid.|
 
-|Error code|Error message|HTTP status code |Description|
-|:---------|:------------|:----------------|:----------|
-|Abs.InvalidAccount.NotFound|The Account is not found or ak is expired.|403|The specified Alibaba Cloud account does not exist. Alternatively, your AccessKey expires.|
-|Forbidden.NotSupportRAM|This action does not support accessed by RAM mode.|403|Ram users are not allowed to perform this operation.|
-|UnsupportedParameter|The parameters is unsupported.|400|The specified parameter does not exist. Alternatively, the specified parameter is not supported.|
-|Forbidden.SubUser|The specified action is not available for you.|403|Ram users are not allowed to perform this operation.|
-|InvalidOperation.DetachPrimaryEniNotAllowed|Detaching primary ENI from ECS instance is not allowed.|400|You cannot detach the primary network interface from an ECS instance.|
-|MissingParameter|The input parameter that is mandatory for processing this request is not supplied.|400|You must specify the required parameter.|
-|InvalidOperation.InvalidEniType|The operation is not allowed in the current ENI type.|403|The specified action failed due to the type of the ENI.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

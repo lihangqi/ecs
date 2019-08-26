@@ -1,115 +1,182 @@
-# DescribeInstanceMonitorData {#DescribeInstanceMonitorData .reference}
+# DescribeInstanceMonitorData {#doc_api_999425 .reference}
 
-Queries all the ECS-related monitoring data. The monitoring data includes the CPU usage of the ECS, data traffic received by the ECS, data traffic sent by the ECS, ECS network traffic, and ECS average bandwidth. You can only query the monitoring data of an ECS that is not in the `Stopped` status.
+Queries all the monitoring data about an ECS instance. The returned monitoring data includes the CPU usage, received data traffic, sent data traffic, network traffic, and average bandwidth of the ECS instance. If some of the traffic data information is missing, it is because the system is unable to obtain the relevant information, such as when an instance is in the Stopped state.
 
-## Description {#section_dwp_4w4_ydb .section}
+## Description {#description .section}
 
-When you call this interface, consider the following:
+When you call this operation, note that:
 
--   You can only query up to 400 entries of monitoring data each time. If the specified \(`EndTime` `StartTime`\)/`Peroid` \> 400, an error is returned.
+-   Up to 400 monitored data entries can be returned per query. If the value of \(EndTime - StartTime\)/Period is greater than 400, an error is returned.
+-   You can only query the monitoring data in the last 30 days. If the value of the StartTime parameter is earlier than 30 days, an error is returned.
 
--   You can only query the monitoring data that is 30 days later than the current time. If the specified `StartTime` is earlier than 30 days, an error is returned.
+## Debugging {#apiExplorer .section}
 
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DescribeInstanceMonitorData) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Request parameters {#RequestParameter .section}
+## Request parameters {#parameters .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DescribeInstanceMonitorData.|
-|InstanceId|String|Yes|ID of the target instance.|
-|StartTime|String|Yes|The start time of the monitoring data, which is represented according to [ISO8601](intl.en-US/API Reference/Appendix/ISO 8601 time format.md#), and UTC is required. Valid format: YYYY-MM-DDThh:mm:ssZ. If the specified `ss` is not 00, it is auto set to start of the next minute.|
-|EndTime|String|Yes|The end time of the retrieved data, which is represented according to ISO8601, and UTC is required. Valid format: YYYY-MM-DDThh:mm:ssZ.  If the specified `ss` is not 00, it is auto set to start of the next minute.|
-|Period|Integer|No|The interval of the retrieved monitoring data, unit: second.  Optional values:-   60
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|EndTime|String|Yes|2014-10-30T08:00:00Z| The end time of the retrieved monitoring data: The time format follows the [ISO 8601](~~25696~~) standard and uses UTC time. The format is YYYY-MM-DDThh:mm:ssZ. If the specified number of seconds \(ss\) is not 00, the time will be automatically rounded up to the next minute.
+
+ |
+|InstanceId|String|Yes|i-instnace1| The ID of the instance.
+
+ |
+|StartTime|String|Yes|2014-10-29T23:00:00Z| The start time of the retrieved monitoring data. The time format follows the [ISO 8601](~~25696~~) standard and the UTC time is used. The format is YYYY-MM-DDThh:mm:ssZ. If the specified number of seconds \(ss\) is not 00, the time will be automatically rounded up to the next minute.
+
+ |
+|Action|String|No|DescribeInstanceMonitorData| The operation that you want to perform. Set the value to DescribeInstanceMonitorData.
+
+ |
+|Period|Integer|No|60| The interval of the retrieved monitoring data. Unit: seconds. Valid values:
+
+ -   60
 -   600
 -   3600
 
-Default value: 60.|
+ Default value: 60.
 
-## Response parameters {#ResponseParameter .section}
+ |
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|MonitorData|[InstanceMonitorDataType](intl.en-US/API Reference/Data type/InstanceMonitorDataType.md#)|A collection composed of instance monitoring data InstanceMonitorDataType.|
+## Response parameters {#resultMapping .section}
 
-## Examples { .section}
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|MonitorData| | | A collection consisting of instance monitoring data.
 
-**Request example** 
+ |
+|└BPSRead|Integer|1000| The system disk read bandwidth. Unit: Byte/s.
 
-```
+ |
+|└BPSWrite|Integer|200| The system disk write bandwidth. Unit: Byte/s.
+
+ |
+|└CPU|Integer|2| The CPU utilization. Unit: percent \(%\).
+
+ |
+|└CPUAdvanceCreditBalance|Float|0.4| The excess credits consumed by the t5 instance.
+
+ |
+|└CPUCreditBalance|Float|120| The total credits of the t5 instance.
+
+ |
+|└CPUCreditUsage|Float|30| The number of credits consumed by the t5 instance.
+
+ |
+|└CPUNotpaidSurplusCreditUsage|Float|0.5| The unpaid excess credits.
+
+ |
+|└IOPSRead|Integer|1000| The system disk read I/O operations. Unit: times/s.
+
+ |
+|└IOPSWrite|Integer|200| The system disk write I/O operations. Unit: times/s.
+
+ |
+|└InstanceId|String|i-instnace1| The ID of the instance.
+
+ |
+|└InternetBandwidth|Integer|10| The Internet traffic of the instance. Unit: Kbit/s.
+
+ |
+|└InternetRX|Integer|122| The Internet traffic received by the instance at the time of traffic query. Unit: Kbit/s.
+
+ |
+|└InternetTX|Integer|343| The Internet traffic sent by the instance at the time of traffic query. Unit: Kbit/s.
+
+ |
+|└IntranetBandwidth|Integer|10| The intranet bandwidth of the instance. Unit: Kbit/s.
+
+ |
+|└IntranetRX|Integer|122| The intranet traffic received by the instance at the time of traffic query. Unit: Kbit/s.
+
+ |
+|└IntranetTX|Integer|343| The intranet traffic sent by the instance at the time of traffic query. Unit: Kbit/s.
+
+ |
+|└TimeStamp|String|2010-01-21T09:50:23Z| The time of traffic query. The time format follows the [ISO 8601](~~25696~~) standard and uses UTC time. The format is yyyy-MM-ddTHH:mm:ssZ.
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request. This parameter is returned regardless of whether the operation is successful.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DescribeInstanceMonitorData
+&EndTime=2014-10-30T08:00:00Z 
 &InstanceId=i-instnace1
-&StartTime=2014-10-29T23:00:00Z
-&EndTime=2014-10-30T08:00:00Z
-&<Common Request Parameters>
+&StartTime=2014-10-29T23:00:00Z 
+&Period=60 
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DescribeInstanceMonitorDataResponse>
-    <RequestId>C8B26B44-0189-443E-9816-D951F59623A9</RequestId>
-    <MonitorData>
-        <InstanceMonitorData>
-            <InstanceId>Bc0102-23xYm09</InstanceId>
-            <CPU>2</CPU>
-            <IntranetRX>122</IntranetRX>
-            <IntranetTX>343</IntranetTX>
-            <IntranetFlow>675</IntranetFlow>
-            <IntranetBandwidth>10</IntranetBandwidth>
-            <InternetRX>122</InternetRX>
-            <InternetTX>343</InternetTX>
-            <InternetFlow>675</InternetFlow>
-            <InternetBandwidth>10</InternetBandwidth>
-            <IOPSRead>1000</IOPSRead>
-            <IOPSWrite>200</IOPSWrite>
-            <BPSRead>1000</BPSRead>
-            <BPSWrite>200</BPSWrite>
-            <TimeStamp>2010-01-21T09:50:23Z</TimeStamp>
-        </InstanceMonitorData>
-    </MonitorData>
+  <RequestId>C8B26B44-0189-443E-9816-D951F59623A9</RequestId>
+  <MonitorData> 
+    <InstanceMonitorData>
+      <InstanceId>Bc0102-23xYm09</InstanceId>
+      <CPU>2</CPU>
+      <IntranetRX>122</IntranetRX>
+      <IntranetTX>343</IntranetTX>
+      <IntranetFlow>675</IntranetFlow>
+      <IntranetBandwidth>10</IntranetBandwidth>
+      <InternetRX>122</InternetRX>
+      <InternetTX>343</InternetTX>
+      <InternetFlow>675</InternetFlow>
+      <InternetBandwidth>10</InternetBandwidth> 
+      <IOPSRead>1000</IOPSRead> 
+      <IOPSWrite>200</IOPSWrite>
+      <BPSRead>1000</BPSRead>
+      <BPSWrite>200</BPSWrite>
+      <TimeStamp>2010-01-21T09:50:23Z</TimeStamp>
+    </InstanceMonitorData>
+  </MonitorData> 
 </DescribeInstanceMonitorDataResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"RequestId":"C8B26B44-0189-443E-9816-D951F59623A9",
+	"MonitorData":{
+		"InstanceMonitorData":[
+			{
+				"IOPSRead":1000,
+				"BPSWrite":200,
+				"IntranetBandwidth":10,
+				"IntranetTX":343,
+				"IntranetRX":122,
+				"InstanceId":"Bc0102-23xYm09",
+				"InternetFlow":675,
+				"CPU":0,
+				"TimeStamp":"2010-01-21T09:50:23Z",
+				"BPSRead":1000,
+				"InternetRX":122,
+				"IntranetFlow":675,
+				"InternetBandwidth":10,
+				"IOPSWrite":200,
+				"InternetTX":343
+			}
+		]
+	}
+}
 ```
 
-    "RequestId": "C8B26B44-0189-443E-9816-D951F59623A9",
-    "Monitoring Data ":{
-        "InstanceMonitorData": [{
-            "InstanceId": "Bc0102-23xYm09",
-            "CPU": 0,
-            "IntranetRX": 122,
-            "IntranetTX": 343,
-            "IntranetFlow": 675,
-            "IntranetBandwidth": 10,
-            "InternetRX": 122,
-            "InternetTX": 343,
-            "InternetFlow": 675,
-            "InternetBandwidth": 10,
-            "IOPSRead": 1000,
-            "IOPSWrite": 200,
-            "BPSRead": 1000,
-            "BPSWrite": 200,
-            "TimeStamp": "2010-01-21T09:50:23Z"
-        
-    }
+## Error codes {#section_mum_mlq_hw8 .section}
 
-```
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|400|InvalidStartTime.ValueNotSupported|The specified parameter StartTime is later than EndTime.|The error message returned when the end time is earlier than the start time.|
 
-## Error codes {#ErrorCode .section}
-
-The following error codes are restricted to this interface. For more error codes, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message|HTTP status code|Meaning|
-|:---------|:------------|:---------------|:------|
-|InvalidInstanceId.NotFound|The specified InstanceId does not exist.|404|The specified `InstanceId` does not exist.|
-|InvalidStartTime.Malformed|The specified parameter “StartTime” is not valid.|400|The specified format of the `StartTime` format is incorrect.|
-|InvalidEndTime.Malformed|The specified parameter “EndTime” is not valid.|400|The specified `EndTime`  is invalid.|
-|InvalidPeriod.ValueNotSupported|The specified parameter “Period” is not valid.|400|The specified `Period`  is invalid.|
-|InvalidStartTime.TooEarly|The specified parameter “StartTime” is too early.|400|The indicated `StartTime` must be 30 days later than the current time.|
-|InvalidParameter.TooManyDataQueried|Too many data queried.|400|You can only query up to 400 entries of monitoring data each time.|
-|Throttling|You have made too many requests within a short time; your request is denied due to request throttling.|400|Your request is denied due to request throttling. Please try again later.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

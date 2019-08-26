@@ -1,54 +1,70 @@
-# DeleteAutoSnapshotPolicy {#DeleteAutoSnapshotPolicy .reference}
+# DeleteAutoSnapshotPolicy {#doc_api_Ecs_DeleteAutoSnapshotPolicy .reference}
 
 删除一条自动快照策略。如果目标自动快照策略已经被应用到磁盘上，删除自动快照策略后，这些磁盘不再执行该策略。
 
-## 请求参数 {#RequestParameter .section}
+## 调试 {#api_explorer .section}
 
-|名称|类型|是否必需|描述|
-|:-|:-|:---|:-|
-|Action|String|是|系统规定参数。取值：DeleteAutoSnapshotPolicy|
-|RegionId|String|是|自动快照策略所在的地域 ID。您可以调用 [DescribeRegions](intl.zh-CN/API参考/地域/DescribeRegions.md#) 查看最新的阿里云地域列表。|
-|AutoSnapshotPolicyId|String|是|自动快照策略的 ID。您可以调用 [DescribeAutoSnapshotPolicyEx](intl.zh-CN/API参考/快照/DescribeAutoSnapshotPolicyEx.md#) 查看您可用的自动快照策略。|
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ecs&api=DeleteAutoSnapshotPolicy&type=RPC&version=2014-05-26)
 
-## 返回参数 {#section_byv_lyz_xdb .section}
+## 请求参数 {#parameters .section}
 
-全是公共返回参数。参阅 [公共参数](intl.zh-CN/API参考/调用方式/公共参数.md#commonResponseParameters)。
+|名称|类型|是否必选|示例值|描述|
+|--|--|----|---|--|
+|autoSnapshotPolicyId|String|是|p-233e6ylv0|自动快照策略的 ID。您可以调用 [DescribeAutoSnapshotPolicyEx](~~25530~~) 查看您可用的自动快照策略。
 
-## 示例 { .section}
+ |
+|regionId|String|是|cn-hangzhou|自动快照所属的地域 ID。您可以调用 [DescribeRegions](~~25609~~) 查看最新的阿里云地域列表。
 
-**请求示例** 
+ |
+|Action|String|否|DeleteAutoSnapshotPolicy|系统规定参数。取值：DeleteAutoSnapshotPolicy
 
-```
+ |
+
+## 返回数据 {#resultMapping .section}
+
+|名称|类型|示例值|描述|
+|--|--|---|--|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID。无论调用接口成功与否，我们都会返回请求 ID。
+
+ |
+
+## 示例 {#demo .section}
+
+请求示例
+
+``` {#request_demo}
+
 https://ecs.aliyuncs.com/?Action=DeleteAutoSnapshotPolicy
-&RegionId=cn-hangzhou
-&AutoSnapshotPolicyId=p-233e6ylv0
+&autoSnapshotPolicyId=p-233e6ylv0
+&regionId=cn-hangzhou
 &<公共请求参数>
-```
-
-**返回示例** 
-
-**XML 格式**
 
 ```
+
+正常返回示例
+
+`XML` 格式
+
+``` {#xml_return_success_demo}
 <DeleteAutoSnapshotPolicyResponse>
-    <RequestId>F3CD6886-D8D0-4FEE-B93E-1B73239673DE</RequestId> 
+      <RequestId>F3CD6886-D8D0-4FEE-B93E-1B73239673DE</RequestId> 
 </DeleteAutoSnapshotPolicyResponse>
 ```
 
- **JSON 格式** 
+`JSON` 格式
 
-```
+``` {#json_return_success_demo}
 {
-    "RequestId":"F3CD6886-D8D0-4FEE-B93E-1B73239673DE"
+	"RequestId":"F3CD6886-D8D0-4FEE-B93E-1B73239673DE"
 }
 ```
 
-## 错误码 {#ErrorCode .section}
+## 错误码 { .section}
 
-以下为本接口特有的错误码。更多错误码，请访问 [API 错误中心](https://error-center.alibabacloud.com/status/product/Ecs)。
+|HttpCode|错误码|错误信息|描述|
+|--------|---|----|--|
+|404|ParameterInvalid|The specified automatic snapshot policy does not exist.|指定的自动快照策略不存在，请您检查自动快照策略是否正确。|
+|404|ParameterInvalid|The specified automatic snapshot policy does not exist in the region.|指定的自动快照策略不存在，请您检查自动快照策略是否正确。|
 
-|错误代码|错误信息|HTTP 状态码|说明|
-|:---|:---|:-------|:-|
-|ParameterInvalid|The specified automatic snapshot policy does not exist.|404|指定的 `AutoSnapshotPolicyId`不存在。|
-|ParameterInvalid|The specified automatic snapshot policy does not exist in the region.|404|指定的 `AutoSnapshotPolicyId`不在指定的地域中。|
+访问[错误中心](https://error-center.aliyun.com/status/product/Ecs)查看更多错误码。
 

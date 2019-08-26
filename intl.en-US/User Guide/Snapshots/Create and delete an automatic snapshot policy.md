@@ -4,39 +4,39 @@ An automatic snapshot policy is a set of defined parameters for automatically cr
 
 **Note:** 
 
--   Avoid business peak hours when you set the automatic snapshot creation time and repeat date, because creating a snapshot may slightly impact the performance of the disk.
--   You can create a maximum of 100 automatic snapshot policies in each region.
+-   We recommend you set the automatic snapshot creation time and repeat date during off-peak business hours to avoid interruptions to your business services.
+-   You can create a maximum of 100 automatic snapshot policies per region.
 
 ## Prerequisite {#section_odg_ffl_xdb .section}
 
-If you want to modify an automatic snapshot policy, you must first create an automatic snapshot policy.
+You must have created an automatic snapshot policy.
 
 ## Procedure {#section_pdg_ffl_xdb .section}
 
-To create an automatic snapshot policy, perform the following:
+To create an automatic snapshot policy, follow these steps:
 
-1.  Log on to the [ECS console](https://ecs.console.aliyun.com/#/home).
-2.  In the left-side navigation pane, select **Snapshots & Images** \> **Automatic Snapshot Policy**.
-3.  On the Create Automatic Snapshot Polic page.
-    -   If you want to create a policy: Click **Create Policy** in the upper-right corner.
-    -   If you want to modify a policy: find the policy that you want to modify, in the **Actions**column, click **Modify Policy**.
-4.  In the Create Policy , or Modify Policy dialog box, define an automatic snapshot policy:
-    -   Define automatic snapshot policy parameters:
-    -   Select **Time** Defines the time of day for automatically creating snapshots. There are 24 snapshot creation points available between 00:00 and 23:00.
-    -   **Repeated day**: There are seven available repetition day configurations.
-    -   Select the automatic snapshot **Retention period**: Defines the number of days a snapshot can be retained. This parameter can be set between 1−65536 days, or permanently. By default, it is set to 30 days. You can also choose to keep automatic snapshots.
+1.  Log on to the [ECS console](https://partners-intl.console.aliyun.com/#/ecs).
+2.  In the left-side navigation pane, select **Snapshots and Images** \> **Automatic Snapshot Policies**.
+3.  On the Automatic Snapshot Policies page, perform the following action as required:
+    -   If you want to create a policy, click **Create Policy** at the upper-right corner.
+    -   If you want to modify a policy, find the policy that you want to modify, and click **Modify Policy** in the **Actions** column.
+4.  In the Create Policy or Modify Policy dialog box, define the automatic snapshot policy as follows.
+    -   Enter a policy name.
+    -   Select a time after **Executed At** to specify the time of day for automatically creating snapshots.
+    -   Specify the **Execution Frequency**.
+    -   Set a number after **Keep Snapshots** to defines the number of days a snapshot can be retained. The value range is 1−65535 days, or permanently. By default, it is set to 30 days. You can also choose to permanently retain automatic snapshots.
 
-        **Note:** When the number of snapshots reaches the limit, the system automatically removes the oldest automatic snapshots that were created. Manually created snapshots are not affected.
+        **Note:** When the number of snapshots reaches the limit, the system automatically removes the oldest automatic snapshots created. Manually created snapshots are not removed.
 
 5.  Click **OK**.
 
-## Follow-up operations {#section_udg_ffl_xdb .section}
+## Additional operations {#section_udg_ffl_xdb .section}
 
-You can [Apply automatic snapshot policies to disks](intl.en-US/User Guide/Snapshots/Apply automatic snapshot policies to disks.md#).
+You can [apply automatic snapshot policies to disks](reseller.en-US/User Guide/Snapshots/Apply automatic snapshot policies to disks.md#).
 
 ## Related APIs {#section_l1z_5hl_xdb .section}
 
--   [CreateAutoSnapshotPolicy](../../../../intl.en-US/API Reference/Snapshots/CreateAutoSnapshotPolicy.md#): Create an automatic snapshot policy
--   [DescribeAutoSnapshotPolicyEx](../../../../intl.en-US/API Reference/Snapshots/DescribeAutoSnapshotPolicyEx.md#): Query automatic snapshot policies
--   [ModifyAutoSnapshotPolicyEx](../../../../intl.en-US/API Reference/Snapshots/ModifyAutoSnapshotPolicyEx.md#): Modify an automatic snapshot policy?
+-   [CreateAutoSnapshotPolicy](../../../../reseller.en-US/API Reference/Snapshots/CreateAutoSnapshotPolicy.md#): Creates automatic snapshot policies.
+-   [DescribeAutoSnapshotPolicyEx](../../../../reseller.en-US/API Reference/Snapshots/DescribeAutoSnapshotPolicyEx.md#): Queries automatic snapshot policies.
+-   [ModifyAutoSnapshotPolicyEx](../../../../reseller.en-US/API Reference/Snapshots/ModifyAutoSnapshotPolicyEx.md#): Modifies automatic snapshot policies.
 

@@ -7,13 +7,13 @@
 |名称|类型|是否必需|描述|
 |:-|:-|:---|:-|
 |Action|String|是|系统规定参数。取值：DeleteLaunchTemplate|
-|RegionId|String|是|实例启动模板所属的地域 ID。您可以调用 [DescribeRegions](intl.zh-CN/API参考/地域/DescribeRegions.md#) 查看最新的阿里云地域列表。|
-|LaunchTemplateId|String|否|实例启动模板 ID。更多详情，请调用 [DescribeLaunchTemplates](intl.zh-CN/API参考/启动模板/DescribeLaunchTemplates.md#)。您必须指定 `LaunchTemplateId` 或 `LaunchTemplateName` 以确定模板。|
+|RegionId|String|是|实例启动模板所属的地域 ID。您可以调用 [DescribeRegions](cn.zh-CN/API参考/地域/DescribeRegions.md#) 查看最新的阿里云地域列表。|
+|LaunchTemplateId|String|否|实例启动模板 ID。更多详情，请调用 [DescribeLaunchTemplates](cn.zh-CN/API参考/启动模板/DescribeLaunchTemplates.md#)。您必须指定 `LaunchTemplateId` 或 `LaunchTemplateName` 以确定模板。|
 |LaunchTemplateName|String|否|实例启动模板名称。|
 
 ## 返回参数 {#ResponseParameters .section}
 
-全是公共返回参数。参阅 [公共参数](intl.zh-CN/API参考/调用方式/公共参数.md#commonResponseParameters)。
+全是公共返回参数。参阅 [公共参数](cn.zh-CN/API参考/HTTP调用方式/公共参数.md#commonResponseParameters)。
 
 ## 示例 { .section}
 
@@ -46,7 +46,7 @@ https://ecs.aliyuncs.com/?Action=DeleteLaunchTemplate
 
 ## 错误码 {#ErrorCode .section}
 
-以下为本接口特有的错误码。更多错误码，请访问 [API 错误中心](https://error-center.alibabacloud.com/status/product/Ecs)。
+以下为本接口特有的错误码。更多错误码，请访问 [API 错误中心](https://error-center.aliyun.com/status/product/Ecs)。
 
 |错误代码|错误信息|HTTP 状态码|说明|
 |:---|:---|:-------|:-|

@@ -1,67 +1,136 @@
-# DetachKeyPair {#DetachKeyPair .reference}
+# DetachKeyPair {#doc_api_999668 .reference}
 
-Detaches an SSH key pair from one or more of your Linux instances.
+Detaches SSH key pairs from one or multiple Linux-based instances.
 
-## Description {#section_a1k_4qn_ydb .section}
+## Description {#description .section}
 
-When you call this interface, consider the following:
+When you call this operation, note that:
 
--   After you detach an SSH key pair, restart the instance \([RebootInstance](intl.en-US/API Reference/Instances/RebootInstance.md#)\) for the operation to take effect.
+-   After you detach an SSH key pair, you must restart the instance \([RebootInstance](~~25502~~)\) for the operation to take effect.
+-   After an SSH key pair is detached from an instance, the account-password authentication method is used by default.
 
--   After the key pair is detached, the user name and password authentication method is used by default.
+## Debugging {#apiExplorer .section}
 
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DetachKeyPair) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Request parameters {#RequestParameter .section}
+## Request parameters {#parameters .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DetachKeyPair|
-|RegionId|String|Yes|The ID of the region to which your SSH key pair belongs. For more information, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|KeyPairName|String|Yes|The names of key pairs.|
-|InstanceIds|String|No|The instance ID. The instance ID. The value can contain arrays of up to 50 instance IDs. The IDs are displayed in the format of \["i-xxxxxxxxx", "i-yyyyyyyyy", … "i-zzzzzzzzz"\] and separated by commas \(,\).|
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|InstanceIds|String|Yes|\["d-xxxxxxxxx", "d-yyyyyyyyy", … "d-zzzzzzzzz"\]| The IDs of instances from which SSH key pairs are detached. The value can be a JSON array consisting of up to 50 instance IDs. Multiple IDs must be separated by commas \(,\).
 
-## Return parameters {#section_f54_lk5_xdb .section}
+ |
+|KeyPairName|String|Yes|FinanceJoshuaV26| The SSH key pair names.
 
-All are common parameters. See [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#).
+ |
+|RegionId|String|Yes|cn-hangzhou| The ID of the region where an SSH key pair resides. You can call [DescribeRegions](~~25609~~) to view the latest list of Alibaba Cloud regions.
 
-## Example { .section}
+ |
+|Action|String|No|DetachKeyPair| The operation that you want to perform. Set the value to DetachKeyPair.
 
-**Request example** 
+ |
 
-```
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|FailCount|String|0| The number of instances from which key pairs fail to be detached.
+
+ |
+|KeyPairName|String|FinanceJoshuaV26| The name of a key pair.
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request. This parameter is returned regardless of whether the operation is successful.
+
+ |
+|Results| | | The result set of detach operation.
+
+ |
+|└Code|String|200| The operation status code returned. 200 indicates that the operation is successful.
+
+ |
+|└InstanceId|String|i-instanceid1| The ID of an instance.
+
+ |
+|└Message|String|successful| The operation information returned. When the value of code is 200, the value of message is successful.
+
+ |
+|└Success|String|true| The message returned indicating whether the operation is successful.
+
+ |
+|TotalCount|String|2| The total number of instances from which key pairs are detached.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DetachKeyPair
 &RegionId=cn-qingdao
 &InstanceIds=["i-xxxxxxx", "i-yyyyyyy"]
 &KeyPairName=test
-&<Common Request Parameter>
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DetachKeyPairResponse>
-    <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
-</DetachKeyPairResponse>
+  <TotalCount>2</TotalCount>
+   <RequestId>834B3E6B-2D1D-482F-81A4-810C327D4735</RequestId>
+  <Results>
+    </Result>
+      <Message>AccessDenied</Message>
+      <InstanceId>i-m5eg7be9ndloji64jknv</InstanceId>
+      <Success>true</Success>
+      <Code>200</Code>
+    </Result>
+    </Result>
+      <Message>successful</Message>
+      <InstanceId>i-m5e25x2mwr0hk33dwv0h</InstanceId>
+      <Success>true</Success>
+      <Code>200</Code>
+    </Result>
+  </Results>
+  <FailCount>0</FailCount>
+ </DetachKeyPairResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "RequestId": "473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
+	"TotalCount":2,
+	"RequestId":"834B3E6B-2D1D-482F-81A4-810C327D4735",
+	"Results":{
+		"Result":[
+			{
+				"Message":"successful",
+				"InstanceId":"i-m5eg7be9ndloji64jknv",
+				"Success":true,
+				"Code":"200"
+			},
+			{
+				"Message":"successful",
+				"InstanceId":"i-m5e25x2mwr0hk33dwv0h",
+				"Success":true,
+				"Code":"200"
+			}
+		]
+	},
+	"FailCount": 0
 }
 ```
 
-## Error codes {#ErrorCode .section}
+## Error codes {#section_w9q_s3a_fyh .section}
 
-Error codes specific to this interface are as follows. For more error codes, see the [API error center](https://error-center.alibabacloud.com/status/product/Ecs).
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|403|DependencyViolation.WindowsInstance|The instance creating is windows, cannot use ssh key pair to login|The error message returned when you cannot detach key pairs from the specified Windows-based instance.|
 
-|Error code|Error message|HTTP status code |Note|
-|:---------|:------------|:----------------|:---|
-|MissingParameter|The input parameter “RegionId” that is mandatory for processing this request is not supplied.|400|You must specify the parameter `RegionId`.  Or you are not authorized to use the resource in the specified region.|
-|DependencyViolation.WindowsInstance|The instance creating is windows, cannot use ssh key pair to login.|403|SSH key pairs are not supported for Windows instances.|
-|InvalidKeyPairName.NotFound|The specified KeyPairName does not exist.|404|The specified `KeyPairName` does not exist.|
-|InvalidRegionId.NotFound|The specified RegionId does not exist.|404|The specified `RegionId` does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

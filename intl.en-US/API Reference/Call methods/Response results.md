@@ -1,6 +1,6 @@
 # Response results {#EcsApiResponse .reference}
 
-We return the results in either XML or JSON format, but XML is the default choice. You can switch to XML schema by specifying the request parameter `Format` . For more information, see [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#). Response examples in our API documents have line breaks and indentions to make them easy to read. The actual response results are not formatted.
+We return the results in either XML or JSON format, but XML is the default choice. You can switch to XML schema by specifying the request parameter `Format`. For more information, see [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#). Response examples in our API documents have line breaks and indention to make them easy to read. The actual response results are not formatted.
 
 ## Success response example {#section_wdm_tjx_wdb .section}
 
@@ -9,7 +9,7 @@ Every successful response has a request ID in the RequestId element and other AP
 -   XML format
 
     ```
-    <? xml version="1.0" encoding="UTF-8"? > <! --Result root node-->
+    <?xml version="1.0" encoding="UTF-8"?> <! --Result root node-->
     <ActionResponse> <! --Response request tag-->
         <RequestId>4C467B38-3910-447D-87BC-AC049166F216</RequestId> <! --Response result data-->
     </ActionResponse>
@@ -18,9 +18,9 @@ Every successful response has a request ID in the RequestId element and other AP
 -   JSON format
 
     ```
-    
+    {
         "RequestId": "4C467B38-3910-447D-87BC-AC049166F216" /* Response result data */
-    
+    }
     ```
 
 
@@ -28,12 +28,12 @@ Every successful response has a request ID in the RequestId element and other AP
 
 Every error response consists of a request ID in the RequestId element and access endpoint in the HostId element, the error code, and the error message. The HTTP status code for an error response is 4xx or 5xx.
 
-You can fix the exception according to the API-specific error codes or [common error codes](#section_a2m_tjx_wdb)[API Error Center](https://error-center.alibabacloud.com/status/product/Ecs) and try the request again. Alternatively, you can [open a ticket](https://workorder-intl.console.aliyun.com/#/ticket/createIndex) and provide additional inputs such as the `HostId` and `RequestId` to get technical support from us.
+You can fix the exception according to the API-specific error codes or [common error codes](#section_a2m_tjx_wdb)[API Error Center](https://error-center.alibabacloud.com/status/product/Ecs) and try the request again. Alternatively, you can [open a ticket](https://workorder-intl.console.aliyun.com/#/ticket/createIndex) and provide additional inputs such as the `HostId` and `RequestId` to get technical support from ECS.
 
 -   XML format
 
     ```
-    <? xml version="1.0" encoding="UTF-8"? ><! --Result root node-->
+    <?xml version="1.0" encoding="UTF-8"?><! --Result root node-->
     <Error>
         <RequestId>540CFF28-407A-40B5-B6A5-74Bxxxxxxxxx</RequestId> <! --Request ID-->
         <HostId>ecs.aliyuncs.com</HostId> <! --Endpoint-->
@@ -45,12 +45,12 @@ You can fix the exception according to the API-specific error codes or [common e
 -   JSON format
 
     ```
-    
+    {
         "RequestId": "540CFF28-407A-40B5-B6A5-74Bxxxxxxxxx", /* Request ID */
         "HostId": "ecs.aliyuncs.com", /* Endpoint */
         "Code": "MissingParameter.CommandId", /* Error code */
         "Message": "The input parameter “CommandId” that is mandatory for processing this request is not supplied." /* Error message */
-    
+    }
     ```
 
 

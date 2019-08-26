@@ -1,13 +1,13 @@
 # API behavior for accounts with overdue payment {#EcsApiOverduePayement .reference}
 
-In the following list, “-“ indicates no relation and “Normal Logic” indicates that the interface is executed and result returned based on the normal logic of the interface.
+When payment is overdue, the `OperationLocks` in the outgoing parameters returned by the `DescribeInstances` or `DescribeDisks` will include `LockReason: financial`.
 
-When payment is overdue, the `OperationLocks` in the outgoing parameters returned by the `DescribeInstanceAttribute` or `DescribeDisks` will include `LockReason: financial`.
+## API request consequence with overdue payment {#section_wdr_cng_ydb .section}
 
-## Instance with overdue payment {#section_wdr_cng_ydb .section}
+In the following tables, "Normal Logic" indicates that the interface is executed and result returned based on the normal logic of the interface.
 
-|Interface| Disk Payment Overdue|Disk Normal|
-|:--------|:--------------------|:----------|
+|Actions| Disk Payment Overdue|Disk Normal|
+|:------|:--------------------|:----------|
 |AllocatePublicIpAddress|Error|Error|
 |AttachDisk|Error|Normal logic|
 |AuthorizeSecurityGroup|Normal logic|Normal logic|
@@ -24,7 +24,6 @@ When payment is overdue, the `OperationLocks` in the outgoing parameters returne
 |DescribeAutoSnapshotPolicy|Normal logic|Normal logic|
 |DescribeDisks|Normal logic|Normal logic|
 |DescribeImages|Normal logic|Normal logic|
-|DescribeInstanceAttribute|Normal logic|Normal logic|
 |DescribeInstanceStatus|Normal logic|Normal logic|
 |DescribeInstanceTypes|Normal logic|Normal logic|
 |DescribeInstanceMonitorData|Normal logic|Normal logic|
@@ -48,10 +47,8 @@ When payment is overdue, the `OperationLocks` in the outgoing parameters returne
 |StartInstance|Error|Error|
 |StopInstance|-|-|
 
-## Disk with overdue payment {#section_jvm_vmg_ydb .section}
-
-|Interface|Instance Payment Overdue|Instance Normal|
-|:--------|:-----------------------|:--------------|
+|Actions|Instance Payment Overdue|Instance Normal|
+|:------|:-----------------------|:--------------|
 |AllocatePublicIpAddress|Error|Normal logic|
 |AttachDisk|Error|Error|
 |AuthorizeSecurityGroup|Normal logic|Normal logic|
@@ -68,7 +65,6 @@ When payment is overdue, the `OperationLocks` in the outgoing parameters returne
 |DescribeAutoSnapshotPolicy|Normal logic|Normal logic|
 |DescribeDisks|Normal logic|Normal logic|
 |DescribeImages|Normal logic|Normal logic|
-|DescribeInstanceAttribute|Normal logic|Normal logic|
 |DescribeInstanceStatus|Normal logic|Normal logic|
 |DescribeInstanceMonitorData|Normal logic|Normal logic|
 |DescribeRegions|Normal logic|Normal logic|

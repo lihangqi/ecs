@@ -1,65 +1,80 @@
-# ModifyInstanceVncPasswd {#ModifyInstanceVncPasswd .reference}
+# ModifyInstanceVncPasswd {#doc_api_1161588 .reference}
 
-Change the password of [management terminal](../../../../intl.en-US/User Guide/Connect/Terminal.md) used to connect a specified ECS instance.
+Modifies the Web management terminal password of an ECS instance.
 
-## Description {#section_m4j_bst_xdb .section}
+## Description {#description .section}
 
--   The password must be six characters in length, and can contain uppercase or lowercase English letters and digits. The password cannot contain special characters.
--   After you change the password:
-    -   For an I/O Optimized instances, the new password takes effect immediately.
-    -   For a non-I/O Optimized instances, you must [restart the instance](../../../../intl.en-US/User Guide/Instances/Restart an instance.md) in the console or by calling API [RebootInstance](intl.en-US/API Reference/Instances/RebootInstance.md#) to make the change take effect.
+-   The password must be 6 characters in length and can contain only uppercase and lowercase letters and digits.
+-   After you modify the password:
+    -   For an optimized instance, the new password takes effect immediately.
+    -   For a non-optimized instance, you must [restart the instance](~~25440~~) from the console or call the [RebootInstance](~~25502~~) operation to validate the modifications.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface.  Value: ModifyInstanceVncPasswd.|
-|RegionId|String|Yes|The region of the ECS instance. You can call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|InstanceId|String|Yes|The ECS instance.|
-|VncPassword|String|Yes|The new password of management terminal used to connect the specified ECS instance.|
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=ModifyInstanceVncPasswd) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Response parameters {#section_u4j_bst_xdb .section}
+## Request parameters {#parameters .section}
 
-All parameters are common response parameters. For more information, see [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#commonResponseParameters).
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|InstanceId|String|Yes|i-AY121018033933eae8689| The ID of the instance.
 
-## Examples { .section}
+ |
+|RegionId|String|Yes|cn-hangzhou| The region ID of the instance. You can call the [DescribeRegions](~~25609~~) operation to view the latest region list.
 
-**Request example** 
+ |
+|VncPassword|String|Yes|123456| The new password of the management terminal.
 
-```
+ |
+|Action|String|No|ModifyInstanceVncPasswd| The operation that you want to perform. Set the value to **ModifyInstanceVncPasswd**.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The request ID.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=ModifyInstanceVncPasswd
-&DescribeInstanceVncUrl
-&InstanceId=AY121018033933eae8689
-&VncPassword=123456
-&<Common Request Parameters>
+&RegionId=cn-hangzhou 
+&InstanceId=i-AY121018033933eae8689
+&VncPassword=123456 
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <ModifyInstanceVncPasswdResponse>
-    <RequestId>FDB6C963-9CE8-4B7F-BCA3-845F6BD29AFC</RequestId>
+  <RequestId>FDB6C963-9CE8-4B7F-BCA3-845F6BD29AFC</RequestId>
 </ModifyInstanceVncPasswdResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"RequestId":"FDB6C963-9CE8-4B7F-BCA3-845F6BD29AFC"
+}
 ```
 
-  "RequestId": "FDB6C963-9CE8-4B7F-BCA3-845F6BD29AFC", 
+## Error codes { .section}
 
-```
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|403|IncorrectInstanceStatus|The current status of the resource does not support this operation.|The error message returned when the operation is not supported while the resource is in the current state.|
+|400|IncorrectVncPassword.Malformed|The specified parameter VncPassword is not valid.|The error message returned when the specified VNC password is invalid.|
+|404|NoSuchResource|The specified resource is not found.|The error message returned when the specified resource does not exist.|
 
-## Error codes {#ErrorCode .section}
-
-Error codes specific to this interface are as follows. For more information, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message |HTTP status code|Meaning|
-|:---------|:-------------|:---------------|:------|
-|IncorrectVncPassword.Malformed|The specified parameter VncPassword is not valid.|400|The specified `VncPassword` is invalid, it must be six characters in length, and can only contain uppercase or lowercase English letters and digits.|
-|IncorrectInstanceStatus|The current status of the resource does not support this operation.|403|The specified instance must be in the **Running** status.|
-|InvalidInstanceId.NotFound|The specified InstanceId does not exist.|404|The specified ECS instance does not exist.|
-|InvalidRegionId.NotFound|The specified RegionId does not exist.|404|The specified `RegionId` does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

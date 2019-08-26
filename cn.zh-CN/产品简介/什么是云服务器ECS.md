@@ -1,53 +1,97 @@
-# 什么是云服务器ECS {#concept_rhf_xgv_tdb .concept}
+# 什么是云服务器ECS {#EcsWelcome .concept}
 
-通过本文档，您可以了解什么是阿里云云服务器ECS，以及它所涉及的资源和服务。
+云服务器（Elastic Compute Service，简称ECS）是阿里云提供的性能卓越、稳定可靠、弹性扩展的IaaS（Infrastructure as a Service）级别云计算服务。云服务器ECS免去了您采购IT硬件的前期准备，让您像使用水、电、天然气等公共资源一样便捷、高效地使用服务器，实现计算资源的即开即用和弹性伸缩。阿里云ECS持续提供创新型服务器，解决多种业务需求，助力您的业务发展。
 
-云服务器Elastic Compute Service（ECS）是阿里云提供的一种基础云计算服务。使用云服务器ECS就像使用水、电、煤气等资源一样便捷、高效。您无需提前采购硬件设备，而是根据业务需要，随时创建所需数量的云服务器ECS实例。在使用过程中，随着业务的扩展，您可以随时扩容磁盘、增加带宽。如果不再需要云服务器，也能随时释放资源，节省费用。
+## 为什么选择云服务器ECS {#section_wj3_jyp_jhb .section}
 
-下图列出了ECS涉及的所有资源，包括实例规格、块存储、镜像、快照、带宽和安全组。您可以通过 [云服务器管理控制台](https://ecs.console.aliyun.com/#/home)配置您的ECS资源。
+选择云服务器ECS，您可以轻松构建具有以下优势的计算资源：
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9543/4795_zh-CN.png)
+-   无需自建机房，无需采购以及配置硬件设施。
+-   分钟级交付，快速部署，缩短应用上线周期。
+-   快速接入部署在全球范围内的数据中心和BGP机房。
+-   成本透明，按需使用，支持根据业务波动随时扩展和释放资源。
+-   提供GPU和FPGA等异构计算服务器、弹性裸金属服务器以及通用的x86架构服务器。
+-   支持通过内网访问其他阿里云服务，形成丰富的行业解决方案，降低公网流量成本。
+-   提供虚拟防火墙、角色权限控制、内网隔离、防病毒攻击及流量监控等多重安全方案。
+-   提供性能监控框架和主动运维体系。
+-   提供行业通用标准API，提高易用性和适用性。
 
-## 相关概念 {#section_jkn_4qj_ydb .section}
+更多选择理由，请参见[云服务器ECS的优势](cn.zh-CN/产品简介/云服务器ECS的优势.md#)和[应用场景](cn.zh-CN/产品简介/应用场景.md#)。
 
-在使用ECS之前，您需要了解以下概念：
+## 产品架构 {#section_vwb_qk2_ghb .section}
 
--   [地域和可用区](https://www.alibabacloud.com/help/doc-detail/40654.htm)：是指ECS资源所在的物理位置。
--   [实例](intl.zh-CN/产品简介/实例.md#)：等同于一台虚拟机，包含CPU、内存、操作系统、网络、磁盘等最基础的计算组件。
--   [实例规格](intl.zh-CN/产品简介/实例规格族.md#)：是指实例的不同配置，包括vCPU核数、内存、网络性能等。实例规格决定了ECS实例的计算和存储能力。
--   [镜像](intl.zh-CN/产品简介/镜像.md#)：是指ECS实例运行环境的模板，一般包括操作系统和预装的软件。操作系统支持多种Linux发行版本和不同的Windows版本。
--   [块存储](intl.zh-CN/产品简介/块存储.md#)：包括基于分布式存储架构的 [弹性块存储](intl.zh-CN/产品简介/块存储/弹性块存储.md#)，以及基于物理机本地硬盘的 [本地存储](intl.zh-CN/产品简介/块存储/本地存储.md#)。
--   [快照](intl.zh-CN/产品简介/快照.md#)：是指某一个时间点上一块弹性块存储的数据备份。
--   [网络类型](intl.zh-CN/产品简介/网络和安全性/网络类型.md#)：包括
-    -   专有网络：基于阿里云构建的一个隔离的网络环境，专有网络之间逻辑上彻底隔离。更多信息，请参考 [专有网络VPC](../../intl.zh-CN/产品简介/什么是专有网络.md#)。
-    -   经典网络：统一部署在阿里云公共基础内，规划和管理由阿里云负责。
--   [安全组](intl.zh-CN/产品简介/网络和安全性/安全组.md#)：由同一地域内具有相同保护需求并相互信任的实例组成，是一种虚拟防火墙，用于设置不同实例的网络访问控制。
--   [SSH 密钥对](intl.zh-CN/产品简介/网络和安全性/SSH 密钥对.md#) ：远程登录Linux ECS实例的验证方式，阿里云存储公钥，您需要自己妥善保管私钥。您也可以选择使用 [用户名密码](../intl.zh-CN/用户指南/连接实例/使用用户名密码验证连接 Linux 实例.md#) 验证登录Linux ECS实例。
--   IP地址：包括用于 [内网通信](intl.zh-CN/产品简介/网络和安全性/内网.md#) 的内网IP或私有IP，以及用于访问Internet的公网IP。
--   [弹性公网IP](https://help.aliyun.com/product/61789.html)：可以与实例反复绑定或解绑的静态公网IP地址。
--   [云服务器管理控制台](https://ecs.console.aliyun.com/#/home)：是指ECS的Web操作界面。
+云服务器ECS主要包含以下功能组件：
 
-## 相关服务 {#section_ogy_tqj_ydb .section}
+-   [实例](../../../../cn.zh-CN/实例/实例概述.md#)：等同于一台虚拟服务器，内含CPU、内存、操作系统、网络配置、磁盘等基础的计算组件。实例的计算性能、内存性能和适用业务场景由[实例规格](../../../../cn.zh-CN/实例/实例规格族.md#)决定，其具体性能指标包括实例vCPU核数、内存大小、网络性能等。
+-   [镜像](../../../../cn.zh-CN/镜像/镜像概述.md#)：提供实例的操作系统、初始化应用数据及预装的软件。操作系统支持多种Linux发行版和多种Windows Server版本。
+-   [块存储](../../../../cn.zh-CN/块存储/什么是块存储.md#)：块设备类型产品，具备高性能和低时延的特性。提供基于分布式存储架构的[云盘](../../../../cn.zh-CN/块存储/云盘/云盘概述.md#)、[共享块存储](../../../../cn.zh-CN/块存储/共享块存储.md#)（公测中）以及基于物理机本地存储的[本地盘](../../../../cn.zh-CN/块存储/本地盘.md#)。
+-   [快照](../../../../cn.zh-CN/快照/快照概述.md#)：某一时间点一块云盘或共享块存储的数据状态文件。常用于数据备份、数据恢复和制作自定义镜像等。
+-   [安全组](../../../../cn.zh-CN/安全/安全组/安全组概述.md#)：由同一地域内具有相同保护需求并相互信任的实例组成，是一种虚拟防火墙，用于设置实例的网络访问控制。
+-   [网络](../../../../cn.zh-CN/网络/网络类型.md#)：
+    -   [专有网络VPC](../../../../cn.zh-CN/产品简介/什么是专有网络.md#)：逻辑上彻底隔离的云上私有网络。您可以自行分配私网IP地址范围、配置路由表和网关等。
+    -   经典网络：所有经典网络类型实例都建立在一个共用的基础网络上。由阿里云统一规划和管理网络配置。
 
-您可以从 [云市场](https://www.alibabacloud.com/marketplace) 获取由第三方服务商提供的基础软件、企业软件、网站建设、代运维、云安全、数据及API、解决方案等相关的各类软件和服务。您也可以成为云市场服务供应商。
+更多功能组件详情，请参见[云服务器ECS产品详情页](https://www.aliyun.com/product/ecs)。
 
-您可以根据业务需求和策略的变化自动调整ECS资源。更多信息，请参考 [弹性伸缩文档](https://www.alibabacloud.com/help/zh/product/25855.htm)。
+以下为云服务器ECS的产品组件架构图，图中涉及的功能组件的详细介绍请参见相应的帮助文档。
 
-您可以在一组云服务器ECS上通过Docker容器管理应用生命周期。更多信息，请参考 [容器服务（Container Service）文档](https://www.alibabacloud.com/help/zh/product/25972.htm)。
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9543/155962969844516_zh-CN.jpg)
 
-您可以对多台云服务器ECS进行流量分发的负载均衡服务。更多信息，请参考 [负载均衡（Server Load Balancer）文档](https://www.alibabacloud.com/help/zh/product/27537.htm)。
+## 产品定价 {#section_vq5_brj_ydb .section}
 
-您可以监控ECS实例、系统盘和公网带宽等。更多信息，请参考 [云监控（CloudMonitor）文档](https://www.alibabacloud.com/help/zh/product/28572.htm)。
+云服务器ECS支持预付费、按量付费、预留实例券（邀测中）、抢占式实例等多种账单计算模式。更多详情，请参见[计费概述](../../../../cn.zh-CN/产品定价/计费概述.md#)和[云产品定价页](https://www.aliyun.com/price/product#/ecs/detail)。
 
-您可以使用安骑士保障云服务器ECS的安全。更多信息，请参考 [安骑士文档](https://www.alibabacloud.com/help/zh/product/28449.htm)。
+## 管理工具 {#section_lsd_yqj_ydb .section}
 
-对于部署在云服务器ECS上的应用，阿里云为您提供了免费的DDoS基础防护，您也可以使用DDoS高防IP保障源站的稳定可靠。更多信息，请参考 [DDoS基础防护文档](https://www.alibabacloud.com/help/zh/product/28396.htm) 和 [DDoS高防IP文档](https://www.alibabacloud.com/help/zh/product/28461.htm)。
+通过注册阿里云账号，您可以在任何地域下，通过阿里云提供的以下途径创建、使用或者释放云服务器ECS：
 
-您可以编写代码调用阿里云开发者工具包（SDK）访问阿里云的产品和服务，更多信息，请参考 [阿里云开发工具包\(SDK\)](https://www.alibabacloud.com/zh/support/developer-resources)。您可以使用 [OpenAPI Explorer](https://api.aliyun.com/) 在线调试ECS API，并生成对应SDK Demo代码。
+-   ECS管理控制台：具有交互式操作的Web服务页面。关于管理控制台的操作，请参见[常用操作导航](../../../../cn.zh-CN/个人版快速入门/623常用操作导航.md#)。
+-   ECS API：支持GET和POST请求的RPC风格API。关于API说明，请参见[API参考](../../../../cn.zh-CN/API参考/简介.md#)。以下为调用云服务器ECS API的常用开发者工具：
+    -   [命令行工具CLI](https://help.aliyun.com/product/29991.html)：基于阿里云API建立的灵活且易于扩展的管理工具。您可基于命令行工具封装阿里云的原生API，扩展出您需要的功能。
+    -   [OpenAPI Explorer](https://api.aliyun.com/)：提供快速检索接口、在线调用API和动态生成SDK示例代码等服务。
+    -   [阿里云SDK](https://develop.aliyun.com/tools/sdk?#/java)：提供Java、Python、PHP等多种编程语言的SDK。
+-   [资源编排（Resource Orchestration Service）](../../../../cn.zh-CN/产品简介/什么是资源编排服务？.md#)：通过创建一个描述您所需的所有阿里云资源的模板，然后资源编排将根据模板，自动创建和配置资源。
+-   [Terraform](../../../../cn.zh-CN/最佳实践/Terraform/什么是Terraform.md#)：能够通过配置文件在阿里云以及其他支持Terraform的云商平台调用计算资源，并对其进行版本控制的开源工具。
+-   阿里云App：移动端类型的管理工具。关于如何使用阿里云App，请参见[App用户指南](https://help.aliyun.com/product/48842.html)。
+-   [Alibaba Cloud Toolkit](https://help.aliyun.com/product/29966.html)：阿里云针对IDE平台为开发者提供的一款插件，用于帮助您高效开发并部署适合在云端运行的应用。
 
-## ECS定价 {#section_vq5_brj_ydb .section}
+## 部署建议 {#section_qde_v9o_iur .section}
 
-ECS支持预付费和按量付费。更多信息，请参考 [产品计价](../intl.zh-CN/产品定价/计费概述.md#) 文档。
+您可以从以下维度考虑如何启动并使用云服务器ECS：
 
-ECS及相关资源的价格信息，请参考 [云产品定价页](https://www.alibabacloud.com/zh/product/ecs)。
+-   地域和可用区
+
+    地域指阿里云的数据中心，地域和可用区决定了ECS实例所在的物理位置。一旦成功创建实例后，其[元数据](../../../../cn.zh-CN/实例/管理实例/使用实例元数据/什么是实例元数据.md#)（仅专有网络VPC类型ECS实例支持获取元数据）将确定下来，并无法更换地域。您可以从用户地理位置、阿里云产品发布情况、应用可用性、以及是否需要内网通信等因素选择地域和可用区。例如，如果您同时需要通过阿里云内网使用[云数据库RDS](../../../../cn.zh-CN/云数据库RDS简介/什么是云数据库RDS.md#)，RDS实例和ECS实例必须处于同一地域中。更多详情，请参见[地域和可用区](../../../../cn.zh-CN/通用参考/地域和可用区.md#)。
+
+-   高可用性
+
+    为保证业务处理的正确性和服务不中断，建议您通过[快照](../../../../cn.zh-CN/快照/快照概述.md#)实现数据备份，通过跨可用区、[部署集](../../../../cn.zh-CN/部署与运维/部署集/部署集概述.md#)、[负载均衡SLB](../../../../cn.zh-CN/产品简介/什么是负载均衡.md#)等实现应用容灾。
+
+-   网络规划
+
+    阿里云推荐您使用[专有网络VPC](../../../../cn.zh-CN/产品简介/什么是专有网络.md#)，可自行规划私网IP，全面支持新功能和新型实例规格。此外，专有网络VPC支持多业务系统隔离和多地域部署系统的使用场景。
+
+-   安全方案
+
+    您可以使用云服务器ECS的安全组，控制ECS实例的出入网访问策略以及端口监听状态。对于部署在云服务器ECS上的应用，阿里云为您提供了免费的[DDoS基础防护](../../../../cn.zh-CN/安全/DDoS基础防护.md#)，此外您还可以使用阿里云云盾，例如：
+
+    -   通过DDoS高防IP保障源站的稳定可靠。更多详情，请参见[DDoS高防IP文档](../../../../cn.zh-CN/DDoS高防IP/产品简介/什么是DDoS高防IP.md#)。
+    -   通过安骑士保障云服务器ECS的安全。更多详情，请参见[安骑士文档](../../../../cn.zh-CN/产品简介/什么是安骑士？.md#)。
+
+## 学习路径 {#section_flx_zwp_52b .section}
+
+您可以通过[ECS学习路径图](https://help.aliyun.com/learn/learningpath/ecs.html)快速了解产品，由浅入深地学习运维云服务器ECS。
+
+## 相关服务 {#section_cdb_tqj_ydb .section}
+
+使用云服务器ECS的同时，您还可以选择以下阿里云服务：
+
+-   根据业务需求和策略的变化，使用[弹性伸缩（Auto Scaling）](../../../../cn.zh-CN/产品简介/什么是弹性伸缩.md#)自动调整云服务器ECS的数量。
+-   使用[容器服务（Container Service）](../../../../cn.zh-CN/产品简介/什么是容器服务.md#)在一组云服务器ECS上通过Docker容器管理应用生命周期。
+-   通过[负载均衡（Server Load Balancer）](../../../../cn.zh-CN/产品简介/什么是负载均衡.md#)对多台云服务器ECS实现流量分发的负载均衡目的。
+-   通过[云监控（CloudMonitor）](../../../../cn.zh-CN/产品简介/产品概述.md#)制定实例、系统盘和公网带宽等的监控方案。
+-   在同一阿里云地域下，采用[关系型云数据库（Relational Database Service）](../../../../cn.zh-CN/云数据库RDS简介/什么是云数据库RDS.md#)作为云服务器ECS的数据库应用是典型的业务访问架构，可极大降低网络延时和公网访问费用，并实现云数据库RDS的最佳性能。云数据库RDS支持多种数据库引擎，包括MySQL、SQL Server、PostgreSQL、PPAS和MariaDB。
+-   在[云市场](https://market.aliyun.com/)获取由第三方服务商提供的基础软件、企业软件、网站建设、代运维、云安全、数据及API、解决方案等相关的各类软件和服务。您也可以成为云市场服务供应商，提供软件应用及服务。更多详情，请参见[云市场文档](https://help.aliyun.com/product/30488.html)。
+
+更多方案，请参见[阿里云解决方案](https://www.aliyun.com/solution/all)。
 

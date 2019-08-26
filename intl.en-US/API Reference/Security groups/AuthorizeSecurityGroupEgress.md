@@ -1,108 +1,165 @@
-# AuthorizeSecurityGroupEgress {#AuthorizeSecurityGroupEgress .reference}
+# AuthorizeSecurityGroupEgress {#doc_api_1032040 .reference}
 
-Adds an outbound rule to a security group. This action permits or declines the outbound traffic from the instances that are in a specified security group to other devices. 
+Sets an outbound rule for a security group. This operation allows or blocks the outbound traffic from the instances in the security group to other devices.
 
-## Description {#section_ytt_yl1_ydb .section}
+## Description {#description .section}
 
-We define the beginning of the traffic as the source, and the terminal of the traffic as the destination, see the following figure.
+Outbound traffic describes the traffic sent by a source security group to some other destination security group.
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9918/6061_en-US.png)
+When you call this operation, note that:
 
-When you call this interface, consider the following:
+-   A maximum of 100 outbound rules can be configured for a single security group.
+-   You can set the security group rule to either accept or drop.
+-   The priority of a security group rule ranges from 1 to 100. A smaller value indicates a higher priority.
+-   When two or more security group rules have the same priority, drop rules will take precedence over accept rules.
+-   The destination device can belong to a specified range of IP addresses \(DestCidrIp\) or another security group \(DestGroupId\).
+-   You can determine an outbound rule by specifying one of the following sets of parameters. The AuthorizeSecurityGroupEgress operation fails if the rule being created matches an existing rule.
+    -   Grant access permissions to a specified range of IP addresses. For a security group of the classic network type, you can set the NicType parameter to either Internet or intranet. For a security group of the VPC type, you can set the NicType parameter only to intranet. You can specify the following set of parameters: IpProtocol, PortRange, SourcePortRange \(optional\), NicType, Policy, DestCidrIp, and SourceCidrIp \(optional\).
 
--   You can add up to 100 authorization rules to one security group.
+        ``` {#codeblock_272_511_wo7}
+        https://ecs.aliyuncs.com/?Action=AuthorizeSecurityGroupEgress
+        &SecurityGroupId=sg-94n63e80l
+        &IpProtocol=icmp
+        &DestCidrIp=10.0.0.0/8
+        &PortRange=-1/-1
+        &NicType=intranet
+        &Policy=Allow
+        &<Common request parameters>
+        ```
 
--   You can set the authorization policies to `accept` or `drop`.
+    -   Grants access permissions to other security groups in the same region. For this configuration, the NicType parameter must be set to intranet. To allow mutual access between classic network-type security groups, you can grant permission to one security group in the same region to access the other security group. The security group granted access can belong to your own Alibaba Cloud account, or can belong to another Alibaba Cloud account specified by the DestGroupOwnerAccount parameter. To allow mutual access between VPC-type security groups, you can grant permission to one security group in the same VPC to access the other security group. You can specify the following set of parameters: IpProtocol, PortRange, SourcePortRange \(optional\), NicType, Policy, DestCidrIp \(optional\), DestGroupOwnerAccount, and DestGroupId.
 
--   The `Priority` of a security group ranges from 1 to 100. Here, a smaller number means a higher priority.
+        ``` {#codeblock_7ld_jzf_3pm}
+        https://ecs.aliyuncs.com/?Action=AuthorizeSecurityGroupEgress
+        &SecurityGroupId=sg-F876FF7BA
+        &DestGroupId=sg-1651FBB64
+        &DestGroupOwnerAccount=test@aliyun.com
+        &IpProtocol=tcp
+        &PortRange=22/22
+        &NicType=intranet
+        &Policy=Drop
+        &<Common request parameters>
+        ```
 
--   If the priorities of several authorization rules are the same. The `drop` rules take the priority by default.
 
--   The destination device can be an IP address range \(`DestCidrIp`\) or the instances that are in another security group \(`DestGroupId`\).
+## Debugging {#apiExplorer .section}
 
--   Use the following two sets of parameters to add a security group rule. If one rule already exists according to the two sets of parameters, the `AuthorizeSecurityGroupEgress` fails.
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=AuthorizeSecurityGroupEgress) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-    -   Sets the access rights for the specified IP address segment, such as [request Example 1](#Sample1): `IpProtocol`, `PortRange`, \(optional\) `SourcePortRange`, `NicType`, `Policy`, `DestCiderIp` \(Optional\)`SourceCidrIp`.
+## Request parameters {#parameters .section}
 
-    -   Sets the access rights for other security groups, such as [request Example 2](#Sample2): `IpProtocol`, `PortRange`, \(optional\) `SourcePortRange`, `NicType`, `Policy`, `DestCiderIp`, `DestGroupOwnerAccount` and `DestGroupId`.
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|IpProtocol|String|Yes|all| The transport layer protocol. This parameter is case-sensitive. Valid values:
 
-
-## Request parameters {#RequestParameter .section}
-
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: AuthorizeSecurityGroupEgress.|
-|RegionId|String|Yes|The ID of the region to which the source security group belongs. For more information, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|SecurityGroupId|String|Yes|The source security group ID.|
-|IpProtocol|String|Yes|The transport layer protocol. Not case sensitive. Optional values:-   icmp
+ -   icmp
 -   gre
 -   tcp
 -   udp
--   all: Supports all protocols at the same time
+-   all: All protocols are supported.
 
-|
-|PortRange|String|Yes|The range of destination port relevant to the transport layer protocol. Value range:-   For TCP/UDP protocol, \[1, 65535\] . Use the slash \(/\) to separate the starting and ending ports. Demonstration: `1/200`; error Demonstration: `200/1`.
--   ICMP protocol:-1/-1.
--   For GRE protocol, -1/-1.
--   For all the protocols, -1/-1.
+ |
+|PortRange|String|Yes|1/200| The range of destination port numbers relevant to the transport layer protocol. Valid values:
 
-|
-|SourcePortRange|String|No|The range of source port relevant to the transport layer protocol. Value range:-   TCP/UDP protocol: \[1, 65535\] . Use the slash \(/\) to separate the starting and ending ports. Demonstration: `1/200`; error Demonstration: `200/1`.
--   ICMP protocol:-1/-1.
--   GRE Protocol:-1/-1.
--   All:-1/-1.
+ -   When IpProtocol is set to tcp or udp, the port number range is 1 to 65535. Separate the starting port and the ending port with a forward slash \(/\). Correct example: 1/200. Incorrect example: 200/1.
+-   When IpProtocol is set to icmp, the port number range is -1/-1, indicating that all values are valid.
+-   When IpProtocol is set to gre, the port number range is -1/-1, indicating that all values are valid.
+-   When IpProtocol is set to all, the port number range is -1/-1, indicating that all values are valid.
 
-|
-|NicType|String|No|The network interface type. Value range:-   internet: internet network card
--   intranet: intranet network card
+ |
+|RegionId|String|Yes|cn-hangzhou| The ID of the region to which the source security group belongs. You can call [DescribeRegions](~~25609~~) to view the latest regions of Alibaba Cloud.
 
-In mutual security group authorization, `DestGroupId` is specified,  while `DestCidrIp`  is not specified, you must specify the `NicType` as `intranet`. Default value: internet|
-|Policy|String|No|The access permission. Value range:-   accept: access accepted
--   drop: access denied
+ |
+|SecurityGroupId|String|Yes|sg-securitygroupid1| The ID of the source security group.
 
-Default value: accept|
-|DestCidrIp|String|No|The destination IP address range. Only CIDR and IPv4 format are supported. Default: 0.0.0.0/0|
-|SourceCidrIp|String|No|The source IP address range. Only CIDR and IPv4 format are supported. Default value: 0.0.0.0/0|
-|DestGroupId|String|No|The destination security group ID. Either the `DestGroupId` or  `DestCidrIp` parameter  must be set. If `DestGroupId` is specified and `DestCidrIp` is not specified, `NicType` must be set to `intranet`. If `DestGroupId` and  `DestCidrIp` are specified,  `DestCidrIp`  by default.|
-|DestGroupOwnerAccount|String|No|The Alibaba Cloud account of the destination security group. -   If the  `DestGroupOwnerAccount` `DestGroupOwnerId` are not set, authorization is performed for security groups of the same account.
--   If the `DestCidrIp` is already set, the `DestGroupOwnerAccount` is invalid.
+ |
+|Action|String|No|AuthorizeSecurityGroupEgress| The operation that you want to perform. Set the value to AuthorizeSecurityGroupEgress.
 
-|
-|DestGroupOwnerId|String|No|The Alibaba Cloud account ID of the destination security group.-   If the `DestGroupOwnerAccount` and `Destgroupowneraccount` are not set, it is considered to be setting access rights for your other security groups.
--   If you have already set the `DestCidrIp` parameter, the parameter `DestGroupOwnerId` is invalid.
+ |
+|ClientToken|String|No|123e4567-e89b-12d3-a456-426655440000| A client token. It is used to ensure the idempotency of requests. The value of this parameter is generated by the client and is unique among different requests. The **ClientToken** parameter must be no more than 64 ASCII characters in length. For more information, see [How to ensure idempotency](~~25693~~).
 
-|
-|Priority|String|No|Authorization policy priority. Value range: \[1, 100\]. Default value: 1.
+ |
+|Description|String|No|FinanceJoshua| The description of the security group rule. The description can be up to 1 to 512 characters in length.
 
-|
-|Description|String|No|The security group rule description,  which can contain up to 512 characters.|
+ |
+|DestCidrIp|String|No|0.0.0.0/0| The destination CIDR block or IPv4 address. Default value: null.
 
-## Return parameters {#section_y5t_yl1_ydb .section}
+ |
+|DestGroupId|String|No|sg-securitygroupid2| The ID of the destination security group. Either the DestGroupId parameter or the DestCidrIp parameter must be specified. If the DestGroupId parameter is specified, but the DestCidrIp parameter is not, the NicType parameter must be set to intranet. If both the DestGroupId and DestCidrIp parameters are set, the DestCidrIp parameter will take precedence.
 
-All are common parameters. See [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#commonResponseParameters).
+ |
+|DestGroupOwnerAccount|String|No|FinanceJoshua| The Alibaba Cloud account of the destination security group when you set security group rules for different accounts.
 
-## Example { .section}
+ -   If neither the DestGroupOwnerAccount parameter nor the DestGroupOwnerId parameter is specified, the access permissions are granted to other security groups.
+-   If the DestCidrIp parameter is specified, the DestGroupOwnerAccount parameter will be ignored.
 
-**Request example 1** 
+ |
+|DestGroupOwnerId|Long|No|155780923770| The ID of the Alibaba account that owns the destination security group. This parameter is used to grant access for the current security group to send traffic to other Alibaba Cloud accounts.
 
-Grant access permission to a specified IP to a specified IP address range. Then, you can set the network interface \(`NicType`\) of a classic network-connected security group to Internet interface \(`internet`\) or  [intranet](../../../../intl.en-US/Product Introduction/Network and security/Intranet.md#) \(`intranet`\). VPC `NicType` of a VPC-Connected security group can be set to `intranet` only.
+ -   If neither the DestGroupOwnerAccount parameter nor the DestGroupOwnerId parameter is specified, access permissions are only granted to your own other security groups.
+-   If the DestCidrIp parameter is specified, the DestGroupOwnerId parameter will be ignored.
 
-```
-https://ecs.aliyuncs.com/?Action=AuthorizeSecurityGroupEgress
-&SecurityGroupId=sg-94n63e80l
-&IpProtocol=icmp
-&DestCidrIp=10.0.0.0/8
-&PortRange=-1/-1
-&NicType=intranet
-&Policy=Allow
-&<Common request parameters>
-```
+ |
+|Ipv6DestCidrIp|String|No|2001:db8:1234:1a00::XXX| The destination CIDR block or IPv6 address.
 
-**Request example 2**
+ Default value: null.
 
-Grant the access permission of another security group. Then, you can only set the network interface \(`NicType`\) to Internet interface \(`intranet`\). For mutual accesses between classic network-connected security groups, you can set the permission for another security group in the same region to access your security group. it can be yours or created by other Alibaba Cloud accounts\(`DestGroupOwnerAccount`\). VPC it must be in the same VPC of the source security group.
+ **Note:** Only IP addresses of the VPC type can be specified.
 
-```
+ |
+|Ipv6SourceCidrIp|String|No|2001:db8:1234:1a00::XXX| The source CIDR block or IPv6 address.
+
+ Default value: null.
+
+ **Note:** Only IP addresses of the VPC type can be specified.
+
+ |
+|NicType|String|No|intranet| The NIC type. Valid values:
+
+ -   internet: Internet NIC
+-   intranet: intranet NIC
+
+ This parameter must be set to intranet for mutual security group access where the DestGroupId parameter is specified and the DestCidrIp parameter is not. Default value: internet.
+
+ |
+|Policy|String|No|accept| The access control policy. Valid values:
+
+ -   accept: grants access.
+-   drop: denies access without returning a rejection response.
+
+ Default value: accept.
+
+ |
+|Priority|String|No|1| The priority of the security group rule. Valid values: 1 to 100.
+
+ Default value: 1.
+
+ |
+|SourceCidrIp|String|No|0.0.0.0/0| The source CIDR block or IPv4 address. Default value: null.
+
+ |
+|SourcePortRange|String|No|80/80| The range of source port numbers relevant to the transport layer protocol. Valid values:
+
+ -   When IpProtocol is set to tcp or udp, the port number range is 1 to 65535. Separate the starting port and the ending port with a forward slash \(/\). Correct example: 1/200. Incorrect example: 200/1.
+-   When IpProtocol is set to icmp, the port number range is -1/-1, indicating that all values are valid.
+-   When IpProtocol is set to gre, the port number range is -1/-1, indicating that all values are valid.
+-   When IpProtocol is set to all, the port number range is -1/-1, indicating that all values are valid.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=AuthorizeSecurityGroupEgress
 &SecurityGroupId=sg-F876FF7BA
 &DestGroupId=sg-1651FBB64
@@ -114,51 +171,56 @@ https://ecs.aliyuncs.com/?Action=AuthorizeSecurityGroupEgress
 &<Common request parameters>
 ```
 
-**Response sample** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <AuthorizeSecurityGroupEgressResponse>
-    <RequestId>CEF72CEB-54B6-4AE8-B225-F876FF7BA984</RequestId>
+  <RequestId>CEF72CEB-54B6-4AE8-B225-F876FF7BA984</RequestId>
 </AuthorizeSecurityGroupEgressResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "RequestId":"CEF72CEB-54B6-4AE8-B225-F876FF7BA984"
+	"RequestId":" CEF72CEB-54B6-4AE8-B225-F876FF7BA984"
 }
 ```
 
-## Error codes {#ErrorCode .section}
+## Error codes {#section_9vj_fit_suc .section}
 
-Error codes specific to this interface are as follows. For more error codes, visit the [API error center](https://error-center.alibabacloud.com/status/product/Ecs).
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|404|InvalidSecurityGroupId.NotFound|The specified SecurityGroupId does not exist.|The error message returned when the specified security group does not exist under this account. Check whether the security group ID is correct.|
+|404|InvalidDestGroupId.NotFound|The DestGroupId provided does not exist in our records.|The error message returned when the specified destination security group does not exist.|
+|400|OperationDenied|The specified IpProtocol does not exist or IpProtocol and PortRange do not match.|The error message returned when the specified IP protocol does not exist or does not match the port range.|
+|400|InvalidIpProtocol.Malformed|The specified parameter PortRange is not valid.|The error message returned when the specified value of the IpProtocol parameter is invalid.|
+|400|InvalidDestCidrIp.Malformed|The specified parameter DestCidrIp is not valid.|The error message returned when the specified value of the DestCidrIp parameter is invalid.|
+|400|InvalidPolicy.Malformed|The specified parameter Policy is not valid.|The error message returned when the specified value of the Policy parameter is invalid.|
+|400|InvalidNicType.Mismatch|Specified nic type conflicts with the authorization record.|The error message returned when the specified NIC type does not exist.|
+|403|InvalidParamter.Conflict|The specified SecurityGroupId should be different from the SourceGroupId.|The error message returned when the specified security group is the same as the source security group.|
+|400|InvalidDestGroup.NotFound|Specified destination security group does not exist.|The error message returned when the specified destination security group does not exist.|
+|400|InvalidPriority.Malformed|The parameter Priority is invalid.|The error message returned when the specified value of the Priority parameter is invalid.|
+|400|InvalidPriority.ValueNotSupported|The parameter Priority is invalid.|The error message returned when the specified value of the Priority parameter is invalid.|
+|400|InvalidDestCidrIp.Malformed|The specified parameter DestCidrIp is not valid.|The error message returned when the specified value of the DestCidrIp parameter is invalid.|
+|403|InvalidNetworkType.Conflict|The specified SecurityGroup network type should be same with SourceGroup network type \(vpc or classic\).|The error message returned when the network type of the specified security group is different from that of the source group.|
+|400|InvalidDestCidrIp.Malformed|The parameter DestCidrIp is not valid.|The error message returned when the specified value of the DestCidrIp parameter is invalid.|
+|403|InvalidNetworkType.Conflict|The specified SecurityGroup network type should be same with|The error message returned when the network type of the specified security group is different from that of the source group.|
+|400|InvalidNicType.ValueNotSupported|The parameter NicType is not valid.|The error message returned when the specified value of the NicType parameter is invalid.|
+|400|InvalidSecurityGroupDiscription.Malformed|The specified security group rule description is not valid.|The error message returned when the description of the specified security group is invalid.|
+|400|InvalidSecurityGroup.InvalidNetworkType|The specified security group network type is not support this operation, please check the security group network types. For VPC security groups, ClassicLink must be enabled.|The error message returned when the network types of the source security group and the destination security group are different.|
+|400|MissingParameter.Dest|Either DestCidrIp or DestGroupId must be specified.|The error message returned when neither the DestCidrIp parameter nor the DestGroupId parameter is specified.|
+|400|InvalidParam.PortRange|Please specify the PortRange or SourcePortRange in integer, less than 65535, and separate the range with ? /?.|The error message returned when the specified value of the PortRange or SourcePortRange parameter is invalid.|
+|400|InvalidIpProtocol.ValueNotSupported|The parameter IpProtocol must be specified with case insensitive TCP, UDP, ICMP, GRE or All.|The error message returned when the IpProtocol parameter is not set to tcp, udp, icmp, gre, or all.|
+|400|InvalidParam.SourceIp|%s|The error message returned when the specified source IP address is invalid.|
+|400|InvalidParam.DestIp|%s|The error message returned when the specified destination IP address is invalid.|
+|400|InvalidParam.Ipv6DestCidrIp|%s|The error message returned when the destination IPv6 address is invalid.|
+|400|InvalidParam.Ipv6SourceCidrIp|%s|The error message returned when the source IPv6 address is invalid.|
+|400|InvalidParam.Ipv4ProtocolConflictWithIpv6Address|%s|The error message returned when IPv4 addresses conflict with IPv6 addresses.|
+|400|InvalidParam.Ipv6ProtocolConflictWithIpv4Address|%s|The error message returned when IPv6 addresses conflict with IPv4 addresses.|
+|400|ILLEGAL\_IPV6\_CIDR|%s|The error message returned when the specified IPv6 CIDR block is invalid.|
 
-|Error code|Error message|HTTP status code|Note|
-|:---------|:------------|:---------------|:---|
-|InvalidDestCidrIp.Malformed|The specified parameter “DestCidrIp” is not valid.|400|The specified `DestCidrIp` is invalid.|
-|Invaliddestcidrip. Malformed|The specified parameter DestCidrIp is not valid.|400|The specified `DestCidrIp` is not valid.|
-|InvalidDestGroup.NotFound|Specified destination security group does not exist.|400|The specified `DestGroupId` is invalid.|
-|InvalidDestGroupId.Mismatch|Specified security group and destination group are not in the same VPC.|400|The network type of the specified destination security group is VPC, so the destination security group must be VPC-connected.|
-|InvalidNicType.Mismatch|Specified nic type conflicts with the authorization record.|400|The specified  `NicType` is invalid.|
-|InvalidNicType.ValueNotSupported|The specified NicType does not exist.|400|The specified `NicType` does not exist.|
-|InvalidPolicy.Malformed|The specified parameter “Policy” is not valid.|400|The specified `Policy` is invalid.|
-|InvalidPortRange.Malformed|The specified parameter “PortRange” is not valid.|400|The specified `PortRange` is invalid.|
-|InvalidPriority.Malformed|The specified parameter “Priority” is not valid.|400|The specified `Priority` is invalid.|
-|InvalidPriority.ValueNotSupported|The specified Priority is invalid.|400|The specified `Priority` is invalid.|
-|InvalidSecurityGroupDiscription.Malformed|The specified security group rule description is not valid.|400|The specified `Description` is invalid.|
-|InvalidSourceCidrIp.Malformed|The specified parameter “SourceCidrIp” is not valid.|400|The specified `SourceCidrIp` is invalid.|
-|InvalidSourcePortRange.Malformed|The specified parameter “SourcePortRange” is not valid.|400|The specified `SourcePortRange` is invalid.|
-|OperationDenied|The specified IpProtocol does not exist or IpProtocol and PortRange, SourcePortRange do not match.|400|The specified `IpProtocol` does not exist. Or the IpProtocol and the PortRange are incorrectly matched|
-|AuthorizationLimitExceed|The maximum number of authorization rules in the security group is exceeded.|403|You cannot add more than 100 authorization rules to one security group.|
-|InvalidDestGroupId.Mismatch|NicType is required or NicType expects intranet.|403|You must specify the `NicType`. Or the `NicType` must be `intranet`.|
-|InvalidNetworkType.Conflict|The specified SecurityGroup network type should be same with SourceGroup network type \(VPC or classic\).|403|The network type of the security group must be the same.|
-|InvalidParamter.Conflict|The specified SecurityGroupId should be different from the DestGroupId.|403|The `SecurityGroupId` and `DestGroupId` cannot indicate the same security group.|
-|InvalidSecurityGroup.IsSame|The authorized SecurityGroupId should be different from the DestGroupId.|403|Parameters `SecurityGroupId` and `DestGroupId` Cannot be the same.|
-|MissingParameter|The input parameter “DestGroupId” or “DestCidrIp” cannot be both blank.|403|Either the `DestGroupId` or `DestCidrIp` must be specified.|
-|InvalidDestGroupId.NotFound|The DestGroupId provided does not exist in our records.|404|The specified `DestGroupId` does not exist.|
-|InvalidRegionId.NotFound|The specified RegionId does not exist.|404|The specified `RegionId` does not exist.|
-|InvalidSecurityGroupId.NotFound|The specified SecurityGroupId does not exist.|404|The specified `SecurityGroupId` does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

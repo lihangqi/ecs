@@ -9,10 +9,10 @@ Describes your available automatic snapshot policies.
 |Action|String|Yes|The name of this interface. Value: DescribeAutoSnapshotPolicyEx.|
 |RegionId|String|Yes|The region of the automatic snapshot policies. For more information, see Regions and zones, or call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
 |AutoSnapshotPolicyId|String|No|The ID of the automatic snapshot policy to query.|
-|PageNumber|Integer|No|Displays the automatic snapshot policies on several pages. Initial value: 1 Default value: 1
+|PageNumber|Integer|No|Displays the automatic snapshot policies on several pages. Initial value: 1. Default value: 1.
 
 |
-|PageSize|Integer|No|Specifies the number of rows per page in case of querying by page. Maximum value: 50Default value: 10
+|PageSize|Integer|No|Specifies the number of rows per page in case of querying by page. Maximum value: 50.Default value: 10.
 
 |
 

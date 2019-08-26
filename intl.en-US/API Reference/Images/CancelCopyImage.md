@@ -1,69 +1,82 @@
-# CancelCopyImage {#CancelCopyImage .reference}
+# CancelCopyImage {#doc_api_999585 .reference}
 
-Cancels a pending image copy \(CopyImage\) operation.
+Cancels an image copy task.
 
-## Description {#section_qxx_22z_xdb .section}
+## Description {#description .section}
 
-When you call this interface, consider the following:
+When you call this operation, note that:
 
 -   After you cancel the task, the destination image created in the target region is deleted, and the source image remains unchanged.
+-   If the image copy process is completed, the CancelCopyImage operation fails and an error will be returned.
 
--   If the image copy process is completed, the action CancelCopyImage fails and an error returns.
+## Debugging {#apiExplorer .section}
 
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=CancelCopyImage) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Request parameters {#RequestParameter .section}
+## Request parameters {#parameters .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: CancelCopyImage.|
-|RegionId|String|Yes|ID of the region to where the source image belongs. You can call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|ImageId|String|Yes|ID of the source image that is being copied.|
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|ImageId|String|Yes|m-imageid1| The ID of the image being copied.
 
-## Response parameters {#section_wxx_22z_xdb .section}
+ |
+|RegionId|String|Yes|cn-hangzhou| The ID of the region to which the image belongs. You can call [DescribeRegions](~~25609~~) to view the latest regions of Alibaba Cloud.
 
-All parameters are common response parameters. For more information, see [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#commonResponseParameters).
+ |
+|Action|String|No|CancelCopyImage| The operation that you want to perform. Set the value to CancelCopyImage.
 
-## Examples { .section}
+ |
 
-**Request example** 
+## Response parameters {#resultMapping .section}
 
-```
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=CancelCopyImage
-&RegionId=cn-hangzhou
-&ImageId=img-2012-12-01-1300
-&<Common Request Parameters>
+&ImageId=m-imageid1
+&RegionId=cn-hangzhou 
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <CancelCopyImageResponse>
-    <RequestId>C8B26B44-0189-443E-9816-D951F59623A9</RequestId>
+  <RequestId>C8B26B44-0189-443E-9816-D951F59623A9</RequestId>
 </CancelCopyImageResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"RequestId":"C8B26B44-0189-443E-9816-D951F59623A9"
+}
 ```
 
-    "RequestId": "C8B26B44-0189-443E-9816-D951F59623A9"
+## Error codes {#section_s6s_4hb_h8p .section}
 
-```
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|404|InvalidRegionId.NotFound|The specified RegionId does not exist.|The error message returned when the specified Region ID does not exist. Check whether the service is available in this region.|
+|404|InvalidImageId.NotFound|The specified ImageId does not exist.|The error message returned when the specified image does not exist under this account. Check whether the image ID is correct.|
+|400|IncorrectImageStatus|The image is copied finished.|The error message returned when the specified image has been copied and the copy task cannot be canceled.|
+|400|InvalidDescription.Malformed|The specified description is wrongly formed.|The error message returned when the specified description is invalid. The description must be 2 to 256 characters in length and cannot start with http:// or https://.|
+|400|IncorrectImageStatus|The specified snapshot is not coping.|The error message returned when the specified snapshot is not being copied.|
+|400|IncorrectImageStatus|The specified image is not coping.|The error message returned when the specified image is not being copied.|
+|400|IncorrectImageStatus|The image has completed copy.|The error message returned when the specified image has been copied and the copy task cannot be canceled.|
+|400|IncorrectImageStatus|The Image copy has been failed.|The error message returned when the specified image failed to be copied.|
+|400|CancelNotSupported|The specified image copying can not be cancelled.|The error message returned when the specified copy task cannot be canceled.|
 
-## Error codes {#ErrorCode .section}
-
-Error codes specific to this interface are as follows. For more information, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message |HTTP status code|Meaning|
-|:---------|:-------------|:---------------|:------|
-|ImageCreatedNotFromCopy|The specified image is not the target image of a copy action.|400|The specified `ImageId` has no image copy task. Please try other images instead.|
-|IncorrectImageStatus|The image has completed copy.|400|This action fails because the image copy task of the specified `ImageId` is already complete.|
-|IncorrectImageStatus|The image is copied finished.|400|This action fails because the image copy task of the specified ImageId is already complete.|
-|IncorrectImageStatus|The specified snapshot is not coping.|400|The status of the specified ImageId is incorrect.|
-|IncorrectImageStatus|The specified image is not coping.|400|The status of the specified ImageId is incorrect.|
-|IncorrectImageStatus|The Image copy has been failed.|400|The status of the specified ImageId is incorrect.|
-|InvalidImageId.NotFound|The specified ImageId does not exist.|404|The specified ImageId does not exist.|
-|InvalidRegionId.NotFound|The specified region does not exist.|404|The specified `RegionId` does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

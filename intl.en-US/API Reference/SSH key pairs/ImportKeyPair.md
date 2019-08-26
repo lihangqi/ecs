@@ -1,91 +1,103 @@
-# ImportKeyPair {#ImportKeyPair .reference}
+# ImportKeyPair {#doc_api_1006131 .reference}
 
-Imports the public key of an SSH key pair that you create with other key pair generators into one of the Alibaba Cloud regions. Once the public key is imported we secure it. However, you must save the private key by yourself.
+Imports the public key of an RSA-encrypted key pair that was created by other key pair generators. After the public key is imported, you must store the private key on your own and ensure its confidentiality.
 
-## Description {#section_qqb_kpn_ydb .section}
+## Description {#description .section}
 
-When you call this interface, consider the following:
+When you call this operation, note that you can only import a maximum of 500 key pairs in each region.
 
--   You can create up to 500 key pairs in each Alibaba Cloud region.
+You can use any of the following encryption methods for your key pair:
 
--   The encryption method of your SSH key pair must be any of the following:
+-   `RSA`
+-   `DSA`
+-   `SSH-RSA`
+-   `SSH-DSS`
+-   `ECDSA`
+-   `ssh-rsa-cert-v00@openssh.com`
+-   `ssh-dss-cert-v00@openssh.com`
+-   `ssh-rsa-cert-v01@openssh.com`
+-   `ssh-dss-cert-v01@openssh.com`
+-   `ecdsa-sha2-nistp256-cert-v01@openssh.com`
+-   `ecdsa-sha2-nistp384-cert-v01@openssh.com`
+-   `ecdsa-sha2-nistp521-cert-v01@openssh.com`
 
-    -   rsa
-    -   dsa
-    -   ssh-rsa
-    -   ssh-dss
-    -   ecdsa
-    -   ssh-rsa-cert-v00@openssh.com
-    -   ssh-dss-cert-v00@openssh.com
-    -   ssh-rsa-cert-v01@openssh.com
-    -   ssh-dss-cert-v01@openssh.com
-    -   ecdsa-sha2-nistp256-cert-v01@openssh.com
-    -   ecdsa-sha2-nistp384-cert-v01@openssh.com
-    -   ecdsa-sha2-nistp521-cert-v01@openssh.com
+## Debugging {#apiExplorer .section}
 
-## Request parameters {#RequestParameter .section}
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=ImportKeyPair) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: ImportKeyPair|
-|RegionId|String|Yes|Regional ID. For more information, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|PublicKeyBody|String|Yes|The public key of the SSH key pair.|
-|KeyPairName|String|Yes|The name of the key pair. The name must be unique.-   Can be \[2, 128\] characters in length.
--   Must begin with an uppercase or lowercase English letter. Can contain digits, underscores \(\_\), colons \(:\), or hyphens \(-\).
--   Supports all character set encoding formats.
--   Cannot begin with http:// or https://.
+## Request parameters {#parameters .section}
 
-|
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|KeyPairName|String|Yes|FinanceJoshuaV24| The name of the key pair. The name must be globally unique. It must be 2 to 128 characters in length. It must start with a letter and cannot start with http:// or https://. It can contain letters, digits, colons \(:\), underscores \(\_\), and hyphens \(-\).
 
-## Return parameters {#ResponseParameter .section}
+ |
+|PublicKeyBody|String|Yes|xxxxxxxxxxxxxx| The public key of the key pair.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|KeyPairName|String|Key pair name.|
-|KeyPairFingerPrint|String| Fingerprint of the key pair The public key fingerprint format is defined in RFC4716 and uses the MD5 message digest algorithm. For more information, see [RFC4716](http://tools.ietf.org/html/rfc4716).|
+ |
+|RegionId|String|Yes|cn-hangzhou| The ID of the region where the key pair resides. You can call [DescribeRegions](~~25609~~) to view the latest list of Alibaba Cloud regions.
 
-## Example { .section}
+ |
+|Action|String|No|ImportKeyPair| The operation that you want to perform. Set the value to ImportKeyPair.
 
-**Request example** 
+ |
 
-```
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|KeyPairFingerPrint|String|89:f0:ba:62:ac:b8:aa:e1:61:5e:fd:81:69:86:6d:6b:f0:c0:5a:d7| The fingerprint of the key pair. MD5 is used based on the public key fingerprint format defined in RFC 4716. For more information, see RFC 4716.
+
+ |
+|KeyPairName|String|FinanceJoshauV24| The name of the key pair.
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=ImportKeyPair
 &RegionId=cn-qingdao
 &PublicKeyBody=xxxxxxxxxxxxxx
 &KeyPairName=test
-&<Common Request Parameter>
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <ImportKeyPairResponse>
-    <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
-    <KeyPairName>test</KeyPairName>
-    <KeyPairFingerPrint> 89:f0:ba:62:ac:b8:aa:e1:61:5e:fd:81:69:86:6d:6b:f0:c0:5a:d7</KeyPairFingerPrint>
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
+  <KeyPairName>test</KeyPairName>
+  <KeyPairFingerPrint> 89:f0:ba:62:ac:b8:aa:e1:61:5e:fd:81:69:86:6d:6b:f0:c0:5a:d7</KeyPairFingerPrint>
 </ImportKeyPairResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "RequestId": "473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
-    "KeyPairName": "test"
-    "KeyPairFingerPrint": "89:f0:ba:62:ac:b8:aa:e1:61:5e:fd:81:69:86:6d:6b:f0:c0:5a:d7"
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E",
+	"KeyPairFingerPrint":"89:f0:ba:62:ac:b8:aa:e1:61:5e:fd:81:69:86:6d:6b:f0:c0:5a:d7",
+	"KeyPairName":"test"
 }
 ```
 
-## Error codes {#ErrorCode .section}
+## Error codes {#section_bbc_0ph_guw .section}
 
-Error codes specific to this interface are as follows. For more error codes, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|403|QuotaExceed.KeyPair|The key pair quota exceeds.|The error message returned when the number of key pairs reaches the upper limit.|
+|400|InvalidPublicKeyBody.Malformed|The PublicKeyBody format is not supported.|The error message returned when the public key format is not supported.|
+|400|MissingParameter|The input parameter "PublicKeyBody" that is mandatory for processing this request is not supplied.|The error message returned when the required PublicKeyBody parameter is not specified.|
+|400|KeyPair.AlreadyExist|The key pair already exist.|The error message returned when a key pair already exists. Duplicate key pairs cannot be added.|
 
-|Error code|Error message|HTTP status code |Meaning|
-|:---------|:------------|:----------------|:------|
-|MissingParameter|The input parameter “RegionId” that is mandatory for processing this request is not supplied.|400|You must specify the `RegionId` parameter.|
-|InvalidPublicKeyBody.Malformed|The PublicKeyBody format is not supported.|400|The format of the specified `PublicKeyBody` is incorrect.|
-|InvalidKeyPairName.Malformed|Specified Key Pair name is not valid.|400| The specified `KeyPairName` is invalid or already exists.|
-|InvalidRegionId.NotFound|The specified RegionId does not exist.|404|The specified `RegionId` does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

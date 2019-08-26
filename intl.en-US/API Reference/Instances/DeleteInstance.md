@@ -1,67 +1,86 @@
-# DeleteInstance {#DeleteInstance .reference}
+# DeleteInstance {#doc_api_1161573 .reference}
 
-Release a Pay-As-You-Go instance.
+Releases a Pay-As-You-Go instance or a subscription instance that expires.
 
-## Description {#section_bvk_f4s_xdb .section}
+## Description {#description .section}
 
--   You can only release an instance that is in the **Stopped** \(`Stopped`\) status.
+-   After an instance is released, all the physical resources used by the instance are reclaimed. The data is erased and cannot be restored. The attached data disks with the `DeleteWithInstance=True` value will be released, but their automatic snapshots are retained. This depends on the value of `DeleteAutoSnapshot`. If the value is `DeleteAutoSnapshot=false`, their automatic snapshots are retained. If the value is `DeleteAutoSnapshot=true`, their automatic snapshots are released.
+-   For an ECS instance on which [Security Control](~~25695~~) is enabled and whose `OperationLocks` is tagged as `"LockReason" : "security"`, even if `DeleteWithInstance` of attached data disks is set to `False`, this value will be ignored and attached data disks will be released.
 
--   After the instance is released, all the physical resources used by the instance are recycled, removed, and impossible to recover.  The attached cloud disks with the property of `DeleteWithInstance=True` are also released. The automatic snapshots of these disks with  the property of `DeleteAutoSnapshot` being `DeleteAutoSnapshot=false` are retained, and automatic snapshots with the property of  `DeleteAutoSnapshot=true` are released.
+## Debugging {#apiExplorer .section}
 
--   If the instance is under [security control](intl.en-US/API Reference/Appendix/API behavior when an instance is locked for security reasons.md#) and `OperationLocks` indicates `"LockReason" : "security"`, even if the property of `DeleteWithInstance` is `False`, its attached cloud disks will be ignored and released directly.
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DeleteInstance) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
+## Request parameters {#parameters .section}
 
-## Request parameters {#RequestParameter .section}
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|InstanceId|String|Yes|i-instance1| The ID of the instance.
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface.  Value: DeleteInstance.|
-|InstanceId|String|Yes| ID of an instance.|
+ |
+|Action|String|No|DeleteInstance| The operation that you want to perform. Set the value to DeleteInstance.
 
-## Response parameters {#ResponseParameter .section}
+ |
+|Force|Boolean|No|false| Indicates whether to forcibly release an instance which is in the **running** \(`Running`\) state. Default value: false. Valid values:
 
-For more information about all the common response parameters, see [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#commonResponseParameters).
+ -   true: forcibly releases an instance which is in the **running** \(`Running`\) state. When this value is selected, temporary data in the memory and storage for the instance is erased and cannot be restored.
+-   false: You can select this value only for an instance which is in the **stopped** \(`Stopped`\) state.
 
-## Examples { .section}
+ |
+|TerminateSubscription|Boolean|No|false| Indicates whether to release an expired subscription instance. Default value: false.
 
-**Request example** 
+ |
 
-```
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The request ID.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DeleteInstance
-&InstanceId=i-instance1
-&<Common Request Parameters>
+&InstanceId=i-instance1 
+&Force=false
+&TerminateSubscription=false
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DeleteInstanceResponse>
-    <RequestId>928E2273-5715-46B9-A730-238DC996A533</RequestId>
+  <RequestId>928E2273-5715-46B9-A730-238DC996A533</RequestId>
 </DeleteInstanceResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"RequestId":"928E2273-5715-46B9-A730-238DC996A533"
+}
 ```
 
-    "RequestId": "928E2273-5715-46B9-A730-238DC996A533"
+## Error codes { .section}
 
-```
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|403|IncorrectInstanceStatus|The current status of the resource does not support this operation.|The error message returned when the operation is not supported while the resource is in the current state.|
+|403|ChargeTypeViolation|The operation is not permitted due to charge type of the instance.|The error message returned when this operation is not supported while this billing method is selected.|
+|400|DependencyViolation.RouteEntry|Specified instance is used by route entry.|The error message returned when custom routing rules still exist in the VPC.|
+|400|InvalidParameter|The input parameter InstanceId is invalid.|The error message returned when the specified InstanceId is invalid. Check whether the InstanceId exists and is correct.|
+|403|IncorrectInstanceStatus.Initializing|The specified instance status does not support this operation.|The error message returned when the instance is being initialized and cannot be released. Try again later.|
+|403|IncorrectInstanceStatus|The specified instance is still attached by volumes.|The error message returned when the specified instance still has data volumes.|
+|403|InvalidOperation.DeletionProtection|%s|The error message returned when release protection is enabled for the instance.|
+|403|InvalidOperation.NotInWhiteList|%s|The error message returned when the parameter is not in the whitelist.|
 
-## Error codes {#ErrorCode .section}
-
-The following error codes are restricted to this interface. For more error codes, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message|HTTP status code|Meaning|
-|:---------|:------------|:---------------|:------|
-|DependencyViolation.RouteEntry|Specified instance is used by route entry.|400| The specified instance is used by the service [Route entry](../../intl.en-US/User Guide/VRouter and route entries.md#).|
-|DependencyViolation.SLBConfiguring|Specified operation is denied as your instance is using by another product.|400|The specified instance is used by the service [Server Load Balancer](../../intl.en-US/Product Introduction/What is Server Load Balancer.md#).|
-|InvalidParameter|The input parameter InstanceId is invalid.|400|The specified instance ID is invalid.|
-|ChargeTypeViolation|The operation is not permitted due to charge type of the instance.|403|You cannot release an subscribed instance.|
-|IncorrectInstanceStatus|The current status of the resource does not support this operation.|403|You can only release an instance that is in the **Stopped** \(`Stopped`\) status.|
-|IncorrectInstanceStatus.Initializing|The specified instance status does not support this operation.|403|The specified instance is being created. Please try again later.|
-|InstanceLockedForSecurity|The specified operation is denied as your instance is locked for security reasons.|403|Your instance is locked out of security.|
-|InvalidInstanceId.NotFound|The specified InstanceId does not exist.|404|The specified instance does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

@@ -1,8 +1,14 @@
 # API behavior when an instance is locked for security reasons {#EcsApi .reference}
 
-Note that, disk-related activities in the In\_use status reference the instance OperationLocks. Otherwise, the instance OperationLocks may be ignored.
+This topic provides the API request consequence when your resource is frozen due to security concerns.
 
-When a security lock is indicated, the `OperationLocks` in the outgoing parameters returned by the `DescribeInstanceAttribute` will include `LockReason:security`.
+## API request consequence {#section_flj_dpg_ydb .section}
+
+When a security lock is indicated, the `OperationLocks` in the outgoing parameters returned by the `DescribeInstances` will include `LockReason:security`.
+
+**Note:** Disk-related activities in the `In_use` status reference the instance `OperationLocks`. Otherwise, the instance `OperationLocks` may be ignored.
+
+In the following table, "Normal Logic" indicates that the interface is executed and result returned based on the normal logic of the interface.
 
 |Interface|Behavior|
 |:--------|:-------|
@@ -11,7 +17,7 @@ When a security lock is indicated, the `OperationLocks` in the outgoing paramete
 |AuthorizeSecurityGroup|Normal logic|
 |CreateDisk|Normal logic|
 |CreateImage|Normal logic|
-|CreateInstance|-|
+|CreateInstance|Normal logic|
 |CreateSecurityGroup|Normal logic|
 |CreateSnapshot|Error \(Only for disks attached on this instance in the In\_use status\)|
 |DeleteDisk|Normal logic|
@@ -22,7 +28,6 @@ When a security lock is indicated, the `OperationLocks` in the outgoing paramete
 |DescribeAutoSnapshotPolicy|Normal logic|
 |DescribeDisks|Normal logic|
 |DescribeImages|Normal logic|
-|DescribeInstanceAttribute|Normal logic|
 |DescribeInstanceStatus|Normal logic|
 |DescribeInstanceTypes|Normal logic|
 |DescribeInstanceMonitorData|Normal logic|
@@ -39,7 +44,10 @@ When a security lock is indicated, the `OperationLocks` in the outgoing paramete
 |ModifyDiskAttribute|Normal logic|
 |ModifyInstanceAttribute|Error|
 |RebootInstance|Error|
-|ReInitDisk|Error \(In\_use\), Normal Logic \(another status\)|
+|ReInitDisk| -   When the disk is in the `In_use`:
+-   When the disk is in the other status: Normal Logic
+
+ |
 |ReplaceSystemDisk|Normal logic|
 |ResetDisk|Error|
 |RevokeSecurityGroup|Normal logic|

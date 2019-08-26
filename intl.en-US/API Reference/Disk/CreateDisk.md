@@ -1,129 +1,173 @@
-# CreateDisk {#CreateDisk .reference}
+# CreateDisk {#doc_api_1032131 .reference}
 
-Creates a portable data disk. The disk category contains general cloud disk, efficiency cloud disk, and cloud SSD disk.
+Creates a Pay-As-You-Go or subscription data disk. You can create a basic disk, an ultra disk, or an SSD.
 
-## Description {#section_szb_3l5_xdb .section}
+## Description {#description .section}
 
--   Creating a disk involves resource billing. Know the billing methods of ECS in advance. For more details, see [Pay-As-You-Go](../intl.en-US/Pricing/Pay-As-You-Go.md#) \(`PostPaid`\).
+-   To ensure that instances can be successfully created, you must maintain a sufficient balance in your linked credit card or PayPal account. For more information, see [Pricing overview](~~25398~~).
+-   By default, the DeleteAutoSnapshot parameter is set to true when a disk is created. This indicates that when the disk is released, snapshots that were created from the disk are deleted together with the disk. You can call [ModifyDiskAttribute](~~25517~~) to modify the parameter value.
+-   By default, the Portable attribute of disks created by calling this operation is set to true, and the billing method is Pay-As-You-Go.
+-   You must specify either the Size or SnapshotId parameter. The Size parameter specifies the size of the disk and the SnapshotId parameter specifies the snapshot that is used to create the disk.
 
--   The `DeleteAutoSnapshot` attribute of the created disk is `true`, namely, automatic snapshots are deleted by default when you delete the data disk. You can use [ModifyDiskAttribute](intl.en-US/API Reference/Disk/ModifyDiskAttribute.md#) to modify this attribute.
+## Debugging {#apiExplorer .section}
 
--   By default, the `Portable` attribute of the created data disk is `true`, and the billing method is Pay-As-You-Go.
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=CreateDisk) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
--   You must specify either the request parameter `Size` or `SnapshotId`.  Request parameters The `Size` specifies the volume capacity of the data disk, and the `SnapshotId` specifies a snapshot to create the data disk.
+## Request parameters {#parameters .section}
 
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-hangzhou| The ID of the region to which the instance belongs. You can call [DescribeRegions](~~25609~~) to view the latest regions of Alibaba Cloud.
 
-## Request Parameters {#RequestParameter .section}
+ |
+|Action|String|No|CreateDisk| The operation that you want to perform. Set the value to CreateDisk.
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: CreateDisk.|
-|RegionId|String|Yes|The ID of the region to which an instance belongs. For more information, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|ZoneId|String|Yes|ID of the zone.|
-|DiskName|String|No|Indicates the disk name.-   The disk name can be 2 to 128 characters in length. It must begin with an uppercase or lowercase English letter, or Chinese character. Can contain digits, periods \(.\), colons\(:\), underscores \(\_\), and hyphens \(-\).
--   The disk name is displayed in the console.
--   Cannot begin with http:// or https://.
--   By default, the value of the disk name is null.
+ |
+|ZoneId|String|No|cn-hangzhou-g| Creates a Pay-As-You-Go disk in a specified availability zone. You cannot specify ZoneId and InstanceId simultaneously.
 
-|
-|Description|String|No|Indicates the disk description.-   It can be 2 to 256 characters in length.
--   The disk description is displayed in the console.
--   Cannot begin with http:// or https://.
--   By default, the value of the disk description is null.
+ |
+|InstanceId|String|No|i-bp1g6zv0ce8og\*\*\*\*\*\*p|Creates a subscription disk and the system automatically attachs it to a subscription instance with the InstanceId you specified. -   If you enter the InstanceId in this request, the ResourceGroupId, Tag,N,Key, Tag.N.Value, ClientToken, and KMSKeyId are not effective any longer.
+-   You cannot specify ZoneId and InstanceId simultaneously.
 
-|
-|Encrypted|Boolean|No|Whether the disk is encrypted or not. Optional values:-   true: encrypted
--   false: not encrypted
+ Default value: null, which indicates you create a Pay-As-You-Go disk. While you must specify the ZoneId if you choose the default setting for InstanceId.
 
-By default, the value of the encryption is false.|
-|DiskCategory|String|No|Indicates the category of the data disk. Optional values:-   Cloud: General cloud disk
--   cloud\_efficiency: Efficiency cloud disk
--   cloud\_ssd: Cloud SSD
+ |
+|ClientToken|String|No|123e4567-e89b-12d3-a456-426655440000| A client token. It is used to ensure the idempotency of requests. The value of this parameter is generated by the client and is unique among different requests. The **ClientToken** parameter must be no more than 64 ASCII characters in length. For more information, see [How to ensure idempotency](~~25693~~).
 
-By default, the value is cloud.|
-|Size|Integer|No|Indicates the size of the system disk \(GB\). The value must be equal to or greater than the size of the specific SnapshotId. Optional values:-   Cloud: \[5, 2000\]
--   cloud\_efficiency: \[20, 32768\]
--   cloud\_ssd: \[20, 32768\]
+ |
+|Description|String|No|FinanceDisk| The description of the disk. The description must be 2 to 256 characters in length and cannot start with http:// or https://. Default value: null.
 
-|
-|SnapshotId|String|No|Indicates the snapshot ID. Snapshots are used to create the data disk. After this parameter is specified, `Size` is ignored. The actual size of the created disk is the size of the specified snapshot. Snapshots generated on or before July 15, 2013 cannot be used to create a disk.|
-|ClientToken|String|No|Used to guarantee the idempotence of the request. The value is generated by a client. It must be unique among all requests and can contain a maximum of 64 ASCII characters. For more information, see [How to ensure idempotence](intl.en-US/API Reference/Appendix/How to ensure idempotence.md#).|
+ |
+|DiskCategory|String|No|cloud\_ssd| The category of the data disk. Valid values:
 
-## Response parameters {#ResponseParameter .section}
+ -   cloud: basic disk
+-   cloud\_efficiency: ultra disk
+-   cloud\_ssd: SSD
+-   cloud\_essd: ESSD
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|DiskId|String|ID of the disk|
+ Default value: cloud.
 
-## Examples { .section}
+ |
+|DiskName|String|No|FinanceJoshua| The name of the disk. The name must be 2 to 128 characters in length. It must start with a letter and cannot start with http:// or https://. It can contain letters, digits, colons \(:\), underscores \(\_\), and hyphens \(-\). Default value: null.
 
-**Request example** 
+ |
+|Encrypted|Boolean|No|false| Indicates whether the disk is encrypted. Default value: false.
 
-```
+ |
+|KMSKeyId|String|No|0e478b7a-4262-4802-b8cb-00d3fb40826X| The ID of the KMS key corresponding to the data disk.
+
+ |
+|ResourceGroupId|String|No|rg-resourcegroupid1| The ID of the resource group to which the disk belongs.
+
+ |
+|Size|Integer|No|2000| The size of the disk. Unit: GiB. The value of this parameter must be equal to or greater than the size of the specified snapshot. Valid values:
+
+ -   cloud: 5 to 2000
+-   cloud\_efficiency: 20 to 32768
+-   cloud\_ssd: 20 to 32768
+-   cloud\_essd: 20 to 32768
+
+ |
+|SnapshotId|String|No|s-snaoshot1| The ID of the snapshot used to create the disk. If this parameter is specified, the Size parameter will be ignored, and the size of the created disk will be the size of the specified snapshot. The specified snapshot cannot be created on or before July 15, 2013.
+
+ |
+|Tag.N.Key|String|No|FinanceDept| The tag key of the disk. Valid values of N: 1 to 20. It cannot be a null string. It can be a maximum of 64 characters in length. It cannot start with aliyun or acs:. It cannot contain http:// or https://.
+
+ |
+|Tag.N.Value|String|No|FinanceDeptJoshua| The tag value of the disk. Valid values of N: 1 to 20. It can be a null string. It can be a maximum of 128 characters in length. It cannot start with aliyun or acs:. It cannot contain http:// or https://.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|DiskId|String|d-bp131n0q38u3a4ziXXXXX| The ID of the disk.
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=CreateDisk
-&RegionId=cn-qingdao
-&ZoneId=cn-qingdao-b
-&Size=200
-&DiskName=ThisIsDiskName
-&Description=ThisIsDescription
-&<Common Request Parameters>
+&RegionId=cn-hangzhou 
+&ZoneId=cn-hangzhou-g
+&SnapshotId=s-snaoshot1
+&DiskName=FinanceJoshua
+&Size=2000
+&DiskCategory=cloud_ssd 
+&Description=FinanceDisk
+&Encrypted=false
+&ClientToken=123e4567-e89b-12d3-a456-426655440000
+&Tag. 1.value=FinanceDeptJoshua
+&Tag. 1.key=FinanceDept
+&Tag. 1. Key=FinanceDept
+&Tag. 1. Value=FinanceDeptJoshua
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <CreateDiskResponse>
-    <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
-    <DiskId>d-bp131n0q38u3a4ziXXXXX</DiskId>
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
+  <DiskId>d-bp131n0q38u3a4ziXXXXX</DiskId>
 </CreateDiskResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E",
+	"DiskId":"d-bp131n0q38u3a4ziXXXXX"
+}
 ```
 
-    "RequestId": "473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E",
-    "DiskId": "d-bp131n0q38u3a4ziXXXXX"
+## Error codes { .section}
 
-```
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|403|InvalidDataDiskCategory.NotSupported|Specified disk category is not supported.|The error message returned when the specified disk category does not support this operation.|
+|404|InvalidRegionId.NotFound|The specified RegionId does not exist.|The error message returned when the specified Region ID does not exist. Check whether the service is available in this region.|
+|404|InvalidZoneId.NotFound|The specified zone does not exist.|The error message returned when the specified zone does not exist.|
+|403|InvalidSnapshot.TooOld|This operation is forbidden because the specified snapshot is created before 2013-07-15.|The error message returned when the specified source snapshot was created on or before July 15, 2013 and cannot be reinitialized.|
+|403|InvalidSnapshot.TooLarge|The capacity of snapshot exceeds 2000GB.|The error message returned when the size of the specified snapshot exceeds 2,000 GB.|
+|403|OperationDenied|The specified snapshot is not allowed to create disk.|The error message returned when the specified snapshot cannot be used to create a disk.|
+|400|MissingParameter|The input parameter either SnapshotId or Size should be specified.|The error message returned when neither the SnapshotId parameter nor the Size parameter is specified.|
+|403|InvalidDiskCategory.ValueUnauthorized|The disk category is not authorized.|The error message returned when you are not authorized to use the specified disk category.|
+|403|InvalidSnapshotId.NotReady|The specified snapshot has not completed yet.|The error message returned when the specified snapshot is being created.|
+|403|InvalidDiskSize.TooSmall|Specified disk size is less than the size of snapshot.|The error message returned when the specified disk size is smaller than that of the snapshot.|
+|403|OperationDenied|The type of the disk does not support the operation.|The error message returned when the specified data disk type does not support this operation.|
+|403|InvalidDataDiskCategory.NotSupported|%s|The error message returned when the specified data disk type does not support this operation.|
+|400|Account.Arrearage|Your account has an outstanding payment.|The error message returned when your account has overdue payments.|
+|400|InvalidDiskCategory.ValueNotSupported|The specified parameter DiskCategory is not valid.|The error message returned when the specified value of the DiskCategory parameter is invalid.|
+|403|InvalidAccountStatus.NotEnoughBalance|Your account does not have enough balance.|The error message returned when your account balance is insufficient. You must top up your account before proceeding.|
+|400|InvalidDataDiskCategory.ValueNotSupported|%s|The error message returned when the parameter is not supported.|
+|400|InvalidParameter.Conflict|%s|The error message returned when the parameter conflicts with another parameter.|
+|400|InvalidDataDiskSize.ValueNotSupported|%s|The error message returned when the parameter is not supported.|
+|400|OperationDenied|The specified Zone is not available or not authorized.|The error message returned when the specified zone is unavailable or you are not authorized to access it.|
+|403|InvalidDiskCategory.NotSupported|The specified disk category is not supported.|The error message returned when the specified disk category is not supported.|
+|403|InvalidDiskSize.NotSupported|The specified disk size is not supported.|The error message returned when the specified disk size is not supported.|
+|400|InvalidDiskSize.NotSupported|The specified parameter size is not valid.|The error message returned when the specified Size parameter is invalid.|
+|403|UserNotInTheWhiteList|The user is not in disk white list.|The error message returned when you are not authorized to use the specified disk.|
+|400|InvalidParameter.EncryptedIllegal|%s|The error message returned when the parameter is not supported because the disk is encrypted.|
+|400|InvalidParameter.EncryptedNotSupported|%s|The error message returned when the parameter is not supported because the disk is encrypted.|
+|400|EncryptedOption.Conflict|%s|The error message returned when the parameter is not supported because the disk is encrypted.|
+|400|InvalidParameter.Encrypted.KmsNotEnabled|The encrypted disk need enable KMS|The error message returned when KMS has not been activated. KMS must be activated to encrypt disks.|
+|500|InternalError|The request processing has failed due to some unknown error, exception or failure.|The error message returned when an unknown error occurs.|
+|403|InvalidRegion.NotSupport|The specified region does not support byok.|The error message returned when BYOK is not supported in this region.|
+|403|UserNotInTheWhiteList|The user is not in byok white list.|The error message returned when you are not authorized to use BYOK.|
+|400|InvalidParameter.EncryptedIllegal|The specified parameter Encrypted must be true when kmsKeyId is not empty.|The error message returned when you have not enabled the encryption attribute after specifying the KMSKeyId parameter.|
+|404|InvalidParameter.KMSKeyId.NotFound|The specified KMSKeyId does not exist.|The error message returned when the specified KMSKeyId parameter does not exist.|
+|403|InvalidParameter.KMSKeyId.KMSUnauthorized|ECS service have no right to access your KMS.|The error message returned when ECS is not authorized to access your KMS resources.|
 
-## Error codes {#ErrorCode .section}
-
-Error codes specific to this interface are as follows. For more information, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message|HTTP status code|Meaning|
-|:---------|:------------|:---------------|:------|
-|Account.Arrearage|Your account has an outstanding payment.|400|Your account balance is insufficient. Update your account status and try again.|
-|InvalidDescription.Malformed|The specified description is wrongly formed.|400|The specified `DescriptionName` format is invalid.|
-|InvalidDiskCategory.NotSupported|The specified disk category is not support.|400|The specified disk category is not supported.|
-|InvalidDiskCategory.ValueNotSupported|The specified parameter DiskCategory is not valid.|400|The specified `DiskCategory` is invalid.|
-|InvalidDiskName.Malformed|The specified disk name is wrongly formed.|400|The specified `DiskName` format is invalid.|
-|EncryptedOption.Conflict|Encryption value of disk conflicts with that of snapshot.|400|The encryption value of disk and snapshot must be the same.|
-|InvalidParameter.Encrypted.KmsNotEnabled|The encrypted disk need enable KMS.|400|No KMS service is available in your account, please enable the KMS service by yourself.|
-|InvalidParameter.EncryptedIllegal|The value of parameter encrypted is illegal.|400|The specified parameter `Encrypted` is invalid.|
-|InvalidParameter.EncryptedNotSupported|Encrypted disk is not support in this region.|400|The specified region does not support encryption.|
-|InvalidParameter.EncryptedNotSupported|Corresponding data disk category does not support encryption.|400|The corresponding disk category does not support encryption.|
-|InvalidSize.ValueNotSupported|The specified parameter Size is not valid.|400|The specified `Size` is not invalid.|
-|MissingParameter|The input parameter either SnapshotId or Size should be specified.|400|The `SnapshotId` or `Size` parameter is not specified.|
-|InstanceDiskCategoryLimitExceed|The total size of specified disk category in an instance exceeds.|403|The specified disk category exceeds the maximum capacity of a single instance.|
-|InvalidAccountStatus.NotEnoughBalance|Your account does not have enough balance.|403|The account balance is insufficient.|
-|InvalidAccountStatus.SnapshotServiceUnavailable|Snapshot service has not been opened yet.|403|The Snapshot service is not activated.|
-|InvalidDataDiskCategory.NotSupported|Specified disk category is not supported.|403|The specified disk category is not supported.|
-|InvalidDataDiskCategory.NotSupported|diskCategory is CLOUD\_SSD, but the supported DiskCategory is \[io1, io4, io3\].|403|The specified disk category is not supported.|
-|InvalidDiskCategory.ValueUnauthorized|The disk category is not authorized.|403|The specified disk category is unauthorized.|
-|InvalidDiskSize.NotSupported|disk size is not supported.|403|The specified disk size is not supported.|
-|InvalidDiskSize.TooSmall|Specified disk size is less than the size of snapshot.|403|The size of the specified disk is smaller than the specified snapshot.|
-|InvalidSnapshot.NotReady|The specified snapshot creation is not completed yet.|403|The specified snapshot is not yet complete.|
-|InvalidSnapshot.TooLarge|The capacity of snapshot emissions 2000 GB.|403|The size of the specified snapshot exceeds the maximum value of the disk type.|
-|InvalidSnapshot.TooOld|This operation is forbidden because the specified snapshot is created before 2013-07-15.|403| The specified snapshot was created on or before July 15, 2013, so the disk cannot be created.|
-|InvalidSnapshotId.NotReady|The specified snapshot has not completed yet.|403|The specified snapshot is not yet complete.|
-|OperationDenied|The specified snapshot is not allowed to create disk.|403|The specified snapshot is not permitted to create a disk.|
-|OperationDenied|The type of the disk does not support the operation.|403|The specified disk type does not support this operation.|
-|QuotaExceed.PortableCloudDisk|The quota of portable cloud disk exceeds.|403|The portable general cloud disk quota has exceeded.|
-|InvalidRegionId.NotFound|The specified RegionId does not exist.|404|The specified `RegionId` does not exist.|
-|InvalidRegionId.NotFound|The specified RegionId does not exist.|404|The specified `RegionId` does not exist.|
-|InvalidSnapshotId.NotFound|The specified SnapshotId does not exist.|404|The specified SnapshotId does not exist.|
-|InvalidZoneId.NotFound|The specified zone does not exist.|404|The specified `ZoneId` does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

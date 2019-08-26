@@ -1,66 +1,74 @@
-# ModifySecurityGroupAttribute {#ModifySecurityGroupAttribute .reference}
+# ModifySecurityGroupAttribute {#doc_api_1031576 .reference}
 
-Modifies the attribute of the specified security group, including the security group name and description.
+Modifies the attributes of the specified security group, including the name and description of the security group.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: ModifySecurityGroupAttribute.|
-|RegionId|String|Yes| The region ID. For more information, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|SecurityGroupId|String|Yes| The ID of the security group.|
-|SecurityGroupName|String|No| The security group name.-   Can contain \[2, 128\] characters in length. Must begin with an English letter. Can contain digits, periods \(.\), underscores \(\_\), and hyphens \(-\).
--   The security group name is displayed in the console.
--   Cannot begin with http:// or https://.
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=ModifySecurityGroupAttribute) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-|
-|Description|String|No| The description of the security group.-   Can contain \[2, 256\] characters in length.
--   Cannot begin with http:// or https://.
--   Cannot be a null string, otherwise, the `Description` is ignored in the request.
+## Request parameters {#parameters .section}
 
-|
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-hangzhou| The ID of the region where the security group resides. You can call [DescribeRegions](~~25609~~) to view the latest regions of Alibaba Cloud.
 
-## Response parameters {#section_f54_lk5_xdb .section}
+ |
+|SecurityGroupId|String|Yes|sg-securitygroupid1| The ID of the security group.
 
-All are common response parameters. For more information, see [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#commonResponseParameters).
+ |
+|Action|String|No|ModifySecurityGroupAttribute| The operation that you want to perform. Set the value to ModifySecurityGroupAttribute.
 
-## Examples { .section}
+ |
+|Description|String|No|FinanceDept| The description of the security group. The description must be 2 to 256 characters in length and cannot start with http:// or https://. Default value: null.
 
-**Request example** 
+ |
+|SecurityGroupName|String|No|FinanceJoshua| The name of the security group. It must be 2 to 128 characters in length. It must start with a letter and cannot start with http:// or https://. It can contain letters, digits, colons \(:\), underscores \(\_\), and hyphens \(-\). Default value: null.
 
-```
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=ModifySecurityGroupAttribute
 &SecurityGroupId=sg-F876FF7BA
-&RegionId=cn-hangzhou
+&RegionId=cn-hangzhou 
 &SecurityGroupName=NewName
-&<Common Request Parameters>
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <ModifySecurityGroupAttributeResponse>
-     <RequestId>CEF72CEB-54B6-4AE8-B225-F876FF7BA984</RequestId>
+  <RequestId>CEF72CEB-54B6-4AE8-B225-F876FF7BA984</RequestId> 
 </ModifySecurityGroupAttributeResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "RequestId":"CEF72CEB-54B6-4AE8-B225-F876FF7BA984"
+	"RequestId":"CEF72CEB-54B6-4AE8-B225-F876FF7BA984"
 }
 ```
 
-## Error codes {#ErrorCode .section}
+## Error codes {#section_a8m_sfe_eqi .section}
 
-The following error codes are restricted to this interface. For more error codes, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|404|InvalidSecurityGroupId.NotFound|The specified security group does not exist.|The error message returned when the specified security group does not exist under this account. Check whether the security group ID is correct.|
 
-|Error code|Error message|HTTP status code|Meaning|
-|:---------|:------------|:---------------|:------|
-|InvalidSecurityGroupDiscription.Malformed|Specified security group description is not valid.|400|The specified `Description` is invalid.|
-|InvalidSecurityGroupName.Malformed|Specified security group name is not valid.|400|The specified `SecurityGroupName` is invalid.|
-|InvalidSecurityGroupId.NotFound|The specified SecurityGroupId does not exist.|404|The specified `SecurityGroupId` is invalid.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

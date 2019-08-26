@@ -1,108 +1,135 @@
-# DescribeClassicLinkInstances {#DescribeClassicLinkInstances .reference}
+# DescribeClassicLinkInstances {#doc_api_1030608 .reference}
 
-Describes one or more of your classic network-connected instances that have established ClassicLink with a VPC.
+Queries one or multiple classic network-connected instances that have established ClassicLink with VPCs.
 
-## Description {#section_b3w_mmn_ydb .section}
+## Description {#description .section}
 
-When you call this interface, consider the following:
+When you call this operation, note that:
 
--   This interface is only applicable to the classic network-connected instances.
+-   This API only supports classic network-connected instances.
+-   You can query a maximum of 100 classic network-connected instances each time.
+-   Either the VpcId parameter or the InstanceId parameter must be specified.
 
--   You can query at most 100 instances each time.
+## Debugging {#apiExplorer .section}
 
--   Either the parameter `VpcId` or `InstanceId` must be specified.
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DescribeClassicLinkInstances) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
+## Request parameters {#parameters .section}
 
-## Request parameters {#RequestParameter .section}
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-hangzhou| The ID of the region where the instance resides. You can call [DescribeRegions](~~25609~~) to view the latest regions of Alibaba Cloud.
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DescribeClassicLinkInstances.|
-|RegionId|String|Yes|The region ID of the instance. You can call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|InstanceId|String|No|The instance ID. It must be classic network-connected instances that are linked to a VPC by using ClassicLink. At most 100 instance IDs can be specified. IDs are separated by commas \(,\).  Sample:  `InstanceId=i-XXX, i-XXX, i-XXX, i-XXX, ...`.|
-|VpcId|String|No|VPC ID. The  [ClassicLink](../../intl.en-US/User Guide/Classiclink/Build ClassicLink connection.md#) service must be enabled for the specified VPC.|
-|PageNumber|Integer|No|Displays the information of the classic network-connected instances on several pages. Start value: 1.Default value: 1.
+ |
+|Action|String|No|DescribeClassicLinkInstances| The operation that you want to perform. Set the value to DescribeClassicLinkInstances.
 
-|
-|PageSize|Integer|No|The number of the classic network-connected instances on each page. Value range: \[1, 100\].Default value: 10.
+ |
+|InstanceId|String|No|i-test| The ID of the instance. You can specify a maximum of 100 instance IDs, which must be separated by commas \(,\).
 
-|
+ |
+|PageNumber|String|No|1| The current page number. Starting value: 1.
 
-## Response parameters {#ResponseParameter .section}
+ Default value: 1.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|TotalCount|Integer|Total number of ClassicLinks|
-|PageNumber|Integer|Page number of the connection list|
-|PageSize|Integer|Number of lines per page set during input|
-|Links|[Link](intl.en-US/API Reference/Data type/Link.md#)|An information set consists of VPC ID and classic network-connected instance ID.|
+ |
+|PageSize|String|No|10| The number of entries per page. Valid values: 1 to 100.
 
-## Examples { .section}
+ Default value: 10.
 
-**Request example** 
+ |
+|VpcId|String|No|vpc-test| The ID of the VPC. The [ClassicLink](~~65413~~) service must be enabled for the specified VPC.
 
-```
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|Links| | | The links between classic network-connected instances and VPCs.
+
+ |
+|└InstanceId|String|i-test| The ID of an instance.
+
+ |
+|└VpcId|String|vpc-test| The ID of a VPC.
+
+ |
+|PageNumber|Integer|1| The page number you query in the link list.
+
+ |
+|PageSize|Integer|10| The number of entries per page.
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the API request.
+
+ |
+|TotalCount|Integer|2| The total number of links.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DescribeClassicLinkInstances
-&RegionId=cn-hangzhou
+&RegionId=cn-hangzhou 
 &VpcId=vpc-test
 &InstanceId=i-test, i-test1
-&<Common Request Parameters>
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DescribeClassicLinkInstancesResponse>
-    <RequestId>B154D309-F3E1-4AB7-BA94-FEFCA8B89001</RequestId>
-    <TotalCount>2</TotalCount>
-    <PageNumber>1</PageNumber>
-    <PageSize>10</PageSize>
-    <Links>
-        <Link>
-            <InstanceId>i-test</InstanceId>
-            <VpcId>vpc-test</VpcId>
-        </Link>
-        <Link>
-            <InstanceId>i-test1</InstanceId>
-            <VpcId>vpc-test</VpcId>
-        </Link>
-    </Links>
+  <RequestId>B154D309-F3E1-4AB7-BA94-FEFCA8B89001</RequestId>
+  <TotalCount>2</TotalCount>
+  <PageNumber>1</PageNumber>
+  <PageSize>10</PageSize>
+  <Links>
+    <Link>
+      <InstanceId>i-test</InstanceId>
+      <VpcId>vpc-test</VpcId>
+    </Link>
+    <Link>
+      <InstanceId>i-test1</InstanceId>
+      <VpcId>vpc-test</VpcId>
+    </Link>
+  </Links>
 </DescribeClassicLinkInstancesResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"PageNumber":1,
+	"TotalCount":2,
+	"Links":{
+		"Link":[
+			{
+				"InstanceId":"i-test",
+				"VpcId":"vpc-test"
+			},
+			{
+				"InstanceId":"i-test1",
+				"VpcId":"vpc-test"
+			}
+		]
+	},
+	"PageSize":10,
+	"RequestId":"B154D309-F3E1-4AB7-BA94-FEFCA8B89001"
+}
 ```
 
-    "PageNumber":1,
-    "Links":{
-        "Link":[{
-            "InstanceId":"i-test",
-            "VpcId":"vpc-test"
-            
-           
-           "InstanceId": "i-test1",
-           "VpcId": "vpc-test"
-           
-    
-    "TotalCount":2,
-    "PageSize":10,
-    "RequestId":"B154D309-F3E1-4AB7-BA94-FEFCA8B89001"
+## Error codes {#section_3j2_ujd_r6k .section}
 
-```
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|403|InvalidInstanceId.NotBelong|The specified instance does not belong to you.|The error message returned when the specified instance does not exist under your account.|
 
-## Error codes {#ErrorCode .section}
-
-Error codes specific to this interface are as follows. For more information, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message|HTTP status code|Meaning|
-|:---------|:------------|:---------------|:------|
-|InvalidRegionId.Malformed|The specified RegionId is invalid.|400|The specified `RegionId` does not exist. Or you are unauthorized to access the specified region.|
-|InvalidInstanceId.NotBelong|The user does not own the specified instance.|403|The specified instance does not belong to you.|
-|InvalidParameter.InvalidInstanceIdAndVpcId|Either InstanceId or VpcId must be specified.|403|Either `InstanceId` or `VpcId` must be specified.|
-|InvalidParameter.ToManyInstanceIds|The maximum number of specified InstanceIds is exceeded.|403|The number of `InstanceId` must be less than 100.|
-|InvalidVpc.NotBelong|The user do not own the specified VPC.|403|The specified VPC does not belong to you.|
-|InvalidInstanceId.NotFound|The specified InstanceId does not exist.|404|The specified `InstanceId` does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

@@ -8,7 +8,7 @@ You must have the AccessKey ready. For more information, see [Create AccessKey](
 
 **Note:** 
 
-The AccessKey has a high level of account privileges. To avoid improper operations and data breach, we recommend that you [Create a RAM user](../../intl.en-US/Quick Start/Create a RAM user.md#), and act as a RAM user to [create your AccessKey](https://help.aliyun.com/document_detail/53045.html).
+The AccessKey has a high level of account privileges. To avoid improper operations and data breach, we recommend that you [Create a RAM user](../../../../intl.en-US/Quick Start/Create a RAM user.md#), and act as a RAM user to [create your AccessKey](https://help.aliyun.com/document_detail/53045.html).
 
 ## Step 1.  Install Packer {#section_j5g_gdm_xdb .section}
 

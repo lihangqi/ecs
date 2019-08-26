@@ -29,8 +29,8 @@ Especially, when you invoke the SSH key pairs APIs, or password exists in your r
 
 See the following table for the API service access endpoints of ECS.
 
-|Region|Access address|
-|:-----|:-------------|
+|Region \(Location\)|Endpoint|
+|:------------------|:-------|
 |Default|ecs.aliyuncs.com|
 |China North 3 \(Zhangjiakou\)|ecs.cn-zhangjiakou.aliyuncs.com|
 |China North 5 \(Hohhot\)|ecs.cn-huhehaote.aliyuncs.com|
@@ -41,6 +41,15 @@ See the following table for the API service access endpoints of ECS.
 |Asia Pacific SOU 1 \(Mumbai\) |ecs.ap-south-1.aliyuncs.com|
 |Middle East 1 \(Dubai\)|ecs.me-east-1.aliyuncs.com|
 |Germany 1 \(Frankfurt\)|ecs.eu-central-1.aliyuncs.com|
+
+Specifically, if you are from international regions, we recommend that you use the following central endpoints to avoid latency.
+
+|Region \(Location\)|Endpoint|
+|:------------------|:-------|
+|Default \(**US West 1** Silicon Valley\)|ecs.us-west-1.aliyuncs.com|
+|Default \(US East 1 Virginia\)|ecs.us-east-1.aliyuncs.com|
+|Default \(Hong Kong\)|ecs.cn-hongkong.aliyuncs.com|
+|Default \(Asia Pacific SE 1 Singapore\)|ecs.ap-southeast-1.aliyuncs.com|
 
 ## Request Parameters {#section_rtp_xvb_wdb .section}
 

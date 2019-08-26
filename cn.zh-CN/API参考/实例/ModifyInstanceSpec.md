@@ -1,54 +1,100 @@
-# ModifyInstanceSpec {#ModifyInstanceSpec .reference}
+# ModifyInstanceSpec {#doc_api_1161587 .reference}
 
-调整一台实例的实例规格和公网带宽大小。
+调整一台按量付费实例的实例规格和公网带宽大小。
 
-## 描述 {#section_bmh_rh5_xdb .section}
+## 接口描述 {#description .section}
 
 调用该接口时，您需要注意：
 
 -   实例必须处于无欠费状态。
-
 -   实例状态必须为 **运行中**（`Running`）或者 **已停止**（`Stopped`）时才能调节公网带宽大小。
-
--   升级或者降低实例规格前，您可以通过 [DescribeResourcesModification](cn.zh-CN/API参考/其他接口/DescribeResourcesModification.md#) 查询当前实例支持变配的实例规格。
-
-    更多详情，请参阅 *云栖社区* [查询 ECS 变配的可用资源实践](https://yq.aliyun.com/articles/500164)。
-
+-   升级或者降低按量付费实例规格前，您可以通过 [DescribeResourcesModification](~~66187~~) 查询当前实例支持变配的实例规格。
 -   实例状态必须为 **已停止**（`Stopped`）时才能变更实例规格。
-
 -   单次只能升级单项配置，即单次只能修改实例规格，或者只能调整公网带宽大小。
+-   单台实例每成功操作一次，5分钟内不能继续操作。
 
--   单个实例每成功操作一次，5 分钟内不能继续操作。
+## 调试 {#apiExplorer .section}
 
+前往【[API Explorer](https://api.aliyun.com/#product=Ecs&api=ModifyInstanceSpec)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
 
-## 请求参数 {#RequestParameter .section}
+## 请求参数 {#parameters .section}
 
-|名称|类型|是否必需|描述|
-|:-|:-|:---|:-|
-|Action|String|是|系统规定参数。取值：ModifyInstanceSpec|
-|InstanceId|String|是|指定的实例 ID。|
-|InstanceType|String|否|实例规格。更多详情，请参阅 [实例规格族](../../../../cn.zh-CN/产品简介/实例规格族.md#)，也可以调用 [DescribeInstanceTypes](cn.zh-CN/API参考/实例/DescribeInstanceTypes.md#)接口获得最新的规格表。|
-|InternetMaxBandwidthOut|Integer|否|公网出带宽最大值，单位为 Mbps \(Megabit per second\)。取值范围：-   按固定带宽计费：\[0, 100\]
--   按使用流量计费：\[0, 100\]
+|名称|类型|是否必选|示例值|描述|
+|--|--|----|---|--|
+|InstanceId|String|是|i-instanceid1|指定的实例 ID。
 
-|
-|InternetMaxBandwidthIn|Integer|否|公网入带宽最大值，单位为 Mbps \(Megabit per second\)。取值范围：-   按固定带宽计费：\[1, 200\]
--   按使用流量计费：\[1, 200\]
+ |
+|Action|String|否|ModifyInstanceSpec|接口名称。取值：**ModifyInstanceSpec**
 
-|
-|ClientToken|String|否|用于保证请求的幂等性。由客户端生成该参数值，要保证在不同请求间唯一。只支持 ASCII 字符，且不能超过 64 个字符。更多详情，请参阅 [如何保证幂等性](cn.zh-CN/API参考/附录/如何保证幂等性.md#)。|
+ |
+|AllowMigrateAcrossZone|Boolean|否|false|是否支持跨集群升级实例规格。默认值：**False**
 
-## 返回参数 {#ResponseParameter .section}
+ 当参数 **AllowMigrateAcrossZone** 取值为 **True** 时，一旦您根据返回信息升级了云服务器，请留意以下注意事项：
 
-|名称|类型|描述|
-|:-|:-|:-|
-|RequestId|String|请求 ID|
+ 经典网络类型实例：
 
-## 示例 { .section}
+ -   对于 [已停售的实例规格](~~55263~~)，非I/O优化实例变配到I/O优化实例时，实例私网IP地址、磁盘设备名和软件授权码会发生变化。对于Linux实例，普通云盘（**cloud**）会被识别为 **xvda** 或者 **xvdb** 等，高效云盘（**cloud\_efficiency**）和SSD云盘（**cloud\_ssd**）会被识别为 **vda** 或者 **vdb** 等。
+-   对于 [正常售卖的实例规格族](~~25378~~)，实例的私网 IP 地址会发生变化。
 
-**请求示例** 
+ 专有网络VPC类型实例：对于 [已停售的实例规格](~~55263~~)，非 I/O 优化实例变配到 I/O 优化实例时，云服务器磁盘设备名和软件授权码会发生变化。Linux 实例的普通云盘（**cloud**）会被识别为 **xvda** 或者 **xvdb** 等，高效云盘（**cloud\_efficiency**） 和SSD云盘（`**cloud_ssd**`）会被识别为 **vda** 或者 **vdb** 等。
 
-```
+ |
+|Async|Boolean|否|false|是否提交异步请求。
+
+ 默认值：false
+
+ |
+|InstanceType|String|否|ecs.g5.large|实例的目标规格。更多详情，请参阅 [实例规格族](~~25378~~)，也可以调用 [DescribeInstanceTypes](~~25620~~) 接口获得最新的规格表。
+
+ |
+|InternetMaxBandwidthIn|Integer|否|200|公网入带宽最大值，单位为 Mbps \(Megabit per second\)。取值范围：1~200
+
+ |
+|InternetMaxBandwidthOut|Integer|否|10|公网出带宽最大值，单位为 Mbps \(Megabit per second\)。取值范围：0~100
+
+ |
+|OwnerAccount|String|否|ECSforCloud|RAM用户的账号登录名称。
+
+ |
+|SystemDisk.Category|String|否|cloud\_ssd|更换系统盘类型。该参数只有在从 [已停售的实例规格](~~55263~~) 升级到 [正常售卖的实例规格族](~~25378~~)，并将非 I/O 优化实例规格升级为 I/O 优化实例规格时有效。取值范围：
+
+ -   cloud\_efficiency：高效云盘
+-   cloud\_ssd：SSD云盘
+
+ |
+|Temporary.EndTime|String|否|2017-12-05T22:40:00Z|临时提升带宽的截止时间点。按照 [ISO8601](~~25696~~) 标准表示，并需要使用UTC时间，格式为yyyy-MM-ddTHH:mm:ssZ。
+
+ **说明：** 该参数即将被弃用，为提高兼容性，请尽量使用其他参数。
+
+ |
+|Temporary.InternetMaxBandwidthOut|Integer|否|50|临时公网出带宽的最大值。取值范围：1~100
+
+ **说明：** 该参数即将被弃用，为提高兼容性，请尽量使用其他参数。
+
+ |
+|Temporary.StartTime|String|否|2017-12-05T22:40:00Z|临时提升带宽的起始时间点。按照 [ISO8601](~~25696~~) 标准表示，并需要使用UTC时间，格式为yyyy-MM-ddTHH:mm:ssZ。
+
+ **说明：** 该参数即将被弃用，为提高兼容性，请尽量使用其他参数。
+
+ |
+|ClientToken|String|否|0c593ea1-3bea-11e9-b96b-88e9fe637760|保证请求幂等性。从您的客户端生成一个参数值，确保不同请求间该参数值唯一。**ClientToken** 只支持 ASCII 字符，且不能超过 64 个字符。更多详情，请参阅 [如何保证幂等性](~~25693~~)。
+
+ |
+
+## 返回参数 {#resultMapping .section}
+
+|名称|类型|示例值|描述|
+|--|--|---|--|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID。
+
+ |
+
+## 示例 {#demo .section}
+
+请求示例
+
+``` {#request_demo}
+
 https://ecs.aliyuncs.com/?Action=ModifyInstanceSpec
 &InstanceId=i-xxxxx1
 &InstanceType=ecs.s1.large
@@ -56,58 +102,60 @@ https://ecs.aliyuncs.com/?Action=ModifyInstanceSpec
 &InternetMaxBandwidthIn=100
 &ClientToken=xxxxxxxxx
 &<公共请求参数>
-```
-
-**返回示例** 
-
-**XML 格式**
 
 ```
+
+正常返回示例
+
+`XML` 格式
+
+``` {#xml_return_success_demo}
 <ModifyInstanceSpecResponse>
-   <RequestId>04F0F334-1335-436C-A1D7-6C044FE73368</RequestId>
+  <RequestId>04F0F334-1335-436C-A1D7-6C044FE73368</RequestId>
 </ModifyInstanceSpecResponse>
-```
-
- **JSON 格式** 
 
 ```
+
+`JSON` 格式
+
+``` {#json_return_success_demo}
 {
-   "RequestId": "04F0F334-1335-436C-A1D7-6C044FE73368",
+	"RequestId":"04F0F334-1335-436C-A1D7-6C044FE73368"
 }
 ```
 
-## 错误码 {#ErrorCode .section}
+## 错误码 { .section}
 
-以下为本接口特有的错误码。更多错误码，请访问 [API 错误中心](https://error-center.aliyun.com/status/product/Ecs)。
+|HttpCode|错误码|错误信息|描述|
+|--------|---|----|--|
+|400|InvalidInternetChargeType.ValueNotSupported|The specified InternetChargeType is not valid.|指定的实例升降配规格不存在。|
+|400|InvalidInstanceType.ValueUnauthorized|The specified InstanceType does not exist or beyond the permitted range.|不支持指定的实例规格。|
+|400|InvalidInstanceType.ValueNotSupported|The specified InstanceType does not exist or beyond the permitted range.|指定的实例规格不支持。|
+|400|InvalidParameter.Mismatch|Too many parameters in one request.|请求中包含的参数过多。|
+|403|CategoryViolation|The specified instance does not support this operation because of its disk category.|挂载有本地磁盘的实例不支持升降配。|
+|403|InvalidStatus.ValueNotSupported|The current status of the resource does not support this operation.|资源当前状态不支持该操作。|
+|500|InternalError|The request processing has failed due to some unknown error, exception or failure.|发生未知错误。|
+|403|InvalidAccountStatus.NotEnoughBalance|Your account does not have enough balance.|账号余额不足，请您先充值再进行该操作。|
+|403|ChargeTypeViolation|The operation is not permitted due to charge type of the instance.|付费方式不支持该操作，请您检查实例的付费类型是否与该操作冲突。|
+|400|BandwidthUpgradeDenied.EipBoundInstance|The specified VPC instance has bound EIP, temporary bandwidth upgrade is denied.|该实例已经绑定EIP，不能进行临时升级。|
+|404|MissingTemporary.StartTime|Temporary.StartTime is not specified.|未指定临时升级开始时间。|
+|404|MissingTemporary.EndTime|Temporary.EndTime is not specified.|未指定临时升级结束时间。|
+|400|InvalidTemporary.StartTime|The specifed Temporary.StartTime is not valid.|临时升级开始时间无效。|
+|400|InvalidTemporary.EndTime|The specifed Temporary.EndTime is not valid.|临时升级结束时间无效。|
+|400|Downgrade.NotSupported|Downgrade operation is not supported.|不支持降配。|
+|400|DependencyViolation.InstanceType|The current InstanceType cannot be changed to the specified InstanceType.|不支持变配到指定实例规格。|
+|403|InvalidInstanceType.ValueNotSupported|The specified zone does not offer the specified instancetype.|不支持指定的实例规格。|
+|400|Account.Arrearage|Your account has an outstanding payment.|账号存在未支付款项。|
+|400|InvalidParameter.AllowMigrateAcrossZone|The specified parameter CanMigrateAcrossZone is not valid.|跨可用区参数设置无效。|
+|400|InvalidParam.SystemDiskCategory|The specified param SystemDisk.Category is not valid.|系统盘类型参数设置无效。|
+|403|InstanceType.Offline|The specified InstanceType has been offline|该实例规格已下线。|
+|400|IdempotenceParamNotMatch|There is a idempotence signature mismatch between this and last request.|幂等签名不一致。|
+|403|InvalidParameter.NotMatch|%s|参数冲突。|
+|403|InvalidInstance.EipNotSupport|The specified instance with eip is not supported, please unassociate eip first.|已绑定EIP的实例不支持该操作，请优先解绑。|
+|400|InvalidAction.NotSupport|The ecs on dedicatedHost not support modify instanceType.|专用宿主机上的实例不支持变更实例规格。|
+|403|InvalidOperation.Ipv4CountExceeded|%s|IPv4 个数达到上限。|
+|403|InvalidOperation.Ipv6CountExceeded|%s|IPv6 个数达到上限。|
+|403|InvalidOperation.Ipv6NotSupport|%s|实例规格不支持 IPv6。|
 
-|错误代码|错误信息|HTTP 状态码|说明|
-|:---|:---|:-------|:-|
-|Account.Arrearage|Your account has an outstanding payment.|400|账号已经欠费。|
-|DependencyViolation.InstanceType|The current InstanceType cannot be changed to the specified InstanceType.|400|当前实例规格不允许变更到指定的实例规格。|
-|IdempotenceParamNotMatch|Request uses a client token in a previous request but is not identical to that request.|400|与相同 `ClientToken` 的请求参数不符合。|
-|InvalidClientToken.ValueNotSupported|The ClientToken provided is invalid.|400|`ClientToken` 参数值不合法，不能包含 ASCII 以外的字符。|
-|InvalidInstance.UnpaidOrder|The specified instance has unpaid order.|400|当前实例有未支付的订单。|
-|InvalidInstanceType.ValueNotSupported|The specified InstanceType is not supported.|400|指定的 `InstanceType` 不合法（超出可选范围）。|
-|InvalidInstanceType.ValueUnauthorized|The specified InstanceType is not authorized.|400|指定的 `InstanceType` 未授权使用。|
-|InvalidInternetChargeType.ValueNotSupported|The specified InternetChargeType is not valid.|400|指定的 `InternetChargeType`不存在。|
-|InvalidParameter|The specified parameter InternetMaxBandwidthOut is not valid.|400|指定的 `InternetMaxBandwidthOut`不合法（不是数字或超出取值范围）。|
-|InvalidParameter.Bandwidth|The specified parameter Bandwidth is not valid.|400|指定的公网带宽值不合法。|
-|InvalidParameter.Conflict|The specified image does not support the specified instance type.|400|指定实例的 `InstanceType` 不允许使用该镜像。|
-|InvalidParameter.Mismatch|Too many parameters in one request.|400|请求参数过多。|
-|InvalidStatus.ValueNotSupported|The current status of the resource does not support this operation.|400|当前的实例状态不支持此操作。|
-|InvalidStatus.ValueNotSupported|The instance cannot be modified in the specified status.|400|当前的实例状态不支持此操作。|
-|OperationDenied|The specified instance is in VPC.|400|该实例的网络类型为专有网络。|
-|Price.PricePlanResultNotFound|The internetMaxBandwidthIn or internetMaxBandwidthOut provided is invalid.|400|请求参数 `InternetMaxBandwidthIn` 或 `InternetMaxBandwidthOut` 不合法。|
-|Throttling|You have made too many requests within a short time; your request is denied due to request throttling.|400|操作过于频繁。|
-|InvalidInstanceStatus.NotStopped|The specified Instance status is not stopped.|400|实例未处于停止状态。|
-|CategoryViolation|The specified instance does not support this operation because of its disk category.|403|当前实例的磁盘类型不支持此操作。|
-|ChargeTypeViolation|The operation is not permitted due to charge type of the instance.|403|当前实例的付费类型不支持此操作。|
-|ImageNotSupportInstanceType|The specified image does not support the specified InstanceType.|403|指定镜像不支持该实例类型。|
-|InstanceLockedForSecurity|The specified operation is denied as your instance is locked for security reasons.|403|该实例目前被安全锁定，拒绝操作。|
-|InvalidAccountStatus.NotEnoughBalance|Your account does not have enough balance.|403|账户余额不足。|
-|LastTokenProcessing|The last token request is processing.|403|上一次请求还在处理中。|
-|OperationDenied|The instance is out of usage.|403|该实例库存不足，请选择其他实例。|
-|InvalidInstanceId.NotFound|The specified InstanceId does not exist.|404|指定的 `InstanceId` 不存在。|
-|InternalError|The request processing has failed due to some unknown error, exception or failure.|500|内部错误。|
-|InvalidAction|The specified action is not valid.|500|当前操作无效。|
+[查看本产品错误码](https://error-center.aliyun.com/status/product/Ecs)
 

@@ -1,86 +1,90 @@
-# ModifyDiskAttribute {#ModifyDiskAttribute .reference}
+# ModifyDiskAttribute {#doc_api_999555 .reference}
 
-Modifies the attribute of your cloud disk.
+Modifie the attributes of a disk.
 
-## Description {#section_ntk_xp5_xdb .section}
+## Description {#description .section}
 
-In this interface, when the **DeleteWithInstance** \(`DeleteWithInstance=false`\) attribute is set to false, once the ECS instance on which the disk is attached is  [locked](intl.en-US/API Reference/Appendix/API behavior when an instance is locked for security reasons.md#) and the `OperationLocks` of instance indicates `"LockReason" : "security"`, the `DeleteWithInstance` attribute of disk is ignored and the disk is released along with the instance.
+If an instance is locked for security reasons \(the OperationLocks parameter is "LockReason": "security"\), the DeleteWithInstance attribute will be ignored and the disk will be released together with the instance.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: ModifyDiskAttribute.|
-|DiskId|String|Yes|ID of the target disk.|
-|DiskName|String|No|The disk name.-   Can contain \[2, 128\] English letters. Must begin with an uppercase or lowercase letter. Can contain digits, colons\(:\), periods \(.\), underscores \(\_\), and hyphens \(-\).
--   Cannot begin with http:// or https://.
--   If it is left empty, the original value is used. The default value is null.
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=ModifyDiskAttribute) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-|
-|Description|String|No|The description of a disk.-   Can contain \[2, 256\] letters. Must begin with an uppercase or lowercase letter. Can contain digits, colons\(:\), periods \(.\), underscores \(\_\), and hyphens \(-\).
--   Cannot begin with http:// or https://.
--   If it is left empty, the original value is used. The default value is null.
+## Request parameters {#parameters .section}
 
-|
-|DeleteWithInstance|String|No|Whether the disk is released along with the instance or not. Optional values:-   True: If the instance is released, this disk is also released.
--   False: If the instance is released, this disk is retained.
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|DiskId|String|Yes|d-diskid1| The ID of the disk to be modified.
 
-Default value: None. In the following conditions, when you set `DeleteWithInstance` to `false`, an error is returned.-   When the Category \(`category`\) attribute of disk is ephemeral \(`ephemeral`\).
--   When the Category \(`category`\) attribute of disk is cloud \(`cloud`\) and the Portable \(`Portable=false`\) attribute is false.
+ |
+|Action|String|No|ModifyDiskAttribute| The operation that you want to perform. Set the value to ModifyDiskAttribute.
 
-|
-|DeleteAutoSnapshot|String|No|Whether the automatic snapshots of a cloud disk are deleted or not when the disk is deleted. Optional values:-   True: If the disk is released, its automatic snapshots are also released.
--   False: If the disk is released, its automatic snapshots are retained.
+ |
+|DeleteAutoSnapshot|Boolean|No|false| Indicates whether the automatic snapshot is deleted when the disk is released. Default value: null, indicating that the parameter value remains unchanged.
 
-Default value: None.|
-|EnableAutoSnapshot|String|No|If you have created an automatic snapshot policy, you can decide whether an automatic snapshot policy is applied to the disk or not. Optional values:-   True: The disk runs an automatic snapshot policy.
--   False: The disk does not run an automatic snapshot policy.
+ |
+|DeleteWithInstance|Boolean|No|false| Indicates whether the disk is released together with the instance: Default value: null, indicating that the parameter value remains unchanged.
 
-Default value: None.|
+ An error will be returned if you set the DeleteWithInstance attribute to false in the following cases:
 
-## Response parameters {#section_b5k_xp5_xdb .section}
+ -   When the Category attribute of a disk is set to ephemeral.
+-   When the Category attribute of a disk is set to cloud and the Portable attribute is set to false.
 
-All are common return parameters. For more information, see [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#commonResponseParameters).
+ |
+|Description|String|No|FinanceDeptJoshua| The description of the disk. The description must be 2 to 256 characters in length and cannot start with http:// or https://.
 
-## Examples { .section}
+ |
+|DiskName|String|No|FinanceJoshua| The name of the disk. The name must be 2 to 128 characters in length. It must start with a letter and cannot start with http:// or https://. It can contain letters, digits, colons \(:\), underscores \(\_\), and hyphens \(-\).
 
-**Request example** 
+ |
+|EnableAutoSnapshot|Boolean|No|true| Indicates whether to apply a created automatic snapshot policy to the disk. Default value: null, indicating that the parameter value remains unchanged.
 
-```
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=ModifyDiskAttribute
 &DiskId=d-23jbf2v5m
-&DiskName=MyDiskName
-&<Common Request Parameters>
+&DiskName=MyDiskName 
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <ModifyDiskAttributeResponse>
-    <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
 </ModifyDiskAttributeResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
+}
 ```
 
-    "RequestId": "473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
+## Error codes {#section_qa6_nwl_9ca .section}
 
-```
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|404|InvalidDescription.Malformed|The specified description is wrongly formed.|The error message returned when the specified description is invalid. The description must be 2 to 256 characters in length and cannot start with http:// or https://.|
+|403|QuotaExceed.Snapshot|The snapshot quota exceeds.|The error message returned when the snapshot quota has been exhausted. To store new snapshots, you can delete existing snapshots without affecting your business.|
+|400|IncompleteParamter|Some fields can not be null in this request.|The error message returned when a required parameter is not specified.|
 
-## Error codes {#ErrorCode .section}
-
-Error codes specific to this interface are as follows. For more information, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message|HTTP status code|Meaning|
-|:---------|:------------|:---------------|:------|
-|InvalidDiskName.Malformed|The specified disk name is wrongly formed.|400|The format of the specified DiskName is incorrect.|
-|NoAttributeToModify|No attribute to be modified in this request.|400|Duplicate requests.|
-|DiskNotPortable|The specified disk is not a portable disk.|403|When you set the `DeleteWithInstance=false` attribute, you cannot set the attribute `Portable` of the specified cloud disk to `false`.|
-|IncorrectDiskStatus|The operation is not supported in this status.|403|The status of the cloud disk is incorrect. For more information, see [Basic cloud disk status table](intl.en-US/API Reference/Appendix/Basic cloud disk status table.md#).|
-|InvalidDescription.Malformed|The specified description is wrongly formed.|404|The format of specified Description is incorrect.|
-|InvalidDiskId.NotFound|The specified disk does not exist.|404|The specified DiskId does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

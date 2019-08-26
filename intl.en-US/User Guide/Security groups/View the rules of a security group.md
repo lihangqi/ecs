@@ -1,13 +1,13 @@
-# View the rules of a security group {#concept_xdb_x11_ydb .concept}
+# View the security group rules {#concept_xdb_x11_ydb .concept}
 
-You can view the rules of a security group at any time. To view the rules of a security group, perform the following:
+You can view the security group rules at any time. To view the security group rules, follow these steps:
 
-1.  Log on to the [ECS console](https://ecs.console.aliyun.com/#/home).
-2.  Select a region.
-3.  In the left-side navigation pane, click Networks & Security \> **Security Groups**.
-4.  Select a security group, and click **Configure Rules**.
-5.  The following security group rule tabs will be displayed for Classic Networks and VPCs:
-    -   For VPCs, Inbound and Outbound can be seen.
-    -   For Classic networks, Internet Inbound , Internet Outbound, Intranet Inbound and Intranet Outbound can be seen.
+1.  Log on to the [ECS console](https://partners-intl.console.aliyun.com/#/ecs).
+2.  In the left-side navigation pane, click **Networks and Security** \> **Security Groups**.
+3.  Select a region.
+4.  Select a security group, and click **Add Rules**.
+5.  The following information is displayed for security groups of classic network and VPC:
+    -   For VPC, **Inbound** and **Outbound** can be seen.
+    -   For classic network, **Internet Inbound**, **Internet Outbound**, **Intranet Inbound**, and **Intranet Outbound** can be seen.
 6.  Click a tab to view the security group rules for that type.
 

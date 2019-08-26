@@ -1,116 +1,118 @@
-# InvokeCommand {#InvokeCommand .reference}
+# InvokeCommand {#doc_api_Ecs_InvokeCommand .reference}
 
-为一台或多台 ECS 实例触发一条云助手命令。
+为一台或多台ECS实例触发一条云助手命令。
 
-## 描述 {#section_amn_fm4_ydb .section}
+## 接口说明 {#description .section}
 
-当您使用该接口时，请注意：
-
--   该接口仅支持专有网络（VPC）实例。
--   目标 ECS 实例的状态必须为 **运行中**（`Running`）。
--   目标 ECS 实例必须预先安装 [云助手客户端](../intl.zh-CN/产品简介/云助手/云助手客户端.md#)。
--   执行类型为 PowerShell 的命令时，您需要确保目标 ECS Windows 实例已经配置了 PowerShell 模块。
--   对于单次执行（`Timed=False`），只执行一次命令。
--   对于周期执行（`Timed=True`），第一次将根据参数 `Frequency` 指定的时间点开始执行任务，后续按照参数 `Frequency` 的指定的时间定时执行。上次的执行结果不对下一次执行产生任何影响。
--   周期执行的时间设置基准为 UTC +08:00，且该时间以 ECS 实例的系统时间为准，您需要确保您的 ECS 实例的时间或者时区与您预期的时间一致。
--   您可以选择多个 ECS 实例，若其中某个实例不满足执行条件时，您需要重新选择。
+-   在一个阿里云地域下，您每天能调用 5000 次 InvokeCommand 接口。如果您想调整调用次数上限，请 [提交工单](https://selfservice.console.aliyun.com/ticket/createIndex.htm) 申请。
+-   目标实例的网络类型必须是 [专有网络VPC](~~34217~~)。
+-   目标实例的状态必须为 运行中（Running）。
+-   目标实例必须预先安装 [云助手客户端](~~64921~~)。
+-   执行类型为 PowerShell 的命令时，您需要确保目标 ECS Windows实例已经配置了 PowerShell 模块。
+-   对于单次执行（Timed=False），只执行一次命令。
+-   对于周期执行（Timed=True），云助手将根据参数 Frequency 指定的时间频率定时执行。上次的执行结果不对下一次执行产生任何影响。
+-   周期执行的时间设置基准为UTC +0，且该时间以实例的系统时间为准，您需要确保您的 ECS 实例的时间或者时区与您预期的时间一致。 更多关于时区的详情，Linux 实例请参阅 [时间设置：设置Linux实例时区和NTP服务](~~92803~~)，Windows 实例请参阅 [时间设置：设置Windows实例NTP服务](~~51890~~)。
+-   您可以选择多台ECS实例，若其中某台实例不满足执行条件时，您需要重新选择。
 -   命令的执行可能会因为目标实例的状态异常、网络异常或云助手客户端异常而出现无法执行的情况，无法执行时不会生成执行信息。
+-   当您创建命令时启用了自定义参数功能，需要在执行命令时传入自定义参数（Parameters）。
 
-## 请求参数 {#RequestParameter .section}
+## 调试 {#apiExplorer .section}
 
-|名称|类型|是否必需|描述|
-|:-|:-|:---|:-|
-|Action|String|是|系统规定参数。取值：InvokeCommand|
-|RegionId|String|是|地域 ID。您可以调用 [DescribeRegions](intl.zh-CN/API参考/地域/DescribeRegions.md#) 查看最新的阿里云地域列表。|
-|InstanceIds|Array|是|需要执行命令的实例列表。参数取值为一个带有格式的 Json Array，格式为 \[`InstanceId1`, `instanceId2`, …\]，最多能指定 100 台实例 ID，用半角逗号字符隔开。|
-|CommandId|String|是|命令 ID。您可以通过接口 [DescribeCommands](intl.zh-CN/API参考/云助手/DescribeCommands.md#) 查询所有可用的 `CommandId`。|
-|Timed|Boolean|否|命令是否为周期执行。取值范围：-   True：是周期执行
--   False：不是周期执行
+前往【[API Explorer](https://api.aliyun.com/#product=Ecs&api=InvokeCommand)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
 
-默认值：False|
-|Frequency|String|否|周期任务的执行周期。当参数 [`Timed`](#Timed) 的值为 `True` 时，参数 `Frequency` 为必需参数。该参数取值遵循 Cron 表达式，参阅 [Cron 表达式](https://help.aliyun.com/document_detail/64769.html)[Cron 表达式](https://www.alibabacloud.com/help/faq-detail/64769.htm)。
+## 请求参数 {#parameters .section}
 
-|
+|名称|类型|是否必选|示例值|描述|
+|--|--|----|---|--|
+|CommandId|String|是|c-e996287206324975b5fbe1dxxxxxxxxx|命令 ID。您可以通过接口 [DescribeCommands](~~64843~~) 查询所有可用的 CommandId。
 
-## 返回参数 {#ResponseParameter .section}
+ |
+|InstanceId.N|RepeatList|是|i-bp185dy2o3o6nxxxxxxx|需要执行命令的实例列表，最多能指定 50 台实例 ID。N 的取值范围为1~50。
 
-|名称|类型|描述|
-|:-|:-|:-|
-|InvokeId|String|命令执行 ID|
+ |
+|RegionId|String|是|cn-hangzhou|地域ID。您可以调用 [DescribeRegions](~~25609~~) 查看最新的阿里云地域列表。
 
-## 示例 { .section}
+ |
+|Action|String|否|InvokeCommand|系统规定参数。取值：InvokeCommand
 
-**请求示例** 
+ |
+|Frequency|String|否|0 \*/20 \* \* \* \*|周期任务的执行周期，两次周期任务的时间间隔不能低于10秒。当参数 Timed 的值为 True 时，参数 Frequency 为必需参数。 该参数取值遵循Cron表达式，参阅 [Cron 表达式](~~64769~~)。
 
-```
+ |
+|Parameters|Json|否|\{"name":"Jack", "accessKey":"LTAIdyv\*\*\*\*\*\*aRY"\}|启用自定义参数功能时，执行命令时传入的自定义参数的键值对。自定义参数的个数范围：0~10
+
+ -   Map的键不允许为空字符串，最多支持64个字符。
+-   Map的值允许为空字符串。
+-   自定义参数与原始命令内容在Base64编码后，综合长度不能超过16KB。
+-   设置的自定义参数名集合必须为创建命令时定义的参数集的子集。对于未传入的参数，您可以使用空字符串代替。
+
+ 您可以取消设置该参数从而禁用自定义参数。
+
+ |
+|Timed|Boolean|否|true|命令是否为周期执行。 默认值：False
+
+ |
+
+## 返回参数 {#resultMapping .section}
+
+|名称|类型|示例值|描述|
+|--|--|---|--|
+|InvokeId|String|t-7d2a745b412b4601b2d47f6a768d3a14|命令执行ID
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID
+
+ |
+
+## 示例 {#demo .section}
+
+请求示例
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=InvokeCommand
-&RegionId=cn-hangzhou
-&InstanceIds=i-bp185dy2o3o6nxxxxxxx
 &CommandId=c-e996287206324975b5fbe1dxxxxxxxxx
+&InstanceId.1=i-bp185dy2o3o6nxxxxxxx
+&RegionId=cn-hangzhou
 &Timed=true
-&Frequency=0 0-5 14 * * ?
+&Frequency=0 */20 * * * *
+&Parameters={"name":"Jack"}
 &<公共请求参数>
 ```
 
-**正常返回示例** 
+正常返回示例
 
-**XML 格式**
+`XML` 格式
 
-```
+``` {#xml_return_success_demo}
 <InvokeCommandResponse>
-    <RequestId>540CFF28-407A-40B5-B6A5-73Bxxxxxxxxx</RequestId>
-    <InvokeId>t-1fad2a8876de47068cc734d5xxxxxxxxx</InvokeId>
+  <RequestId>E69EF3CC-94CD-42E7-8926-F133B86387C0</RequestId>
+  <InvokeId>t-7d2a745b412b4601b2d47f6a768d3a14</InvokeId>
 </InvokeCommandResponse>
-```
-
- **JSON 格式** 
 
 ```
+
+`JSON` 格式
+
+``` {#json_return_success_demo}
 {
-    "RequestId":"540CFF28-407A-40B5-B6A5-73Bxxxxxxxxx",
-    "InvokeId":"t-1fad2a8876de47068cc734d5xxxxxxxxx"
+	"RequestId":"E69EF3CC-94CD-42E7-8926-F133B86387C0",
+	"InvokeId":"t-7d2a745b412b4601b2d47f6a768d3a14"
 }
 ```
 
-**异常返回示例** 
+## 错误码 { .section}
 
-**XML 格式**
+|HttpCode|错误码|错误信息|描述|
+|--------|---|----|--|
+|500|InternalError.Dispatch|An error occurred when you dispatched the request.|发生未知错误。|
+|404|InvalidInstance.NotFound|The specified instance does not exist.|指定的实例不存在。|
+|403|MissingParam.Frequency|The frequency must be specified when you create a timed task.|请为周期任务设置执行频率。|
+|404|Parameter.Disabled|Parameters cannot be passed in when the command customization function is disabled.|当您禁用命令自定义参数功能时，请不要传递自定义参数。|
+|403|ParameterCount.ExceedLimit|The maximum number of parameters is exceeded.|您的自定义参数个数超过限制。|
+|403|ParameterKey.ExceedLimit|The maximum length of a parameter name is exceeded.|您的自定义参数的参数名长度超过限制。|
+|403|CmdContent.ExceedLimit|The maximum length of a command is exceeded.|您的命令内容过长，请精简您的命令内容。|
+|403|ParameterKey.Duplicate|Parameter names cannot be duplicated.|请不要传递重复的参数名。|
+|403|Parameter.NotMatched|The passed-in parameters do not match the parameters defined when you created the command.|传入的自定义参数与创建命令时定义的自定义参数不匹配。|
 
-```
-<Error>
-    <RequestId>540CFF28-407A-40B5-B6A5-74Bxxxxxxxxx</RequestId>
-    <HostId>ecs.aliyuncs.com</HostId>
-    <Code>MissingParameter.CommandId</Code>
-    <Message>The input parameter “CommandId” that is mandatory for processing this request is not supplied.</Message>
-</Error>
-```
-
- **JSON 格式** 
-
-```
-{
-    "RequestId": "540CFF28-407A-40B5-B6A5-74Bxxxxxxxxx",
-    "HostId": "ecs.aliyuncs.com"
-    "Code": "MissingParameter.CommandId"
-    "Message": "The input parameter “CommandId” that is mandatory for processing this request is not supplied."
-}
-```
-
-## 错误码 {#ErrorCode .section}
-
-以下为本接口特有的错误码。更多错误码，请访问 [API 错误中心](https://error-center.alibabacloud.com/status/product/Ecs)。
-
-|错误代码|错误信息|HTTP 状态码|说明|
-|:---|:---|:-------|:-|
-|InvalidInstance.NoClient|The specified instances have no cloud assistant client installed.|400|指定的 ECS 实例中未安装云助手客户端。您可以参阅 [云助手客户端](../intl.zh-CN/产品简介/云助手/云助手客户端.md#) 安装并使用云助手客户端。|
-|InvalidInstance.NotVpc|The specified instances must be VPC instances.|400|参数 `InstanceIds` 只能包含 VPC 实例的 ID。|
-|InvalidInstanceStatus|The specified instance’s status can not execute this operation|400|指定实例的状态必须为运行中；或者指定实例的网络状态异常。|
-|MissingParameter.CommandId|The input parameter “CommandId” that is mandatory for processing this request is not supplied.|400|您必须指定必需参数 `CommandId`。|
-|MissingParameter.InstanceIds|The input parameter “InstanceIds” that is mandatory for processing this request is not supplied.|400|您必须指定必需参数 `InstanceIds`。|
-|MissingParameter.RegionId|The input parameter “RegionId” that is mandatory for processing this request is not supplied.|400|您必须指定必需参数 `RegionId`，或者您暂时不能使用指定 `RegionId` 里的资源。|
-|MissingParameter.Frequency|The frequency parameter must exist when create a timed Invocation.|400|当参数 `Timed` 的值为 `True` 时，您必须指定参数 `Frequency`。|
-|InvalidCmdId.NotFound|The specified commandId does not exist.|404|指定的 `CommandId` 不存在。|
-|InvalidInstance.NotFound|The specified instances does not exist.|404|指定的 `InstanceId` 不存在。|
-|InvalidRegionId.NotFound|The RegionId provided does not exist in our items.|404|指定的 `RegionId` 不存在。|
-|InternalError.Dispatch|An internal error occurred when dispatching your request.|500|内部错误，请稍后尝试。|
+[查看本产品错误码](https://error-center.aliyun.com/status/product/Ecs)
 

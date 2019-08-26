@@ -1,62 +1,79 @@
-# DeleteSnapshot {#DeleteSnapshot .reference}
+# DeleteSnapshot {#doc_api_999641 .reference}
 
- Deletes a specified snapshot. Deletes a specified snapshot. If you want to cancel a snapshot creating task, you can call this interface. 
+Deletes a snapshot. Snapshots that are currently being created can also be deleted by calling this operation.
 
-## Description {#section_j3f_mxz_xdb .section}
+## Description {#description .section}
 
-When you call this interface, consider the following:
+When you call this operation, note that:
 
--   If the specified SnapshotId does not exist, the request is ignored.
+-   If the specified snapshot does not exist, the request will be ignored.
+-   A snapshot that has already been used to create custom images cannot be deleted. A snapshot can be deleted only after the created custom images have been deleted \([DeleteImage](~~25537~~)\).
 
--   You cannot delete the snapshot if it has been used to create a custom image \(CreateImage\).  However, you can delete the appropriate custom image \([DeleteImage](intl.en-US/API Reference/Images/Deleteimage.md#)\) before you try the DeleteSnapshot action again.
+## Debugging {#apiExplorer .section}
 
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DeleteSnapshot) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Request parameters {#RequestParameter .section}
+## Request parameters {#parameters .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DeleteSnapshot|
-|SnapshotId|String|Yes|The snapshot ID.|
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|SnapshotId|String|Yes|s-snapshotid1| The ID of the snapshot.
 
-## Return parameters {#section_o3f_mxz_xdb .section}
+ |
+|Action|String|No|DeleteSnapshot| The operation that you want to perform. Set the value to DeleteSnapshot.
 
-All are common parameters. See [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#commonResponseParameters).
+ |
+|Force|Boolean|No|false| Indicates whether to force delete snapshots associated with the disk.
 
-## Example { .section}
+ **Note:** A disk cannot be reinitialized after its associated snapshots are deleted.
 
-**Request example** 
+ |
 
-```
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DeleteSnapshot
-&SnapshotId=s-923FE2BF0
+&SnapshotId=s-snapshotid1
 &<Common request parameters>
 ```
 
-**Response sample** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DeleteSnapshotResponse>
-     <RequestId>CEF72CEB-54B6-4AE8-B225-F876FF7BA984</RequestId>
+  <RequestId>CEF72CEB-54B6-4AE8-B225-F876FF7BA984</RequestId>
 </DeleteSnapshotResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "RequestId": " CEF72CEB-54B6-4AE8-B225-F876FF7BA984"
+	"RequestId":" CEF72CEB-54B6-4AE8-B225-F876FF7BA984"
 }
 ```
 
-## Error codes {#ErrorCode .section}
+## Error codes {#section_pcc_pli_wzn .section}
 
-Error codes specific to this interface are as follows. For more error codes, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|403|SnapshotCreatedImage|The snapshot has been used to create user defined image\(s\).|The error message returned when the specified snapshot has been used to create custom images. You must delete the associated images before deleting the snapshot. If you force delete the snapshot, the images associated with the snapshot will become unavailable.|
+|403|SnapshotCreatedDisk|The snapshot has been used to create disk\(s\).|The error message returned when the specified snapshot has been used to create disks.|
+|400|MissingParameter|The input parameter SnapshotId that is mandatory for processing this request is not supplied.|The error message returned when the required SnapshotId parameter is not specified.|
+|404|InvalidSnapshotId.NotFound|The specified snapshot is not found|The error message returned when the specified snapshot does not exist.|
+|403|Operation.Conflict|The operation may conflicts with others, please retry later.|The error message returned when the current operation conflicts with other operations.|
 
-|Error code|Error message|HTTP status code|Note|
-|:---------|:------------|:---------------|:---|
-|MissingParameter|The input parameter SnapshotId that is mandatory for processing this request is not supplied.|400|You must specify the required parameter `SnapshotId`.|
-|SnapshotCreatedDisk|The snapshot has been used to create disk\(s\).|403|The specified snapshot has already been used to create a disk.|
-|SnapshotCreatedImage|The snapshot has been used to create user defined image\(s\).|403|The specified snapshot has been used to create a custom image. You need to first delete the custom mirrors that have been created.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

@@ -1,88 +1,78 @@
-# StopInvocation {#StopInvocation .reference}
+# StopInvocation {#doc_api_Ecs_StopInvocation .reference}
 
-停止一台或多台 ECS 实例中一条正在 **进行中**（`Running`）的云助手命令进程。
+调用StopInvocation停止一台或多台ECS实例中一条正在进行中（Running）的云助手命令进程。
 
-## 描述 {#section_ult_wm4_ydb .section}
+## 接口说明 {#description .section}
 
 -   停止单次命令进程后，已经开始执行的实例会继续执行，未开始执行的实例将不再执行。
 -   停止周期命令进程后，已经开始执行的命令将继续执行，但后续将不会再进行下一次的执行。
 
-## 请求参数 {#RequestParameter .section}
+## 调试 {#apiExplorer .section}
 
-|名称|类型|是否必需|描述|
-|:-|:-|:---|:-|
-|Action|String|是|系统规定参数。取值：StopInvocation|
-|RegionId|String|是|地域 ID。您可以调用 [DescribeRegions](cn.zh-CN/API参考/地域/DescribeRegions.md#) 查看最新的阿里云地域列表。|
-|InvokeId|String|是|命令进程执行 ID。您可以通过接口 [DescribeInvocations](cn.zh-CN/API参考/云助手/DescribeInvocations.md#) 查询所有的 `InvokeId`。|
-|InstanceIds|Array|否|需要停止执行命令的实例列表。参数取值为一个带有格式的 Json Array，格式为 \[`InstanceId1`, `InstanceId2`, …\]，最多能指定 100 个实例 ID，用半角逗号字符隔开。|
+前往【[API Explorer](https://api.aliyun.com/#product=Ecs&api=StopInvocation)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
 
-## 返回参数 {#section_f54_lk5_xdb .section}
+## 请求参数 {#parameters .section}
 
-全是公共返回参数。参阅 [公共参数](cn.zh-CN/API参考/调用方式/公共参数.md#commonResponseParameters)。
+|名称|类型|是否必选|示例值|描述|
+|--|--|----|---|--|
+|InvokeId|String|是|t-7d2a745b412b4601b2d47f6a768d3\*\*\*|命令进程执行ID。您可以通过接口 [DescribeInvocations](~~64840~~) 查询所有的InvokeId。
 
-## 示例 { .section}
+ |
+|RegionId|String|是|cn-hangzhou|地域ID。您可以调用 [DescribeRegions](~~25609~~) 查看最新的阿里云地域列表。
 
-**请求示例** 
+ |
+|Action|String|否|StopInvocation|系统规定参数。取值：StopInvocation
 
-```
+ |
+|InstanceId.N|RepeatList|否|i-uf614fhehhzmx\*\*\*|要停止执行命令的实例列表，最多能指定20台实例ID。N的取值范围为1~50。
+
+ |
+
+## 返回数据 {#resultMapping .section}
+
+|名称|类型|示例值|描述|
+|--|--|---|--|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID。
+
+ |
+
+## 示例 {#demo .section}
+
+请求示例
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=StopInvocation
+&InvokeId=t-7d2a745b412b4601b2d47f6a768d3***
 &RegionId=cn-hangzhou
-&InvokeId=t-1fad2a8876de47068cc734d57703aa76
+&InstanceId.1=i-uf614fhehhzmx***
 &<公共请求参数>
 ```
 
-**正常返回示例** 
+正常返回示例
 
-**XML 格式**
+`XML` 格式
 
-```
+``` {#xml_return_success_demo}
 <StopInvocationResponse>
-    <RequestId>540CFF28-407A-40B5-B6A5-73Bxxxxxxxxx</RequestId>
+  <RequestId>E69EF3CC-94CD-42E7-8926-F133B86387C0</RequestId>
 </StopInvocationResponse>
-```
-
- **JSON 格式** 
 
 ```
+
+`JSON` 格式
+
+``` {#json_return_success_demo}
 {
-    "RequestId":"540CFF28-407A-40B5-B6A5-73Bxxxxxxxxx",
+	"RequestId":"E69EF3CC-94CD-42E7-8926-F133B86387C0"
 }
 ```
 
-**异常返回示例** 
+## 错误码 { .section}
 
-**XML 格式**
+|HttpCode|错误码|错误信息|描述|
+|--------|---|----|--|
+|500|InternalError.Dispatch|An error occurred when you dispatched the request.|发生未知错误。|
+|404|InvalidInvokeId.NotFound|The specified invoke ID does not exist.|指定的InvokeId不存在。|
 
-```
-<Error>
-    <RequestId>540CFF28-407A-40B5-B6A5-74Bxxxxxxxxx</RequestId>
-    <HostId>ecs.aliyuncs.com</HostId>
-    <Code>InvalidInstance.NoClient</Code>
-    <Message>The specified instances have no cloud assistant client installed.</Message>
-</Error>
-```
-
- **JSON 格式** 
-
-```
-{
-    "RequestId": "540CFF28-407A-40B5-B6A5-74Bxxxxxxxxx",
-    "HostId": "ecs.aliyuncs.com"
-    "Code": "InvalidInstance.NoClient"
-    "Message": "The specified instances have no cloud assistant client installed."
-}
-```
-
-## 错误码 {#ErrorCode .section}
-
-以下为本接口特有的错误码。更多错误码，请访问 [API 错误中心](https://error-center.aliyun.com/status/product/Ecs)。
-
-|错误代码|错误信息|HTTP 状态码|说明|
-|:---|:---|:-------|:-|
-|InvalidInvokeId.NotFound|The specified InvokeId does not exist.|400|指定的 `InvokeId` 不存在。|
-|MissingParameter.InstanceId|The input parameter “InstanceIds” that is mandatory for processing this request is not supplied.|400|您必须指定必需参数 `InstanceIds`。|
-|MissingParameter.RegionId|The input parameter “RegionId” that is mandatory for processing this request is not supplied.|400|您必须指定必需参数 `RegionId`，或者您暂时不能使用指定 `RegionId` 里的资源。|
-|MissingParameter.InvokeId|The input parameter “InvokeId” that is mandatory for processing this request is not supplied.|400|您必须指定必需参数 `InvokeId`。|
-|InvalidRegionId.NotFound|The RegionId provided does not exist in our items.|404|指定的 `RegionId` 不存在。|
-|InternalError.Dispatch|An internal error occurred when dispath the request|500|内部错误，请稍后尝试。|
+访问[错误中心](https://error-center.aliyun.com/status/product/Ecs)查看更多错误码。
 

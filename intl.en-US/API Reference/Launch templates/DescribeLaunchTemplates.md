@@ -1,106 +1,173 @@
-# DescribeLaunchTemplates {#DescribeLaunchTemplates .reference}
+# DescribeLaunchTemplates {#doc_api_1006047 .reference}
 
-Queries available instance launch templates.
+Queries one or more instance launch templates.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required |Description |
-|:---|:---|:--------|:-----------|
-|Action |String |Yes |The name of this interface Value: DescribeLaunchTemplates.|
-|RegionId|String |Yes|Region ID of an instance launch template. To view the latest list of Alibaba Cloud regions, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#).|
-|LaunchTemplateId|String|No|Instance launch template ID. You must specify the `LaunchTemplateId`   or `LaunchTemplateName` to determine the template.|
-|LaunchTemplateName|String |No |Instance launch template name.|
-|PageNumber |Integer |No |Page number of the instance launch template list. Start value: 1.Default value: 1.
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DescribeLaunchTemplates) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-|
-|PageSize|Integer|No |Number of rows per page when querying by page. Maximum Value: 50. Default value: 10.
+## Request parameters {#parameters .section}
 
-|
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-hangzhou| The ID of the region. You can call [DescribeRegions](~~25609~~) to view the latest regions of Alibaba Cloud.
 
-## Response parameters {#ResponseParameter .section}
+ |
+|Action|String|No|DescribeLaunchTemplates| The operation that you want to perform. Set the value to DescribeLaunchTemplates.
 
-|Name |Type |Description |
-|:----|:----|:-----------|
-|TotalCount|Integer |Total number of instance launch templates.|
-|PageNumber|Integer |Current page number. |
-|PageSize |Integer  |Number of rows per page when querying by page.|
-|LaunchTemplateSet|[LaunchTemplateSet](#LaunchTemplateSet)|The instance launch template information set.|
+ |
+|LaunchTemplateId.N|RepeatList|No|lt-m5e3ofjr1zn1aw7qdxxx| The IDs of one or more instance launch templates to be queried. You can specify a maximum of 100 launch template IDs. You must specify either the LaunchTemplateId parameter or the LaunchTemplateName parameter to determine a launch template.
 
-**LaunchTemplateSet** 
+ |
+|LaunchTemplateName.N|RepeatList|No|wd-1526307480xxx| The names of one or more instance launch templates to be queried. You can specify a maximum of 100 launch template names.
 
-|Name |Type |Description |
-|:----|:----|:-----------|
-|CreateTime |String |The creation time of an instance launch template.|
-|ModifiedTime|String |Time of last modification.|
-|LaunchTemplateId|String |Template ID.|
-|LaunchTemplateName|String |Template name.|
-|DefaultVersionNumber|Long |The default template version number. |
-|LatestVersionNumber|Long|The latest template version number.|
-|CreatedBy|String |Creator of the template.template.|
+ |
+|PageNumber|Integer|No|1| The page number that you query in the instance launch template list. Starting value: 1.
 
-## Examples { .section}
+ Default value: 1.
 
-**Request example** 
+ |
+|PageSize|Integer|No|10| The number of entries per page. Maximum value: 50.
 
-```
+ Default value: 10.
+
+ |
+|TemplateResourceGroupId|String|No|rg-resourcegroupid1| The ID of the resource group to which the launch template belongs.
+
+ |
+|TemplateTag.N.Key|String|No|FinanceDept| The tag key of the launch template. Valid values of N: 1 to 20.
+
+ |
+|TemplateTag.N.Value|String|No|FinanceDepltJoshua| The tag value of the launch template. Valid values of N: 1 to 20.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|LaunchTemplateSets| | | A set of instance launch templates.
+
+ |
+|└CreateTime|String|2018-05-14T14:18:00Z| The creation time of the instance launch template.
+
+ |
+|└CreatedBy|String|1942111349714xxx| The creator of the instance launch template.
+
+ |
+|└DefaultVersionNumber|Long|1| The default version number of the template.
+
+ |
+|└LatestVersionNumber|Long|1| The latest version number of the template.
+
+ |
+|└LaunchTemplateId|String|lt-m5e3ofjr1zn1aw7qdxxx| The ID of the instance launch template.
+
+ |
+|└LaunchTemplateName|String|wd-1526307480xxx| The name of the instance launch template.
+
+ |
+|└ModifiedTime|String|2018-05-14T14:18:00Z| The time when the template was last modified.
+
+ |
+|└ResourceGroupId|String|rg-resourcegroupid1| The ID of the resource group to which the launch template belongs.
+
+ |
+|└Tags| | | The tag of the launch template.
+
+ |
+|└TagKey|String|FinanceDept| The tag key of the launch template.
+
+ |
+|└TagValue|String|FinanceDeptJoshua| The tag value of the launch template.
+
+ |
+|PageNumber|Integer|1| The current page number.
+
+ |
+|PageSize|Integer|10| The number of entries per page.
+
+ |
+|RequestId|String|04F0F334-1335-436C-A1D7-6C044FExxxxx| The ID of the request. This parameter is returned regardless of whether the operation is successful.
+
+ |
+|TotalCount|Integer|1| The total number of instance launch templates.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DescribeLaunchTemplates
-&RegionId=cn-hangzhou
-&<Common Request Parameters>
+&RegionId=cn-hangzhou 
+&TemplateTag. 1. Key=FinanceDept
+&TemplateTag. 1. Value=FinanceDepltJoshua
+&LaunchTemplateId. 1=lt-m5e3ofjr1zn1aw7qdxxx
+&LaunchTemplateName. 1=wd-1526307480xxx
+&PageNumber=1 
+&PageSize=10 
+&TemplateResourceGroupId=rg-resourcegroupid1
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DescribeLaunchTemplatesResponse>
-	<RequestId>04F0F334-1335-436C-A1D7-6C044FExxxxx</RequestId>
-	<TotalCount>1</TotalCount>
-	<PageNumber>1</PageNumber>
-	<PageSize>10</PageSize>
-	<LaunchTemplateSets>
-		<LaunchTemplateSet>
-			<CreateTime>2018-05-14T14:18:00Z</CreateTime>
-			<ModifiedTime>2018-05-14T14:18:00Z</ModifiedTime>
-			<LaunchTemplateid>lt-m5e3ofjr1zn1aw7xxxx</LaunchTemplateid>
-			<LaunchTemplateName>wd-1526307480xxx</LaunchTemplateName>
-			<DefaultVersionNumber>1</DefaultVersionNumber>
-			<LatestVersionNumber>1</LatestVersionNumber>
-			<CreatedBy>1942111349714xxx</CreatedBy>
-		</LaunchTemplateSet>
-	</LaunchTemplateSets>
+  <RequestId>04F0F334-1335-436C-A1D7-6C044FExxxxx</RequestId>
+  <TotalCount>1</TotalCount> 
+  <PageNumber>1</PageNumber> 
+  <PageSize>10</PageSize> 
+  <LaunchTemplateSets>
+    <LaunchTemplateSet>
+      <CreateTime>2018-05-14T14:18:00Z</CreateTime>
+      <ModifiedTime>2018-05-14T14:18:00Z</ModifiedTime>
+      <LaunchTemplateid>lt-m5e3ofjr1zn1aw7xxxx</LaunchTemplateid>
+      <LaunchTemplateName>wd-1526307480xxx</LaunchTemplateName>
+      <DefaultVersionNumber>1</DefaultVersionNumber>
+      <LatestVersionNumber>1</LatestVersionNumber>
+      <CreatedBy>1942111349714xxx</CreatedBy>
+    </LaunchTemplateSet>
+  </LaunchTemplateSets>
 </DescribeLaunchTemplatesResponse>
 ```
 
- **JSON format ** 
+`JSON` format
 
-```
-
-	"RequestId": "04F0F334-1335-436C-A1D7-6C044FExxxxx",
-	"TotalCount":1,
+``` {#json_return_success_demo}
+{
 	"PageNumber":1,
-	"PageSize":10,
+	"TotalCount":1,
 	"LaunchTemplateSets":{
-		"LaunchTemplateSet":[{
-			"LaunchTemplateName":"wd-1526307480xxx",
-			"CreatedBy":"1942111349714xxx",
-			"ModifiedTime":"2018-05-14T14:18:00Z",
-			"LatestVersionNumber":1,
-			"CreateTime":"2018-05-14T14:18:00Z",
-			"LaunchTemplateId":"lt-m5e3ofjr1zn1aw7qdxxx",
-			"DefaultVersionNumber":1
-		
-	}
-
+		"LaunchTemplateSet":[
+			{
+				"DefaultVersionNumber":1,
+				"LaunchTemplateId":"lt-m5e3ofjr1zn1aw7qdxxx",
+				"LatestVersionNumber":1,
+				"CreateTime":"2018-05-14T14:18:00Z",
+				"CreatedBy":"1942111349714xxx",
+				"ModifiedTime":"2018-05-14T14:18:00Z",
+				"LaunchTemplateName":"wd-1526307480xxx"
+			}
+		]
+	},
+	"PageSize":10,
+	"RequestId":"04F0F334-1335-436C-A1D7-6C044FExxxxx"
+}
 ```
 
-## Error codes {#ErrorCode .section}
+## Error codes { .section}
 
-The following error codes are specific to this interface. For more error codes, visit the [API error center](https://error-center.alibabacloud.com/status/product/Ecs).
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|400|InvalidRegion.NotExist|%s|The error message returned when the specified region does not exist.|
+|400|MissingParameter|%s|The error message returned when a required parameter is not specified.|
+|400|InvalidParameter|%s|The error message returned when the parameter format is invalid.|
+|403|InnerServiceFailed|%s|The error message returned when an internal service failed to be called.|
 
-|Error code |Error message|HTTP status code |Description |
-|:----------|:------------|:----------------|:-----------|
-|MissingParameter |The input parameter “\{0\}” that is mandatory for processing this request is not supplied.|400 |A required parameter is missing.|
-|InvalidParameter|the parameter\(s\) “\{0\}” provided is\(are\) invalid.|400 |The specified parameter is invalid.|
-|InnerServiceFailed|call inner service failed|403 |Internal server error.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

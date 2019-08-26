@@ -1,49 +1,41 @@
 # View a snapshot chain {#concept_w51_1rl_xdb .concept}
 
-The snapshot service fee is related to the snapshot capacity. This article describes how to view the capacity of all snapshots on a single disk and all snapshot capacity on a region.
+The snapshot service fee is related to the snapshot size. This article describes how to view the snapshot size on a single disk or under a region.
 
-## View individual disk snapshot capacity {#section_cx4_3rl_xdb .section}
+## View the snapshot size on a single disk {#section_cx4_3rl_xdb .section}
 
-When you create snapshots of an elastic block storage device, such as a cloud disk or a shared block storage device, you can view the size of all the snapshots of the device by using the  **Snapshot Chain** feature in the ECS console.
+When you create snapshots of a cloud disk or a shared block storage device, you can view the snapshot size of the device by using the **Snapshot Chains** feature in the ECS console.
 
-A snapshot chain is composed of all the snapshots of an elastic block storage device. After you create a snapshot, the device has a snapshot chain. The chain has the identical ID with that of the device. A snapshot chain provides the following information:
+A snapshot chain is composed of all the snapshots of a cloud disk or shared block storage device. After you create a snapshot, the device has a snapshot chain. The snapshot chain uses an identical ID with that of the disk, and provides the following information:
 
--   Snapshot node: one node in the snapshot chain represents a single snapshot of the disk.
--   Snapshot nodes: Each snapshot node of the chain represents one snapshot of the device.
--   Snapshot capacity: The storage space occupied by all the snapshots of the device. Snapshot quota: Each device has up to 64 snapshots, including those created manually or automatically.
+-   Snapshot nodes, whereby each snapshot node of the chain represents one snapshot of the device.
+-   Snapshot size, indicating the storage space occupied by all snapshots of the device.
+-   Snapshot quota, whereby each device can have up to 64 snapshots, including those created manually or automatically.
 
-## Prerequisites {#section_gfm_srl_xdb .section}
+## Prerequisite {#section_gfm_srl_xdb .section}
 
-You have [Create snapshots](intl.en-US/User Guide/Snapshots/Create snapshots.md#).
+You have [created snapshots](reseller.en-US/User Guide/Snapshots/Create a snapshot.md#).
 
 ## Procedure {#section_a25_trl_xdb .section}
 
-To view the total size of all the snapshots of an elastic block storage device, follow these steps:
+To view the total size of all the snapshots of a cloud disk or shared block storage device, follow these steps:
 
-1.  Log on to the [ECS console](https://ecs.console.aliyun.com/#/home).
-2.  Select a region.
-3.  In the left-side navigation pane, select **Snapshots & Images** \> **Snapshot list** .
-4.  Find the disk ID of the snapshot. The disk should have at least one snapshot.
+1.  Log on to the [ECS console](https://partners-intl.console.aliyun.com/#/ecs).
+2.  Select the target region.
+3.  In the left-side navigation pane, select **Snapshots and Images** \> **Snapshots** .
+4.  Find the disk ID of the target snapshot.
+5.  In the left-side navigation pane, click **Snapshot Chains**.
+6.  View the size of all snapshots on the disk according to the disk ID found in step 4. You can view the total number and size of snapshots of the disk in the list.
 
-    ![](images/4574_en-US.png)
+In the **Actions** column, click **Details** to go to the Snapshot Chain Details page to see all snapshots of the disk. Here, you can choose to [roll back a cloud disk](reseller.en-US/User Guide/Cloud disks/Roll back a cloud disk.md#) or [create a custom image by using a snapshot](reseller.en-US/User Guide/Images/Create custom image/Create a custom image by using a snapshot.md#).
 
-5.  In the left-side navigation pane, click **Snapshot Chain**.
-6.  View all the snapshot capacities for the disk according to the disk ID that was found in step 4. You can view the total number and size of snapshots of the disk in the list.
+## View the snapshot size under a region {#section_sbv_2sl_xdb .section}
 
-    ![](images/4578_en-US.png)
+Follow these steps:
 
+1.  Log on to the [ECS console](https://partners-intl.console.aliyun.com/#/ecs).
+2.  Select the target region.
+3.  In the left-side navigation pane, select **Snapshots and Images** \> **Snapshots**.
 
-In the **Actions** column, click **Details** to go to the  Snapshot Chain Details page. On the page, you can see all the snapshots of the disk, which you can use to [Roll back a cloud disk](intl.en-US/User Guide/Cloud disks/Roll back a cloud disk.md#) or  [Create a custom mirror using a snapshot](intl.en-US/User Guide/Images/Create custom image/Create a custom mirror using a snapshot.md#).
-
-## View all snapshot capacities under a region. {#section_sbv_2sl_xdb .section}
-
-Follow these steps to view all snapshot capacities in a region:
-
-1.  Log on to the [ECS console](https://ecs.console.aliyun.com/#/home).
-2.  Select a region.
-3.  In the left-hand navigation bar, select **Snapshots & Images** \> **Snapshots** .
-
-You can view the total number and size of snapshots of the disk in the list.
-
-![](images/4581_en-US.png)
+Here, you can view the total number and size of snapshots of the disk in the list.
 

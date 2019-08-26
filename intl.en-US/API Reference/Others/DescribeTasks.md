@@ -1,59 +1,119 @@
-# DescribeTasks {#DescribeTasks .reference}
+# DescribeTasks {#doc_api_Ecs_DescribeTasks .reference}
 
-Query the progress of a specified asynchronous request.
+You can call this operation to query the progress of one or more asynchronous requests.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DescribeTasks.|
-|RegionId|String|Yes|Region ID. For more information, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|TaskAction|String|Yes|The specified action to be queried. Optional values:-   ImportImage: Query the task of \([import an image](intl.en-US/API Reference/Images/ImportImage.md#)\)
--   ExportImage: Query the task of \([export an image](intl.en-US/API Reference/Images/ExportImage.md#)\)
+Alibaba Cloud provides [OpenAPI Explorer](https://api.aliyun.com/#product=Ecs&api=DescribeTasks) to simplify API usage. You can use OpenAPI Explorer to search for APIs, call APIs, and dynamically generate SDK example code.
 
-|
-|TaskIds|String|No|Task ID; up to 100 task IDs are supported, and they are separated by comma \(`,`\).|
-|TaskStatus|String|No|Task status. Optional values:-   Finished
+## Request parameters {#parameters .section}
+
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-hangzhou|The ID of the region for which to query the progress of requests. You can call the [DescribeRegions](~~25609~~) operation to query the latest region list.
+
+ |
+|Action|String|No|DescribeTasks|The operation that you want to perform. For API requests using the HTTP and HTTPS methods, `Action` is required. Set the value to DescribeTasks.
+
+ |
+|EndTime|String|No|2015-11-23T15:16:00Z|The end of the time range where the data is queried. Specify the time in the [ISO 8601](~~25696~~) standard in the yyyy-MM-ddTHH:mm:ssZ format. The time must be in UTC.
+
+ |
+|PageNumber|Integer|No|1|The number of the page to return. Pages start from page 1. Default value: 1.
+
+ |
+|PageSize|Integer|No|2|The number of entries to return on each page. Valid values: 1 to 100. Default value: 10.
+
+ |
+|StartTime|String|No|2015-11-23T15:10:00Z|The beginning of the time range where the data is queried. Specify the time in the [ISO 8601](~~25696~~) standard in the yyyy-MM-ddTHH:mm:ssZ format. The time must be in UTC.
+
+ |
+|TaskAction|String|No|ImportImage|The operation name of the task. Valid values:
+
+ -   ImportImage
+-   ExportImage
+-   RedeployInstance
+
+ |
+|TaskIds|String|No|\["t-bp10e8or\*\*\*\*\*\*\*\*74o8x","t-bp10e8or\*\*\*\*\*\*\*\*74o8y"\]|The task IDs. You can specify up to 100 task IDs at a time. Separate multiple tasks IDs with commas \(,\).
+
+ |
+|TaskStatus|String|No|Finished|The status of the task. Valid values:
+
+ -   Finished
 -   Processing
--   Pending
+-   Waiting
 -   Deleted
 -   Paused
+-   Failed
 
-Default value: NoneCurrently, you can query the task in the `Finished` and `Processing` status, and other value is ignored in the request.
+ Default value: null. The system only retrieves tasks in the Finished, Processing, and Failed states. The request ignores other values.
 
-|
-|StartTime|String|No|Query by creation time, start time of the creation time period. The time is displayed in the format specified in the [ISO8601](intl.en-US/API Reference/Appendix/ISO 8601 time format.md#) standard, and the UTC time is used Format: YYYY-MM-DDThh:mmZ.|
-|EndTime|String|No|Query by creation time, start time of the creation time period. The time is displayed in the format specified in the ISO8601 standard, and the UTC time is used. It is in the format of YYYY-MM-DDThh:mmZ.|
-|PageNumber|Integer|No|Page number of the query result. Initial value: 1|
-|PageSize|Integer|No|Number of lines on each page, set for pagination query. Maximum value: 100 Default value: 10|
+ |
 
-## Response parameters {#section_ay2_4yg_ydb .section}
+## Response parameters {#resultMapping .section}
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|TaskSet|[TaskType](intl.en-US/API Reference/Data type/TaskType.md#)|TaskSet|
-|RegionId|String|Regional ID.|
-|TotalCount|Integer|Number of items in the list|
-|PageNumber|Integer|Current page number.|
-|PageSize|Integer|Number of items included in the current page|
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|PageNumber|Integer|1|The number of the page returned.
 
-## Examples {#section_mv1_byg_ydb .section}
+ |
+|PageSize|Integer|2|The number of entries returned on the page.
 
-**Request example**
+ |
+|RegionId|String|cn-hangzhou|The region ID.
 
-```
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request.
 
+ |
+|TaskSet| | |A set of tasks.
+
+ |
+|└CreationTime|String|2015-11-24T12:50Z|The time when the task was created.
+
+ |
+|└FinishedTime|String|2015-11-24T12:50Z|The time when the task was finished.
+
+ |
+|└SupportCancel|String|true|Indicates whether the task can be canceled.
+
+ |
+|└TaskAction|String|IMPORT\_IMAGE|The name of the task.
+
+ |
+|└TaskId|String|t-bp10e8or\*\*\*\*\*\*\*\*74o8X|The ID of the task.
+
+ |
+|└TaskStatus|String|Finished|The status of the task.
+
+ |
+|TotalCount|Integer|2|The total number of tasks.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DescribeTasks
 &RegionId=cn-hangzhou
-&<Common Request Parameters>
+&PageNumber=1
+&PageSize=2
+&TaskIds=t-bp10e8or********74o8X
+&TaskAction=ImportImage
+&TaskStatus=Finished
+&StartTime=2015-11-23T15:10:00Z
+&EndTime=2015-11-23T15:16:00Z
+&<Common request parameters>
 ```
 
-**Response example**
+Sample success responses
 
-**XML format**
+`XML` format
 
-```
-
+``` {#xml_return_success_demo}
 <DescribeTasksResponse>
   <PageNumber>1</PageNumber>
   <TotalCount>2</TotalCount>
@@ -67,7 +127,7 @@ https://ecs.aliyuncs.com/?Action=DescribeTasks
       <SupportCancel>true</SupportCancel>
       <TaskAction>IMPORT_IMAGE</TaskAction>
       <TaskStatus>Finished</TaskStatus>
-      <TaskId>t-23mo8zf9w</TaskId>
+      <TaskId>t-bp10e8or********74o8X</TaskId>
     </Task>
     <Task>
       <CreationTime>2015-11-23T15:10Z</CreationTime>
@@ -82,44 +142,46 @@ https://ecs.aliyuncs.com/?Action=DescribeTasks
 
 ```
 
-**JSON format**
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "PageNumber": 1,
-    "TotalCount": 2,
-    "PageSize": 2,
-    "RegionId": "cn-hangzhou",
-    "RequestId": "F746C690-D9EA-4F87-AF31-8E1910FAB541"，
-    "TaskSet": {
-        "Task": [
-            {
-                "CreationTime": "2015-11-24T12:50Z",
-                "FinishedTime": "2015-11-24T12:50Z",
-                "SupportCancel": true,
-                "TaskAction": "ImportImage",
-                "TaskStatus": "Finished",
-                "TaskId": "t-23mo8zf9w"
-            },
-            {
-                "CreationTime": "2015-11-23T15:10Z",
-                "FinishedTime": "2015-11-23T15:16Z",
-                "SupportCancel": true,
-                "TaskAction": "ImportImage",
-                "TaskStatus": "Finished",
-                "TaskId": "t-23sgu0dyj"
-            }
-        ]
-    }
+	"PageNumber":1,
+	"TotalCount":2,
+	"TaskSet":[
+		{
+			"Task":[
+				{
+					"CreationTime":"2015-11-24T12:50Z",
+					"FinishedTime":"2015-11-24T12:50Z",
+					"SupportCancel":true,
+					"TaskAction":"ImportImage",
+					"TaskStatus":"Finished",
+					"TaskId":"t-bp10e8or********74o8X"
+				},
+				{
+					"CreationTime":"2015-11-23T15:10Z",
+					"FinishedTime":"2015-11-23T15:16Z",
+					"SupportCancel":true,
+					"TaskAction":"ImportImage",
+					"TaskStatus":"Finished",
+					"TaskId":"t-23sgu0dyj"
+				}
+			]
+		}
+	],
+	"PageSize":2,
+	"RequestId":"F746C690-D9EA-4F87-AF31-8E1910FAB541",
+	"RegionId":"cn-hangzhou"
 }
 ```
 
-## Error codes {#ErrorCode .section}
+## Error codes { .section}
 
-Error codes specific to this interface are as follows. For more error codes, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|400|MissingParameter|An input parameter "RegionId" that is mandatory for processing the request is not supplied.|The error message returned because the RegionId parameter is not specified.|
+|400|InvalidRegionId.NotFound|The specified RegionId does not exist.|The error message returned because the specified Region ID does not exist. Check whether ECS is available in that region.|
 
-|Error code|Error message |HTTP status code|Meaning|
-|:---------|:-------------|:---------------|:------|
-|MissingParameter| An input parameter RegionId that is mandatory for processing the request is not supplied.|400|The required parameter `RegionId` is missing.|
-|InvalidRegionId.NotFound|The specified region not found.|400|The specified `RegionId` does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

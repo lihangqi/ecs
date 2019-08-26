@@ -15,7 +15,7 @@ After a system disk is changed,
 -   To make sure that your account have enough snapshot quota for the new system disk, you can delete unnecessary snapshots of the original system disk.
 
 
-This article describes how to replace an existing image with a non-public image. If you want to use a non-public image, see Change the system disk \(public image\).
+This article describes how to replace an existing image with a non-public image. If you want to use a public image, see [Change a system disk \(public image\)](intl.en-US/User Guide/Cloud disks/Change a system disk (public image).md#).
 
 ## Note {#section_zdm_dkj_ydb .section}
 
@@ -125,5 +125,5 @@ After the system disk is changed, you may have to perform the following:
 
 ## Related APIs {#section_y2m_dkj_ydb .section}
 
-[../DNA0011860945/EN-US\_TP\_9889.md\#](../intl.en-US/API Reference/Disk/ReplaceSystemDisk.md#)
+[ReplaceSystemDisk](../../../../intl.en-US/API Reference/Disk/ReplaceSystemDisk.md#)
 

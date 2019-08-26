@@ -1,70 +1,110 @@
-# DescribeCommands {#DescribeCommands .reference}
+# DescribeCommands {#doc_api_1030541 .reference}
 
-Queries the cloud assistant commands that you have created. If you only specify the `Action` and `RegionId` parameters, Alibaba Cloud ECS queries all your available commands \(`CommandId`\) by default.
+Views the cloud assistant commands that you have created. If you only specify the Action and RegionId parameters, the system queries all available commands by default.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DescribeCommands.|
-|RegionId|String|Yes|The region ID. You can call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|CommandId|String|No|Command ID.|
-|Type|String|No|Command type. Optional values:-   RunBatScript: The command process is a Bat script for Windows instances.
--   RunPowerShellScript: The command process is a PowerShell script for Windows instances.
--   RunShellScript: The command process is a Shell script for Linux instances.
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DescribeCommands) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-|
-|Name|String|No|Command name, fuzzy search temporarily not supported.|
-|Description|String|No|Command description, fuzzy search temporarily not supported.|
-|PageNumber|Integer|No|Current page number. Start value: 1.Default value: 1.
+## Request parameters {#parameters .section}
 
-|
-|PageSize|Integer|No|The number of rows per page for multi-page display. Maximum value: 50.Default value: 10.
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-hangzhou| The ID of the region. You can call [DescribeRegions](~~25609~~) to view the latest regions of Alibaba Cloud.
 
-|
+ |
+|Action|String|No|DescribeCommands| The operation that you want to perform. Set the value to DescribeCommands.
 
-## Response parameters {#ResponseParameter .section}
+ |
+|CommandId|String|No|c-7d2a745b412b4601b2d47f6a768d3a14| The ID of the command.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|TotalCount|Integer|Total number of commands|
-|Pagenumber|Integer|Command list page number|
-|Pagesize|Integer|The number of rows per page|
-|Commands|Array|Type of command data set \([`CommandSetType`](#CommandSetType)\)|
+ |
+|Description|String|No|test| The description of the command.
 
- **CommandSetType** 
+ |
+|Name|String|No|Test1| The name of the command. Partial command names are not supported.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|Command|Array|Command type \([`CommandType`](#CommandType)\)|
+ |
+|PageNumber|Long|No|1| The current page number. Starting value: 1.
 
- **CommandType** 
+ Default value: 1.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|CommandId|String|Command ID|
-|Name|String|Command name|
-|Description|String|Command description|
-|Type|String|Command type|
-|Commandcontent|String|Command content, transmitted in the Base64-encoded format|
-|WorkingDir|String|Invocation path|
-|TimeOut|Integer|Timeout|
+ |
+|PageSize|Long|No|10| The number of entries per page. Maximum value: 50.
 
-## Examples { .section}
+ Default value: 10
 
-**Request example** 
+ |
+|Type|String|No|RunShellScript| The type of the command. Valid values:
 
-```
+ -   RunBatScript: Bat script for Windows-based instances
+-   RunPowerShellScript: PowerShell script for Windows-based instances
+-   RunShellScript: Shell script for Linux-based instances
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|Commands| | | An array of CommandSetType data.
+
+ |
+|└ CommandContent|String|Y2QgL3Jvb3Q=| The content of the command, which is Base64-encoded.
+
+ |
+|└CommandId|String|c-7d2a745b412b4601b2d47f6a768d3a14| The ID of the command.
+
+ |
+|└Description|String|test| The description of the command.
+
+ |
+|└Name|String|Test1| The name of the command.
+
+ |
+|└Timeout|Long|3600| The timeout period.
+
+ |
+|└Type|String|RunShellScript| The type of the command.
+
+ |
+|└WorkingDir|String|/home/| The directory path for command invocation.
+
+ |
+|PageNumber|Long|1| The page number of the command list.
+
+ |
+|PageSize|Long|10| The number of entries per page.
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
+
+ |
+|TotalCount|Long|5| The total number of commands.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=DescribeCommands
-&RegionId=cn-hangzhou
-&<Common Request Parameters>
+&RegionId=cn-hangzhou 
+&CommandId=c-7d2a745b412b4601b2d47f6a768d3a14
+&Name=Test1
+&Description=test 
+&Type=RunShellScript
+&PageNumber=1 
+&PageSize=10 
+&<Common request parameters>
 ```
 
-**Success response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DescribeCommandsResponse>
     <TotalCount>5</TotalCount>
     <Commands>
@@ -74,8 +114,8 @@ https://ecs.aliyuncs.com/?Action=DescribeCommands
                 <CommandContent>ZWNobyAxMjM=</CommandContent>
                 <Timeout>3600</Timeout>
                 <Type>RunShellScript</Type>
-                <CommandId>c-05946950bc63441dab0a72b8xxxxxxxx</CommandId>
-                <Description>test</Description>
+                <CommandId>c-7d2a745b412b4601b2d47f6a768d3a14</CommandId>
+                <Description>test</Description> 
         </Command>
         <Command>
                 <Name>Test1</Name>
@@ -83,7 +123,7 @@ https://ecs.aliyuncs.com/?Action=DescribeCommands
                 <CommandContent>Y2QgL3Jvb3Q=</CommandContent>
                 <Timeout>3600</Timeout>
                 <Type>RunShellScript</Type>
-                <CommandId>c-53253cb556d74cb7b7f7309fdxxxxxxxx</CommandId>
+                <CommandId>c-7d2a745b412b4601b2d47f6a768d3a15</CommandId>
                 <Description>test1</Description>
         </Command>
         <Command>
@@ -92,7 +132,7 @@ https://ecs.aliyuncs.com/?Action=DescribeCommands
                 <CommandContent>eXVtIHVwZGF0ZQ==</CommandContent>
                 <Timeout>3600</Timeout>
                 <Type>RunShellScript</Type>
-                <CommandId>c-57881b01e5ec4403916f8685xxxxxxxx</CommandId>
+                <CommandId>c-7d2a745b412b4601b2d47f6a768d3a16</CommandId>
                 <Description>test2</Description>
         </Command>
         <Command>
@@ -101,7 +141,7 @@ https://ecs.aliyuncs.com/?Action=DescribeCommands
                 <CommandContent>c2VydmljZSBuZ2lueCByZWxvYWQ=</CommandContent>
                 <Timeout>3600</Timeout>
                 <Type>RunShellScript</Type>
-                <CommandId>c-742eea007af14043b07c4978xxxxxxxx</CommandId>
+                <CommandId>c-7d2a745b412b4601b2d47f6a768d3a17</CommandId>
                 <Description>test3</Description>
         </Command>
         <Command>
@@ -110,106 +150,83 @@ https://ecs.aliyuncs.com/?Action=DescribeCommands
                 <CommandContent>bHM=</CommandContent>
                 <Timeout>120</Timeout>
                 <Type>RunShellScript</Type>
-                <CommandId>c-cec3ded3bc434c22aabcfeaaxxxxxxxx</CommandId>
+                <CommandId>c-7d2a745b412b4601b2d47f6a768d3a18</CommandId>
                 <Description>test4</Description>
         </Command>
-    <PageNumber>1</PageNumber>
-    <RequestId>36443468-4AE5-44DB-A6FE-A528xxxxxxxx</RequestId>
-    <PageSize>10</PageSize>
-
+    <PageNumber>1</PageNumber> 
+    <RequestId>E69EF3CC-94CD-42E7-8926-F133B86387C0</RequestId> 
+    <PageSize>10</PageSize> 
+</DescribeCommandsResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"PageNumber":1,
+	"TotalCount":5,
+	"PageSize":10,
+	"RequestId":"E69EF3CC-94CD-42E7-8926-F133B86387C0",
+	"Commands":{
+		"Command":[
+			{
+				"Name":"Test",
+				"Description":"test",
+				"Timeout":3600,
+				"CommandContent": "ZWNobyAxMjM=",
+				"Type":"RunShellScript",
+				"CommandId":"c-7d2a745b412b4601b2d47f6a768d3a14",
+				"WorkingDir":""
+			},
+			{
+				"Name":"Test1",
+				"Description":"test1",
+				"Timeout":3600,
+				"CommandContent":"Y2QgL3Jvb3Q=",
+				"Type":"RunShellScript",
+				"CommandId":"c-7d2a745b412b4601b2d47f6a768d3a15",
+				"WorkingDir":""
+			},
+			{
+				"Name":"Test2",
+				"Description":"test2",
+				"Timeout":3600,
+				"CommandContent":"eXVtIHVwZGF0ZQ==",
+				"Type":"RunShellScript",
+				"CommandId":"c-7d2a745b412b4601b2d47f6a768d3a16",
+				"WorkingDir":""
+			},
+			{
+				"Name":"Test3",
+				"Description":"test3",
+				"Timeout":3600,
+				"CommandContent":"c2VydmljZSBuZ2lueCByZWxvYWQ=",
+				"Type":"RunShellScript",
+				"CommandId":"c-7d2a745b412b4601b2d47f6a768d3a17",
+				"WorkingDir":""
+			},
+			{
+				"Name":"Test4",
+				"Description":"test4",
+				"Timeout":3600,
+				"CommandContent":"bHM=",
+				"Type":"RunShellScript",
+				"CommandId":"c-7d2a745b412b4601b2d47f6a768d3a18",
+				"WorkingDir":""
+			}
+		]
+	}
+}
 ```
 
-    "TotalCount": 5,
-    "Commands": {
-        "Command": [
-            
-                "Name": "Test",
-                "WorkingDir": "",
-                "CommandContent": "ZWNobyAxMjM=",
-                "Timeout": 3600,
-                "Type": "RunShellScript",
-                "CommandId": "c-05946950bc63441dab0a72b8xxxxxxxx",
-                "Description": "test"
-            
-            
-                "Name": "Test1",
-                "WorkingDir": "",
-                "CommandContent": "Y2QgL3Jvb3Q=",
-                "Timeout": 3600,
-                "Type": "RunShellScript",
-                "CommandId": "c-53253cb556d74cb7b7f7309fxxxxxxxx",
-                "Description": "test1"
-            
-            
-                "Name": "Test2",
-                "WorkingDir": "",
-                "CommandContent": "eXVtIHVwZGF0ZQ==",
-                "Timeout": 3600,
-                "Type": "RunShellScript",
-                "CommandId": "c-57881b01e5ec4403916f8685xxxxxxxx",
-                "Description": "test2"
-            
-            
-                "Name": "Test3",
-                "WorkingDir": "",
-                "CommandContent": "c2VydmljZSBuZ2lueCByZWxvYWQ=",
-                "Timeout": 3600,
-                "Type": "RunShellScript",
-                "CommandId": "c-742eea007af14043b07c4978xxxxxxxx",
-                "Description": "test3"
-            
-            
-                "Name": "Test4",
-                "WorkingDir": "",
-                "CommandContent": "bHM=",
-                "Timeout": 3600,
-                "Type": "RunShellScript",
-                "CommandId": "c-cec3ded3bc434c22aabcfeaaxxxxxxxx",
-                "Description": "test4"
-            
-        
-    
-    "PageNumber": 1,
-    "RequestId": "36443468-4AE5-44DB-A6FE-A528xxxxxxxx",
-    "PageSize": 10
+## Error codes {#section_uv0_fp7_o5w .section}
 
-```
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|500|InternalError.Dispatch|An error occurred when you dispatched the request.|The error message returned when an unknown error occurs.|
+|403|InvalidParam.PageNumber|The specified parameter is invalid.|The error message returned when the specified parameter is invalid.|
+|403|InvalidParam.PageSize|The specified parameter is invalid.|The error message returned when the specified parameter is invalid.|
+|403|InvalidRegionId.CloudAssistant|Current region is not available.|The error message returned when the specified region is unavailable.|
 
-**Error response example** 
-
-**XML format**
-
-```
-<Error>
-    <RequestId>540CFF28-407A-40B5-B6A5-74Bxxxxxxxxx</RequestId>
-    <HostId>ecs.aliyuncs.com</HostId>
-    <Code>MissingParameter.RegionId</Code>
-    <Message>The input parameter “RegionId” that is mandatory for processing this request is not supplied.</Message>
-</Error>
-```
-
- **JSON format** 
-
-```
-
-    "RequestId": "540CFF28-407A-40B5-B6A5-74Bxxxxxxxxx",
-    "HostId": "ecs.aliyuncs.com"
-    "Code": "MissingParameter.RegionId"
-    "Message": "The input parameter “RegionId” that is mandatory for processing this request is not supplied."
-
-```
-
-## Error codes {#ErrorCode .section}
-
-Error codes specific to this interface are as follows. For more information, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message |HTTP status code|Meaning|
-|:---------|:-------------|:---------------|:------|
-|MissingParameter.RegionId|The input parameter “RegionId” that is mandatory for processing this request is not supplied.|400|You must specify the required parameter `RegionId`, or you cannot use  the resources in the specified region.|
-|InvalidRegionId.NotFound|The RegionId provided does not exist in our items.|404|The specified `RegionId` parameter does not exist.|
-|InternalError.Dispatch|An internal error occurred when dispath the request|500|Internal error. Please try again later.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

@@ -1,130 +1,141 @@
 # Limits {#concept_gvb_h1w_tdb .concept}
 
-When using ECS, consider the following:
+When using ECS, note the following limitations:
 
--   ECS does not support virtual application installation or subsequent virtualization such as when using VMware.  Currently, only [../../../../dita-oss-bucket/SP\_2/DNA0011858383/EN-US\_TP\_9553.md\#](../../../../intl.en-US/Product Introduction/Instance/ECS Bare Metal Instance and Super Computing Clusters.md#) supports virtualization.
--   ECS does not support sound card applications. 
--   ECS does not support the installation of external hardware devices such as hardware dongles, USB drives, external hard drives, and  the USB security keys issued by banks.
--   ECS does not support SNAT and other IP packet address translation services.  You can achieve this by using an external VPN or proxy.
--   ECS does not support multicast protocol.  If multicasting services are required, we recommend that you use unicast point-to-point method.
--   Currently, Log Service does not support 32-bit Linux ECS instance. To know the regions that support Log Service, see [Service endpoint](https://www.alibabacloud.com/help/doc-detail/29008.htm). See [../../../../dita-oss-bucket/SP\_7/DNSLS11850791/EN-US\_TP\_13054.md\#](../../../../intl.en-US/User Guide/Logtail collection/Overview.md#) to know the server operating systems that support Log Service.
+-   ECS does not support virtual application installation or revirtualization \(such as installation of VMware\). Currently, only [ECS Bare Metal Instance and Super Computing Clusters](../../../../../reseller.en-US/Product Introduction/Instances/ECS Bare Metal Instance and Super Computing Clusters.md#) support revirtualization.
+-   ECS does not support sound card applications.
+-   ECS does not support external hardware devices directly \(such as dongles, USB drives, or external hard drives\). Instead, it supports a software protection dongle or two-step verification with dynamic passwords.
+-   ECS does not support IP address translation services such as SNAT. Instead, it supports a VPN or proxy.
+-   ECS does not support multicast protocols. If multicasting services are required, we recommend that you use point-to-point unicast instead.
+-   Currently, Log Service does not support 32-bit Linux ECS instances. For information about regions that support Log Service, see [Service endpoint](../../../../../reseller.en-US/API Reference/Service endpoint.md#). For information about operating systems that support Log Service, see [Overview](../../../../../reseller.en-US/User Guide/Logtail collection/Overview/Overview.md#).
 
-Besides the preceding limit, the additional limits of ECS are mentioned in the following table.
+In addition to the preceding limits, the following table details further limits of ECS and states whether you can open a ticket to request changing the limits.
 
 ## ECS instances {#section_tbg_zdx_wdb .section}
 
-|Item|Limit |Supply for higher configuration or unlock configuration rights|
-|:---|:-----|:-------------------------------------------------------------|
-|Permission to create instances |Complete real-name registration to create ECS instances in the mainland China regions |Not supported|
-|Default quota of Pay-As-You-Go ECS instances \(including spot instances\) in all regions for one account |10|Open a ticket|
-|Launch templates in each region for one account |30|Not supported|
-|Versions of one launch template |30|Not supported|
-|Conversion of the billing method from Pay-As-You-Go to Subscription |Not supported in the following instance types or type families:-   Generation II: n1, ne2, and e3
--   All instance types of Generation I
+|Item|Limitation|Can I open a ticket to change the limitation?|
+|:---|:---------|:--------------------------------------------|
+|Instance types for which you can create Pay-As-You-Go instances|Instance types with less than 16 vCPUs|Yes|
+|Default quota of launch templates in each region for one account|30|No|
+|Default quota of versions of one launch template|30|No|
+|Switch from Pay-As-You-Go to Subscription|The following instance types \(families\) are not supported: t1, s1, s2, s3, c1, c2, m1, m2, n1, n2, and e3.|No|
+|Switch from Subscription to Pay-As-You-Go| -   Depends on the membership level
+-   5,000 vCPUs × hours for each month. The quota increases with membership levels.
+-   Maximum refund limit per month \(varies with the membership level\).
 
-|Not supported|
-|Default available instance types for creating Pay-As-You-Go ECS instances \(New generation\) |ecs.t1.small \(1 vCPU core, 1 GiB\) |Open a ticket|
-|ecs.s1.small \(1 vCPU core, 2 GiB\)|
-|ecs.s1.medium \(1 vCPU core, 4 GiB\)|
-|ecs.s2.small \(2 vCPU core, 2 GiB\)|
-|ecs.s2.large \(2 vCPU core, 4 GiB\)|
-|ecs.s2.xlarge \(2 vCPU core, 8 GiB\)|
-|ecs.s3.medium \(4 vCPU core, 4 GiB\)|
-|ecs.s3.large \(4 vCPU core, 8 GiB\)|
-|ecs.m1.medium \(4 vCPU core, 16 GiB\)|
-|Default available instance types for creating Pay-As-You-Go ECS instances \(Previous generation\) |ecs.n1.tiny \(1 vCPU core, 1 GiB\)|Open a ticket|
-|ecs.n1.small \(1 vCPU core, 2 GiB\)|
-|ecs.n1.medium \(2 vCPU core, 4 GiB\)|
-|ecs.n1.large \(4 vCPU core, 8 GiB\)|
-|ecs.n2.small \(1 vCPU core, 4 GiB\)|
-|ecs.n2.medium \(4 vCPU core, 8 GiB\)|
-|ecs.n2.large \(4 vCPU core, 16 GiB\)|
-|ecs.e3.small \(1 vCPU core, 8 GiB\)|
-|ecs.e3.medium \(2 vCPU core, 16 GiB\)|
+ |No|
 
 ## Block storage {#section_xlb_32x_wdb .section}
 
-|Item|Limit|Supply for higher configuration or unlock configuration rights|
-|:---|:----|:-------------------------------------------------------------|
-|Permission to create Pay-As-You-Go cloud disks |Complete [real-name registration](https://www.alibabacloud.com/help/zh/doc-detail/52595.htm) to create ECS instances in the mainland China regions |Not supported|
-|Quota of Pay-As-You-Go cloud disks in all regions for one account |Five times of the number of Pay-As-You-Go instances in all regions under one account |Open a ticket|
-|Quota of system disks for one ECS instance |1|Not supported|
-|Quota of data disks for one ECS instance |16 \(including cloud disks and Shared Block Storage\) |Not supported|
-|Multi-node attachment of shared block storage |16 instances. Four instances supported during public beta. |Not supported|
-|Quota of shared block storage in all regions for one account |10|Open a ticket|
-|Capacity of one Basic Cloud Disk |5 GiB ~ 2000 GiB|Not supported|
-|Capacity of one SSD Cloud Disk |20 GiB ~ 32768 GiB|Not supported|
-|Capacity of one Ultra Cloud disk |20 GiB ~ 32768 GiB|Not supported|
-|Capacity of one ephemeral SSD disk |5 GiB ~ 800 GiB|Not supported|
-|Capacity of ephemeral SSD disks on one ECS instance |1024 GiB|Not supported|
-|Capacity of one NVMe SSD local disk |1456 GiB|Not supported|
-|Capacity of NVMe SSD local disks on one ECS instance |2912 GiB|Not supported|
-|Capacity of one SATA HDD local disk |5500 GiB|Not supported|
-|Capacity of SATA HDD local disks on one ECS instance |154000 GiB|Not supported|
-|Capacity of one SSD Shared Block Storage device |32768 GiB|Not supported|
-|Capacity of SSD Shared Block Storage devices on one ECS instance |128 TiB|Not supported|
-|Capacity of one Ultra Shared Block Storage device |32768 GiB|Not supported|
-|Capacity of Ultra Shared Block Storage devices on one ECS instance |128 TiB|Not supported|
-|Size limit of one system disk |Windows: 40 GiB − 500 GiB Linux \(excluding CoreOS\)+ FreeBSD: 20 GiB − 500 GiB CoreOS: 30 GiB − 500 GiB |Not supported|
-|Size limit of one data disk |Basic Cloud Disk: 5 GiB − 2,000 GiB SSD Cloud Disk/Ultra Cloud Disk/SSD Shared Block Storage/Ultra Shared Block Storage: 20 GiB − 32,768 GiB Local disk: See Local disks|Not supported|
-|Attaching an independent local disk to an ECS instance with local disks |Not supported |Not supported |
-|Configuration changes of an ECS instance with local disks |Only changes to public network bandwidth are permitted |Not supported |
-|Mount point for system disks |/dev/xvda|Not supported|
-|Mount points for data disks |/dev/xvd\[b-z\]|Not supported|
+|Item|Limitation|Can I open a ticket to change the limitation?|
+|:---|:---------|:--------------------------------------------|
+|Default quota of Pay-As-You-Go cloud disks in all regions for one account|Number of Pay-As-You-Go instances in all regions under the user account × 5|Yes|
+|Default quota of system disks for one instance|1|No|
+|Default quota of data disks for one instance|16 \(including cloud disks and Shared Block Storage\)|No|
+|Default quota of instances to which one Shared Block Storage can be attached|8|No|
+|Default quota of Shared Block Storage in all regions for one account|10|Yes|
+|Capacity of one Basic Cloud Disk|5 GiB−2,000 GiB|No|
+|Capacity of one SSD Cloud Disk|20 GiB−32,768 GiB|No|
+|Capacity of one Ultra Cloud disk|20 GiB−32,768 GiB|No|
+|Capacity of one local SSD disk|5 GiB−800 GiB|No|
+|Capacity of local SSD disks for one instance|1,024 GiB|No|
+|Capacity of one local NVMe SSD disk|1,456 GiB|No|
+|Capacity of local NVMe SSD disks for one instance|2,912 GiB|No|
+|Capacity of one local SATA HDD disk|5,500 GiB|No|
+|Capacity of local SATA HDD disks for one instance|154,000 GiB|No|
+|Capacity of one SSD Shared Block Storage|32,768 GiB|No|
+|Capacity of SSD Shared Block Storage for one instance|128 TiB|No|
+|Capacity of one Ultra Shared Block Storage|32,768 GiB|No|
+|Capacity of Ultra Shared Block Storage for one instance|128 TiB|No|
+|Capacity of one ESSD disk|32,768 GiB|No|
+|Capacity of one system disk| -   Windows: 40 GiB−500 GiB
+-   Linux \(excluding CoreOS\) and FreeBSD: 20 GiB−500 GiB
+-   CoreOS: 30 GiB−500 GiB
+
+ |No|
+|Capacity of one data disk| -   Basic Cloud Disk: 5 GiB−2,000 GiB
+-   SSD Cloud Disk/Ultra Cloud Disk/SSD Shared Block Storage/Ultra Shared Block Storage: 20 GiB−32,768 GiB
+-   Local disk: dependent on specific disks
+
+ |No|
+|Attach a new local disk to an instance with local disks|This feature is not supported.|No|
+|Change configuration of an instance with local disks|Only bandwidth changes are allowed.|No|
+|System disk mount points|/dev/xvda|No|
+|Data disk mount points|/dev/xvd\[b-z\]|No|
+
+**Note:** Block storage capacity is measured in binary units. 1 KiB is *1,024 bytes*. 1 MiB is 1,024 KiB. 1 GiB is 1,024 MiB. 1 TiB is 1,024 GiB.
 
 ## Snapshots {#section_bxk_n2x_wdb .section}
 
-|Item|Limit|Supply for higher configuration or unlock configuration rights|
-|:---|:----|:-------------------------------------------------------------|
-|Quota of snapshots |Number of elastic block storage devices \* 64 |Not supported|
+|Item|Limitation|Can I open a ticket to change the limit?|
+|:---|:---------|:---------------------------------------|
+|Quota of snapshots|Each cloud disk and Shared Block Storage can have up to 64 snapshots|No|
 
 ## Images {#section_jnw_r2x_wdb .section}
 
-|Item|Limit|Supply for higher configuration or unlock configuration rights|
-|:---|:----|:-------------------------------------------------------------|
-|Quota of custom images in all regions for one account |100|Open a ticket|
-|Quota of accounts to share one custom image |100|Open a ticket|
-|Requirements of images for instance types |32-bit images are not supported on an instance with 4 GiB or more RAM. |Not supported|
+|Item|Limitation|Can I open a ticket to change the limit?|
+|:---|:---------|:---------------------------------------|
+|Quota of custom images in one region for one account|100 \(increases with membership levels\)|Yes|
+|Maximum number of users with whom a single image can be shared|50|Yes|
+|Usage of images on instance types|32-bit images are not supported on an instance with 4 GiB or more RAM.|No|
 
 ## Key pairs {#section_dxw_s2x_wdb .section}
 
-|Item|Limit|Supply for higher configuration or unlock configuration rights|
-|:---|:----|:-------------------------------------------------------------|
-|Quota of key pairs in all regions for one account |500|Not supported|
-|Instance types supporting key pairs |All instance types, except those non-I/O optimized instance types in Generation I |Not supported|
-|Images supporting key pairs |Linux images only |Not supported|
+|Item|Limitation|Can I open a ticket to change the limit?|
+|:---|:---------|:---------------------------------------|
+|Quota of key pairs in one region for one account|500|No|
+|Instance types supporting key pairs|All instance types except non-I/O optimized instance types in Generation I|No|
+|Images supporting key pairs|Linux images only|No|
+
+## Internet bandwidth {#section_og5_t2x_wdb .section}
+
+|Item|Limitation|Can I open a ticket to change the limit?|
+|:---|:---------|:---------------------------------------|
+|Change the assigned Internet address for one instance|The instance has existed for less than six hours. You can change the Internet address of an instance three times.|No|
 
 ## Security groups {#section_mzr_52x_wdb .section}
 
-|Item|Limit|Supply for higher configuration or unlock configuration rights|
-|:---|:----|:-------------------------------------------------------------|
-|Quota of ECS instances for one security group |1000|Not supported|
-|Quota of rules for one security groups |100|Not supported|
-|Quota of security groups in all regions for one account | 100
+|Item|Limitation|Can I open a ticket to change the limit?|
+|:---|:---------|:---------------------------------------|
+|Quota of security groups in one region for an account| 100 \(increases with membership levels\)
 
- |Open a ticket|
-|Quota of security groups for one ECS instances |5|Not supported|
-|Port|Access to TCP Port 25, which is the default port for the STMP service, is denied. It cannot be allowed by adding a security group rule. |Open a ticket. For more information, see [Apply to open TCP port 25](https://www.alibabacloud.com/help/doc-detail/56130.htm)|
+ |Yes|
+|Quota of instances/IP addresses for one security group| -   Security groups for classic network instances: 1,000 classic network instances
+-   Security groups for VPC instances: 2,000 private IP addresses \(shared by primary and secondary network cards\)
 
-## ENI {#section_gfq_v2x_wdb .section}
+ |No|
+|Quota of security groups to which each Elastic Network Interface \(ENI\) belongs for one instance|500|No|
+|Quota of security groups to which each Elastic Network Interface \(ENI\) belongs for one instance|5|Open a ticket to raise the upper limit to 10 or 16|
+|Quota of rules for one security group|100|No It decreases as the security group quota increases. For detailed restrictions, see [Security groups](../../../../../reseller.en-US/Product Introduction/Network and security/Security groups.md#)|
+|Port|For the outbound Internet traffic, the default STMP port is 25, which is disabled by default and cannot be enabled through security group rules.|Open a ticket to enable it. For more information, see [Request for enabling TCP port 25.](https://partners-intl.aliyun.com/help/doc-detail/56130.htm)|
 
-|Item|Limit|Supply for higher configuration or unlock configuration rights|
-|:---|:----|:-------------------------------------------------------------|
-|Quota of ENI in one region for one account | 100
+## Deployment sets {#section_wcf_hbs_2fb .section}
 
- |Open a ticket|
+|Item|Limit|Can I open a ticket to change the limit?|
+|:---|:----|:---------------------------------------|
+|Quota of deployment sets in one region for an account|2|No|
+|The number of instances that can be included in a deployment set|Seven instances are allowed in one zone. The number of instances allowed in one region equals the number of zones × 7.|No|
+|Instance types that can be created in a deployment set|c5, g5, hfc5, hfg5, r5, se1ne, sn1ne, and sn2ne|No|
+
+## ENIs {#section_gfq_v2x_wdb .section}
+
+|Item|Limit|Can I open a ticket to change the limit?|
+|:---|:----|:---------------------------------------|
+|Quota of ENIs in one region for one account| 100 \(increases with membership levels\)
+
+ |Yes|
 
 ## Tags {#section_npm_w2x_wdb .section}
 
-|Item|Limit|Supply for higher configuration or unlock configuration rights|
-|:---|:----|:-------------------------------------------------------------|
-|Quota of tags for one ECS instance |10|Not supported|
+|Item|Limit|Can I open a ticket to change the limit?|
+|:---|:----|:---------------------------------------|
+|Quota of tags that can be bound to one instance|20|No|
 
 ## API {#section_glg_x2x_wdb .section}
 
-|Item|Limit|Supply for higher configuration or unlock configuration rights|
-|:---|:----|:-------------------------------------------------------------|
-|Invocation quota of CreateInstance |At most 200 times per minute |Open a ticket|
+|Item|Limit|Can I open a ticket to change the limit?|
+|:---|:----|:---------------------------------------|
+|Quota of CreateInstance calls|200 times per minute|Yes|
 
-**Note:** For more information about the limits for VPC, see [../../../../dita-oss-bucket/SP\_22/DNVPC11824082/EN-US\_TP\_2432.md\#](../../../../intl.en-US/VPC product introduction/Limits.md#).
+**Note:** For the limits of VPC products, see [Limits](../../../../../reseller.en-US/Product Introduction/Limits.md#).
 

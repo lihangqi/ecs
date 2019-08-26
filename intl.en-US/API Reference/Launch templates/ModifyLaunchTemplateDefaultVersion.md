@@ -1,60 +1,79 @@
-# ModifyLaunchTemplateDefaultVersion {#ModifyLaunchTemplateDefaultVersion .reference}
+# ModifyLaunchTemplateDefaultVersion {#doc_api_999545 .reference}
 
-Sets a specified version of this template as the default version. If you do not specify a template version number when creating an instance \([RunInstances](intl.en-US/API Reference/Instances/RunInstances.md#)\), default version is used.
+Modifies the default version of a launch template. If you do not specify a template version number when creating an instance \(RunInstances\), the default version will be used.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name |Type |Required|Description|
-|:----|:----|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: ModifyLaunchTemplateDefaultVersion.|
-|RegionId |String |Yes|Region ID of the template. To view the latest list of Alibaba Cloud regions, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#).|
-|DefaultVersionNumber|Long|Yes|Sets the default version number for the instance launch template.|
-|LaunchTemplateId|String|No|Instance launch template ID. You must specify the `LaunchTemplateId` or  `LaunchTemplateName` to determine the template.|
-|LaunchTemplateName|String |No |Instance launch template name. You must specify the `LaunchTemplateId` or `LaunchTemplateName` to determine the template.|
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=ModifyLaunchTemplateDefaultVersion) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Response parameters {#ResponseParameter .section}
+## Request parameters {#parameters .section}
 
-All are public response parameters. See [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#commonResponseParameters).
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|DefaultVersionNumber|Long|Yes|2| The default version number for the instance launch template.
 
-## Examples { .section}
+ |
+|RegionId|String|Yes|cn-hangzhou| The ID of the region to which the template belongs. You can call [DescribeRegions](~~25609~~) to view the latest regions of Alibaba Cloud.
 
-**Request example** 
+ |
+|Action|String|No|ModifyLaunchTemplateDefaultVersion| The operation that you want to perform. Set the value to ModifyLaunchTemplateDefaultVersion.
 
-```
+ |
+|LaunchTemplateId|String|No|lt-templateid1| The ID of the instance launch template. You must specify either the LaunchTemplateId parameter or the LaunchTemplateName parameter to determine a launch template.
+
+ |
+|LaunchTemplateName|String|No|lt-name1| The name of the instance launch template. You must specify either the LaunchTemplateId parameter or the LaunchTemplateName parameter to determine a launch template.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=ModifyLaunchTemplateDefaultVersion
-&RegionId=cn-hangzhou
-&LaunchTemplateName=lt-name1
-&DefaultVersionNumber=2
-&<Common Request Parameters>
+&DefaultVersionNumber=2 
+&RegionId=cn-hangzhou 
+&LaunchTemplateId=lt-templateid1
+&LaunchTemplateName=lt-name1 
+&<Common request parameters>
 ```
 
-**Response example ** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <ModifyLaunchTemplateDefaultVersionResponse>
-    <RequestId>04F0F334-1335-436C-A1D7-6C044FExxxxx</RequestId>
+  <RequestId>04F0F334-1335-436C-A1D7-6C044FExxxxx</RequestId>
 </ModifyLaunchTemplateDefaultVersionResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"RequestId":"04F0F334-1335-436C-A1D7-6C044FExxxxx"
+}
 ```
 
-    "RequestId": "04F0F334-1335-436C-A1D7-6C044FExxxxx",
+## Error codes { .section}
 
-```
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|400|InvalidRegion.NotExist|%s|The error message returned when the specified region does not exist.|
+|404|InvalidLaunchTemplate.NotFound|%s|The error message returned when the specified launch template name does not exist.|
+|400|MissingParameter|%s|The error message returned when a required parameter is not specified.|
+|400|InvalidParameter|%s|The error message returned when the parameter format is invalid.|
+|403|InnerServiceFailed|%s|The error message returned when an internal service failed to be called.|
 
-## Error codes {#ErrorCode .section}
-
-The following error codes are specific to this interface. For more error codes, visit the [API error center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message|HTTP status code|Description|
-|:---------|:------------|:---------------|:----------|
-|InvalidLaunchTemplate.NotFound|The specified LaunchTemplateId “\{0\}” LaunchTemplateName “\{1\}” is not found.|400|The specified `LaunchTemplateId`  or `LaunchTemplateName` does not exist.|
-|InvalidLaunchTemplateVersion.NotFound|The specified LaunchTemplateId “\{0\}” Version “\{1\}” is not found.|400|The specified `DefaultVersionNumber` does not exist.|
-|MissingParameter|The input parameter “\{0\}” that is mandatory for processing this request is not supplied.|400|A required parameter is missing.|
-|InvalidParameter|the parameter\(s\) “\{0\}” provided is\(are\) invalid.|400|The specified parameter is invalid.|
-|InnerServiceFailed|call inner service failed|403|Internal server error.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

@@ -8,7 +8,7 @@
 
 -   实例必须分配了公网IP地址，即在 **实例列表** 里，实例的 **IP地址** 列会显示公网IP地址，如下图所示。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9656/5458_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9656/15433990175458_zh-CN.png)
 
     **说明：** 
 
@@ -34,7 +34,7 @@
 1.  登录 [ECS管理控制台](https://ecs.console.aliyun.com/?spm=a2c4g.11186623.2.9.FNEORG#/home)。
 2.  在左侧导航栏中，单击 **实例**。
 3.  选择地域。
-4.  找到更换公网IP地址的实例，在 **操作** 列，选择 **更多** \> **更换公网IP**。
+4.  找到更换公网IP地址的实例，在 **操作** 列，选择 **更多** \> **网络和安全组** \> **更换公网IP**。
 
     **说明：** 如果您的实例创建后已经超过6小时，控制台上不会显示 **更换公网IP** 选项。
 
@@ -42,7 +42,7 @@
 
     更换成功后，对话框会显示新的公网IP地址，如下图所示。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9656/5460_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9656/15433990175460_zh-CN.png)
 
 6.  单击 **确定** 关闭对话框。
 

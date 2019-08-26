@@ -1,93 +1,113 @@
-# CopyImage {#CopyImage .reference}
+# CopyImage {#doc_api_999578 .reference}
 
-Copies a custom image from one region to other regions. You can use the destination image to create instances \([RunInstances](intl.en-US/API Reference/Instances/RunInstances.md#)\) or replace system disks \([ReplaceSystemDisk](intl.en-US/API Reference/Disk/ReplaceSystemDisk.md#)\). 
+Copies a custom image from one region to another. You can use copied images to perform operations in the target region, such as creating instances \(RunInstances\) and replacing system disks \(ReplaceSystemDisk\).
 
-## Description {#section_mv5_ndz_xdb .section}
+## Description {#description .section}
 
-When you call this interface, consider the following:
+When you call this operation, note that:
 
--   You can only copy the custom image when it is in the `Available` status.
+-   You can only copy the custom image when it is in the Available state.
+-   You can only copy the image belonging to your Alibaba Cloud account. Images cannot be copied from one account to another.
+-   If the copying is not completed, you cannot call [DeleteImage](~~25537~~) to delete the image but you can call [CancelCopyImage](~~25539~~) to cancel the copying.
 
--   You can only copy the image within your Alibaba Cloud account. Coping an image cross accounts is not allowed.
+## Debugging {#apiExplorer .section}
 
--   You cannot delete an image \([DeleteImage](intl.en-US/API Reference/Images/Deleteimage.md#)\) when copying is in progress. However, you can cancel the copying process \([CancelCopyImage](intl.en-US/API Reference/Images/CancelCopyImage.md#)\).
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=CopyImage) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
+## Request parameters {#parameters .section}
 
-## Request parameters {#RequestParameter .section}
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|ImageId|String|Yes|m-imageid1| The ID of the source custom image.
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: CopyImage.|
-|RegionId|String|Yes|ID of the region to which the source custom image belongs. For more information, call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|ImageId|String|Yes|ID of the source custom image.|
-|DestinationRegionId|String|Yes|ID of the region to where the destination custom image belongs.|
-|DestinationImageName|String|No|Name of the destination custom image.-   Can contain \[2, 128\] characters in length. Must begin with an uppercase or lowercase English letter, or a Chinese character. Can contain digits, backslashes \(\\\), colons \(:\), underscores \(\_\), or hyphens \(-\).
--   Cannot begin with http:// or https://.
+ |
+|RegionId|String|Yes|cn-hangzhou| The ID of the region to which the source custom image belongs. You can call [DescribeRegions](~~25609~~) to view the latest regions of Alibaba Cloud.
 
-Can be null. Default value: null.|
-|DestinationDescription|String|No|The description of the destination custom image.-   Length is \[0,256\] characters.
--   You cannot start with http: // and https.
+ |
+|Action|String|No|CopyImage| The operation that you want to perform. Set the value to CopyImage.
 
-Can be null. Default value: null.|
+ |
+|DestinationDescription|String|No|FinanceDept| The description of the destination custom image. The description must be 2 to 256 characters in length and cannot start with http:// or https://. Default value: null.
 
-## Return parameters {#ResponseParameter .section}
+ |
+|DestinationImageName|String|No|FinanceJoshua| The name of the destination custom image. The name must be 2 to 128 characters in length. It must start with a letter and cannot start with http:// or https://. It can contain letters, digits, colons \(:\), underscores \(\_\), and hyphens \(-\). Default value: null.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|ImageId|String|ID of the destination custom image|
+ |
+|DestinationRegionId|String|No|cn-shanghai| The ID of the region to which the destination custom image belongs.
 
-## Example { .section}
+ |
+|Encrypted|Boolean|No|false| Indicates whether to encrypt the image.
 
-**Request example** 
+ |
+|Tag.N.Key|String|No|FinanceJoshua| The tag key of the custom image.
 
-```
+ |
+|Tag.N.Value|String|No|FinanceDept| The tag value of the custom image.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|ImageId|String|m-imageid2| The ID of the destination custom image.
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=CopyImage
-&DestinationRegionId=cn-hangzhou
-&ImageId=m-281234567
-&RegionId=cn-qingdao
+&ImageId=m-imageid1
+&RegionId=cn-hangzhou 
+&DestinationImageName=FinanceJoshua
+&DestinationDescription=FinanceDept
+&DestinationRegionId=cn-shanghai
+&Encrypted=false
 &<Common request parameters>
 ```
 
-**Response sample** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <CopyImageResponse>
-    <RequestId>C8B26B44-0189-443E-9816-D951F59623A9</RequestId>
-    <ImageId>Img-231234567</ImageId>
+  <RequestId>C8B26B44-0189-443E-9816-D951F59623A9</RequestId>
+  <ImageId>Img-231234567</ImageId>
 </CopyImageResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "RequestId": "C8B26B44-0189-443E-9816-D951F59623A9",
-    "ImageId": "Img-231234567"
+	"ImageId":"Img-231234567",
+	"RequestId":"C8B26B44-0189-443E-9816-D951F59623A9"
 }
 ```
 
-## Error codes {#ErrorCode .section}
+## Error codes {#section_a7f_h7q_lff .section}
 
-Error codes specific to this interface are as follows. For more error codes, see [API error center](https://error-center.alibabacloud.com/status/product/Ecs).
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|401|InvalidAliUid.IsNull|The aliUid must not be null|The error message returned when the required AliUid parameter is not specified.|
+|403|Forbidden|User not authorized to operate on the specified resource.|The error message returned when you are not authorized to access the specified resource.|
+|400|InvalidDescription.Malformed|The specified destination description is wrongly formed.|The error message returned when the specified description is invalid. The description must be 2 to 256 characters in length and cannot start with http:// or https://.|
+|400|InvalidDescription.Malformed|The specified description is wrongly formed.|The error message returned when the specified description is invalid. The description must be 2 to 256 characters in length and cannot start with http:// or https://.|
+|404|InvalidImageId.NotFound|The specified ImageId does not exist.|The error message returned when the specified image does not exist under this account. Check whether the image ID is correct.|
+|400|IncorrectImageStatus|The image not available.|The error message returned when the specified image is unavailable.|
+|403|QuotaExceed.Image|The Image Quota exceeds.|The error message returned when the custom image quota has been exhausted.|
+|403|QuotaExceed.Snapshot|The snapshot quota exceeds.|The error message returned when the snapshot quota has been exhausted. To store new snapshots, you can delete existing snapshots without affecting your business.|
+|403|OperationDenied|The specified snapshot is not allowed to create image.|The error message returned when the specified snapshot cannot be used to create images.|
+|403|SizeExceed.Image|The image exceeds the maximum size. Please open a ticket to add the account to the white list.|The error message returned when the specified image size has reached the upper limit. If the problem persists, please submit a ticket to contact Alibaba Cloud technical support personnel.|
+|403|OperationDeined.EncryptedSnapshot|The image contains encrypted snapshots, which do not support copying.|The error message returned when the specified image contains encrypted snapshots and cannot be copied.|
+|403|OperationDenied.SameRegionOnly|The image shared from others can not be copied to another region directly.|The error message returned when the specified image is shared by other accounts and cannot be copied.|
 
-|Error code|Error message|HTTP status code|Note|
-|:---------|:------------|:---------------|:---|
-|DestinationRegion.NotFound|The destination region not found|400|The `DestinationRegionId` does not exist.|
-|IncorrectImageStatus|The image not available.|400|The status of the specified source custom image \(`ImageId`\) must be `Available`.|
-|InvalidDescription.Malformed|The specified description is wrongly formed.|400|The description of the specified destination custom image \(`DestinationDescription`\) is invalid.|
-|InvalidImageId.NotFound|The specified ImageId does not exist.|400|The specified source custom image \(`ImageId`\) does not exist.|
-|InvalidImageName.Duplicated|The destination image does not exist.|400|The name of the destination custom image \(`DestinationImageName`\) is already in use.|
-|InvalidImageName.Malformed|The specified destination Image name is wrongly formed.|400|The name of the specified destination custom image \(`DestinationImageName`\) is invalid.|
-|InvalidImageName.Malformed|The specified Image name is wrongly formed.|400|The format of `DestinationImageName` is incorrect.|
-|SourceRegion.NotFound|The source region not found|400|The `RegionId` of the specified source custom image does not exist.|
-|Forbidden|User not authorized to operate on the specified resource.|403|You don't have permissions for copying images.|
-|IncorrectDestinationRegion|The destination region is not equal the target region.|403|The source region for copying images \(`RegionId`\) must be different from the destination region \(`DestinationRegionId`\).|
-|InvalidSnapshot.TooOld|This operation is denied because the specified snapshot is created before 2013-07-15.|403|The specified ImageId \(`ImageId`\) is created on or before July 15, 2013. Please try other images instead.|
-|OperationDeined.EncryptedSnapshot|The image contains encrypted snapshots, which do not support copying.|403|The source custom image \(`ImageId`\) contains encrypted snapshots, which do not support copying.|
-|OperationDenied.ImageCopying|The specified image is being copied.|403|The specified source custom image \(`ImageId`\) is being copied. Please try again later.|
-|QuotaExceed.Image|The Image Quota exceeds.|403|No more images will be copied because you have exceeded your custom image quota.|
-|QuotaExceed.Snapshot|The maximum number of snapshots is exceeded.|403|No more images will be copied because you have exceeded your snapshot quota.|
-|RegionNotSupportCopy|The region not support copy.|403|The specified region of the destination image \(`DestinationRegionId`\) does not support image copying.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

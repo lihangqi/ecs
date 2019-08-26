@@ -1,70 +1,80 @@
-# StartInstance {#StartInstance .reference}
+# StartInstance {#doc_api_1161593 .reference}
 
-Start a specified instance.
+Starts an ECS instance.
 
-## Description {#section_njd_cmm_xdb .section}
+## Description {#description .section}
 
--   You can only run this interface when the instance is in **Stopped** \(`Stopped`\) status.
--   After you run this interface successfully, the specified instance is in **Starting** \(`Starting`\) status.
--   If the specified instance is [locked](intl.en-US/API Reference/Appendix/API behavior when an instance is locked for security reasons.md#), and the `OperationLocks` of the instance indicates `LockReason: "security"`, you cannot start the instance.
+-   The instance must be in the **stopped** \(`Stopped`\) state.
+-   After the instance is started, it is in the **starting**\(`Starting`\) state.
+-   You cannot start an ECS instance on which [Security Control](~~25695~~) is enabled and whose `OperationLocks` is tagged as `"LockReason" : "security"`.
 
-## Request parameters {#section_nzr_pww_ydb .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: StartInstance.|
-|InstanceId|String|Yes|ID of the instance.|
-|InitLocalDisk|Boolean|No|Applicable to instance types of D1, I1, and I2 [instance type family](../../../../intl.en-US/Product Introduction/Instance type families.md#). Recover to the previous normal status of your local disk when exceptions occurs. Optional values:-   true: Recover the local disk to the previous normal status. The accumulated data starting from the previous normal status is overwritten.
--   false: Skip the recovery, and keep the status of the local disk unchanged.
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=StartInstance) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-|
+## Request parameters {#parameters .section}
 
-## Response parameters {#section_ujd_cmm_xdb .section}
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|InstanceId|String|Yes|i-instanceid1| The ID of the instance.
 
-All parameters are common response parameters. For more information, see [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#commonResponseParameters).
+ |
+|Action|String|No|StartInstance| The operation that you want to perform. Set the value to StartInstance.
 
-## Examples { .section}
+ |
+|InitLocalDisk|Boolean|No|false| Indicates whether to restore the initial health status of the instance. It is applicable to those instances of the [instance type families](~~25378~~) that contain local disks such as D1, I1, and I2. If a local disk of the D1, I1, or I2 instance type fails, you can use this parameter to restore the initial health status of the instance when you start the instance. After that, all data in the local disk will be lost. Default value: false.
 
-**Request example** 
+ |
 
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The request ID.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
+https://ecs.aliyuncs.com/?Action=StartInstance
+&InstanceId=i-instanceid1
+&InitLocalDisk=false
+&<Common request parameters>
 ```
- https://ecs.aliyuncs.com/?Action=StartInstance
-&InstanceId=i-instance1
-&<Common Request Parameters>
 
-```
+Successful response examples
 
-**Response example** 
+`XML` format
 
-**XML format**
-
-```
+``` {#xml_return_success_demo}
 <StartInstanceResponse>
-    <RequestId>C0003E8B-B930-4F59-ADC0-0E20xxxxxxxx</RequestId>
-</StartInstanceResponse>
+  <RequestId>C0003E8B-B930-4F59-ADC0-0E20xxxxxxxx</RequestId>
+</StartInstanceResponse> 
 ```
 
- **JSON format** 
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "RequestId": "C0003E8B-B930-4F59-ADC0-0E20xxxxxxxx"
+	"RequestId":"C0003E8B-B930-4F59-ADC0-0E20xxxxxxxx"
 }
-
 ```
 
 ## Error codes { .section}
 
-Error codes specific to this interface are as follows. For more error codes, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|403|IncorrectInstanceStatus|The current status of the resource does not support this operation.|The error message returned when the operation is not supported while the resource is in the current state.|
+|403|DiskError|IncorrectDiskStatus.|The error message returned when the specified DiskCategory is invalid.|
+|403|InstanceExpired|The postPaid instance has been expired. Please ensure your account have enough balance.|The error message returned when the Pay-As-You-Go instance is stopped due to overdue payment.|
+|403|InstanceExpired|The prePaid instance has been expired.|The error message returned when the Pay-As-You-Go instance is stopped due to overdue payment.|
+|403|InstanceNotReady|The specified instance is not ready for use|The error message returned when the operation is not supported while the resource is in the current state. Retry the operation after a few minutes.|
+|403|IncorrectInstanceStatus|%s|The error message returned when the operation is not supported while the instance is in the current state.|
+|403|InvalidParameter.KMSKeyId.KMSUnauthorized|ECS service have no right to access your KMS.|The error message returned when ECS is not authorized to access your KMS.|
+|500|InternalError|The request processing has failed due to some unknown error, exception or failure.|The error message returned when an unknown error occurs.|
 
-|Error code|Error message|HTTP status code|Meaning|
-|:---------|:------------|:---------------|:------|
-|DiskError|Incorrect Disk Status|403|Your disk is in an abnormal status.|
-|IncorrectInstanceStatus|The current status of the resource does not support this operation.|403|The current state of the instance does not support this operation.|
-|InstanceExpired|PrePaid instances has been expired.|403|The Subscription instance has expired. The Pay-As-You-Go instance has been in outstanding payment.|
-|InstanceLockedForSecurity|The specified operation is denied as your instance is locked for security reasons.|403|Operation is denied because the resource is locked for security reasons.|
-|InsufficientBalance|Your account does not have enough balance.|403|The instance cannot be started because the account does not have enough balance.|
-|InvalidInstanceId.NotFound|The specified InstanceId does not exist.|404|The specified InstanceId does not exist.|
-|InstanceNotReady|The specified instance is not ready for use|500|The specified instance is being created.|
-|InternalError|The request processing has failed due to some unknown error.|500|Internal error, please try again later.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

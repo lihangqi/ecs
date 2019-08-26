@@ -1,4 +1,4 @@
-# Basic cloud disk status chart {#EcsApiDiskStatusIllustration .reference}
+# Cloud disk status chart {#EcsApiDiskStatusIllustration .reference}
 
-![](images/4030_en-US.jpg)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/10044/4030_en-US.jpg)
 

@@ -1,82 +1,94 @@
-# AttachDisk {#AttachDisk .reference}
+# AttachDisk {#doc_api_1030732 .reference}
 
-Attaches a data disk to your ECS instance.
+Attaches a data disk to an ECS instance.
 
-## Description {#section_vgf_j45_xdb .section}
+## Description {#description .section}
 
-When you call this interface, consider the following:
+When you call this operation, note that:
 
--   The target instance must be in the **Running** \(`Running`\) or **Stopped** \(`Stopped`\).
+-   The operation can be performed only when the instance is in the Running or Stopped state.
+-   The data disk to be attached must be in the Available state.
+-   The instance must not be locked by [security control](~~25695~~). The OperationLocks parameter of the ECS instance must not be set to "LockReason": "security".
+-   If an instance is locked for security reasons \(the OperationLocks parameter is "LockReason": "security"\), the DeleteWithInstance attribute will be ignored and the disk will be released together with the instance.
 
--   The target cloud disk must be in the **Available** \(`Available`\) status.
+## Debugging {#apiExplorer .section}
 
--   If the specified instance is [locked](intl.en-US/API Reference/Appendix/API behavior when an instance is locked for security reasons.md#), and the OperationLocks of the instance indicates `"LockReason": "security"`, you cannot call this interface.
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=AttachDisk) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
--   Even if you set the `DeleteWithInstance` to `false` when attaching the cloud disk, once the instance is locked and the `OperationLocks` of the instance indicates `"LockReason": "security"`, when you release the instance,  the `DeleteWithInstance` attribute of the cloud disk is ignored and the disk is released along with the instance.
+## Request parameters {#parameters .section}
 
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|DiskId|String|Yes|d-23jbf2v5m| The ID of the disk to be attached. The disk and the instance must belong to the same zone.
 
-## Request parameters {#RequestParameter .section}
+ |
+|InstanceId|String|Yes|i-instance1| The ID of the ECS instance that the disk is to be attached to.
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: AttachDisk.|
-|InstanceId|String|Yes|The ID of the target instance.|
-|DiskId|String|Yes|Indicates the cloud disk ID. The cloud disk \(`DiskId`\) and instance \(`InstanceId`\) must be in the same zone.|
-|DeleteWithInstance|String|No|Indicates whether the cloud disk is released along with the instance or not. Optional values:-   true: When the instance is released, the cloud disk is released with it.
--   false: When the instance is released, the cloud disk is retained.
+ |
+|Action|String|No|AttachDisk| The operation that you want to perform. Set the value to AttachDisk.
 
-Default value: null.|
+ |
+|DeleteWithInstance|Boolean|No|false| Indicates whether the disk is to be released together with the instance. Default value: false.
 
-## Response parameters {#section_ehf_j45_xdb .section}
+ |
+|Device|String|No|/dev/xvda| The name of the disk. This parameter will be removed in the future. We recommend that you use other parameters to ensure compatibility.
 
-All parameters are common response parameters. For more information, see [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#commonResponseParameters).
+ |
 
-## Examples { .section}
+## Response parameters {#resultMapping .section}
 
-**Request example** 
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
 
-```
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=AttachDisk
-&InstanceId=i-23jggx34b
 &DiskId=d-23jbf2v5m
-&<Common Request Parameters>
+&InstanceId=i-instance1 
+&DeleteWithInstance=false 
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <AttachDiskResponse>
-    <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
 </AttachDiskResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
+}
 ```
 
-    "RequestId": "473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
+## Error codes {#section_0qw_vss_rft .section}
 
-```
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|400|InvalidDevice.Malformed|The specified port is not valid.|The error message returned when the specified disk name does not exist.|
+|403|InstanceDiskLimitExceeded|The amount of the disk on instance in question reach its limits.|The error message returned when the specified instance is already attached with the maximum number of disks.|
+|403|InvalidDevice.InUse|The specified device has been occupied.|The error message returned when the specified device already has an attached disk.|
+|403|InstanceLockedForSecurity|The instance is locked due to security.|The error message returned when the specified instance is locked for security reasons and the operation cannot be completed.|
+|403|InstanceExpiredOrInArrears|The specified operation is denied as your prepay instance is expired \(prepay mode\) or in arrears \(afterpay mode\).|The error message returned when the subscription of the instance has expired. You must renew the subscription before proceeding.|
+|400|IncorrectInstanceStatus|The current status of the resource does not support this operation.|The error message returned when the specified resource is in a state that does not support the current operation.|
+|403|DiskError|IncorrectDiskStatus.|The error message returned when the status of the specified disk is invalid.|
+|403|DiskId.ValueNotSupported|The specified parameter diskid is not supported.|The error message returned when the specified disk type does not support this operation.|
+|403|DiskId.StatusNotSupported|The specified disk status is not supported.|The error message returned when the specified disk is in a state that does not support this operation.|
+|404|InvalidDisk.InUse|The specified disk has been occupied.|The error message returned when the specified disk is already in use.|
+|403|UserNotInTheWhiteList|The user is not in disk white list.|The error message returned when you are not authorized to use the specified disk.|
+|400|InvalidOperation.InstanceTypeNotSupport|The instance type of the specified instance does not support hot attach disk.|The error message returned when the instance that the disk is attached to does not support the hot swapping of disks.|
 
-## Error codes {#ErrorCode .section}
-
-Error codes specific to this interface are as follows. For more information, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message|HTTP status code|Meaning|
-|:---------|:------------|:---------------|:------|
-|IncorrectInstanceStatus|The current status of the resource does not support this operation.|400|The target instance must be in the **Running** \(`Running`\) or **Stopped** \(`Stopped`\) status.|
-|InvalidParameter|The input parameter is mandatory for processing thisrequest is empty.|400|The specified DeleteWithInstance is invalid.|
-|DiskError|IncorrectDiskStatus.|403|The target disk must be in the **Available** \(`Available`\) status.|
-|DiskId.ValueNotSupported|The specified parameter diskid is not supported.|403|The specified DiskId is not supported.|
-|DiskInArrears|The specified operation is denied as your disk owing fee.|403|The specified instance has an outstanding payment.|
-|DiskNotPortable|The specified disk is not a portable disk.|403|The specified disk cannot be detached.|
-|IncorrectDiskStatus|The operation is not supported in this status.|403|The target disk must be in the **Available** \(`Available`\) status.|
-|InstanceExpiredOrInArrears|The specified operation is denied as your prepay instance is expired \(prepay mode\) or in arrears \(afterpay mode\).|403|The specified instance has an outstanding payment.|
-|InstanceLockedForSecurity|The instance is locked due to security.|403|The instance is locked for security reasons.|
-|InvalidDevice.InUse|The specified device has been occupied.|403|The specified disk has already been attached to another instance.|
-|ResourcesNotInSameZone|The specified instance and disk are not in the samezone.|403|The specified disk and instance are not in the same zone.|
-|InvalidDiskId.NotFound|The specified disk does not exist.|404|The specified cloud disk does not exist.|
-|InvalidInstanceId.NotFound|The specified InstanceId does not exist.|404|The specified instance does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

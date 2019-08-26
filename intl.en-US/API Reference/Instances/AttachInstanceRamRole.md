@@ -1,84 +1,117 @@
-# AttachInstanceRamRole {#AttachInstanceRamRole .reference}
+# AttachInstanceRamRole {#doc_api_1161570 .reference}
 
-Attaches an [instance RAM role](../intl.en-US/User Guide/Instances/Instance RAM roles.md#) to your ECS instance. You can only assign one RAM role to an instance at any time. If the instance already has a RAM role, an error code returns when you attach another RAM role to the same instance.
+Attaches a RAM role to one or more ECS instances. You can only attach one RAM role to an instance at any time. If the instance already has a RAM role, an error code is returned when you attach another RAM role to the same instance.
 
-## Request parameters {#RequestParameter .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: AttachInstanceRamRole.|
-|RegionId|String|Yes|Region ID. You can call [DescribeRegions](intl.en-US/API Reference/Regions/DescribeRegions.md#) to obtain the latest region list.|
-|InstanceIds|Array|Yes|Instance ID set. A maximum of 100 instances are supported, in the format of \["instanceId1", "instanceId2",  "instanceId3"…\].|
-|RamRoleName|String|Yes|Instance RAM role name. The name is provided and maintained by *RAM* and can be queried using [ListRoles](../../intl.en-US//Role Management Interface/ListRoles.md#). See API [CreateRole](../../intl.en-US//Role Management Interface/CreateRole.md#) and [ListRoles](../../intl.en-US//Role Management Interface/ListRoles.md#).|
+You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=AttachInstanceRamRole) to perform debugging. API Explorer allows you to perform various operations to simplify API usage. For example, you can retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Response parameters {#ResponseParameter .section}
+## Request parameters {#parameters .section}
 
-All are common response parameters. For more information, see [Common parameters](intl.en-US/API Reference/Call methods/Common parameters.md#commonResponseParameters).
+|Name|Type|Required|Example|Description|
+|----|----|--------|-------|-----------|
+|InstanceIds|String|Yes|\[“instanceId1”, “instanceId2”, “instanceId3”…\]| The instance ID set. A maximum of 100 instances can be entered at a time.
 
-## Examples { .section}
+ |
+|RamRoleName|String|Yes|RamRoleTest| The RAM role name of the instance. You can call the [ListRoles](~~28713~~) operation to view RAM roles for the specified instance.
 
-**Request example** 
+ |
+|RegionId|String|Yes|cn-hangzhou| The region ID of the instance. You can call the [DescribeRegions](~~25609~~) operation to view the latest region list.
 
-```
+ |
+|Action|String|No|AttachInstanceRamRole| The operation that you want to perform. Set the value to AttachInstanceRamRole.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Name|Type|Example|Description|
+|----|----|-------|-----------|
+|AttachInstanceRamRoleResults| | | The returned RAM role information. It is an array that consists of AttachInstanceRamRoleResult data.
+
+ |
+|└Code|String|200| Indicates whether the RAM role is attached. If 200 is returned, the operation is successful. If other values are returned, the operation fails. For more information, see Error codes.
+
+ |
+|└InstanceId|String|i-instanceid1| The ID of the instance.
+
+ |
+|└Message|String|Success| Indicates whether the RAM role is attached. If Success is returned, the operation is successful. If other values are returned, the operation fails. For more information, see Error codes.
+
+ |
+|└Success|Boolean|true| Indicates whether the RAM role is attached.
+
+ |
+|FailCount|Integer|0| The number of RAM roles that fail to be attached.
+
+ |
+|RamRoleName|String|RamRoleTest| The name of the RAM role.
+
+ |
+|RequestId|String|D9553E4C-6C3A-4D66-AE79-9835AF705639| The request ID.
+
+ |
+|TotalCount|Integer|1| The number of RAM roles attached.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=AttachInstanceRamRole
-&RegionId=cn-hangzhou
-&RamRoleName=RamRoleTest
-&InstanceIds=["i-instance1"]
-&<Common Request Parameters>
+&InstanceIds=["i-instance1"] 
+&RamRoleName=RamRoleTest 
+&RegionId=cn-hangzhou 
+&<Common request parameters>
 ```
 
-**Response example** 
+Successful response examples
 
-**XML format**
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <AttachInstanceRamRoleResponse>
-    <RequestId>E6352369-5C2B-41CD-AB50-471550C8F674</RequestId>
-    <AttachInstanceRamRoleResults>
-        <AttachInstanceRamRoleResult>
-             <InstanceId>i-instance1</InstanceId>
-             <Code>200</Code>
-             <Message>success</Message>
-        </AttachInstanceRamRoleResult>
-    </AttachInstanceRamRoleResults>
-    <TotalCount>1</TotalCount>
-    <FailCount>0</FailCount>
-    <RamRoleName>RamRoleTest</RamRoleName>
+  <RequestId>E6352369-5C2B-41CD-AB50-471550C8F674</RequestId>
+  <AttachInstanceRamRoleResults>
+    <AttachInstanceRamRoleResult>
+      <InstanceId>i-instance1</InstanceId>
+      <Code>200</Code>
+      <Message>success</Message>
+    </AttachInstanceRamRoleResult>
+  </AttachInstanceRamRoleResults>
+  <TotalCount>1</TotalCount> 
+  <FailCount>0</FailCount>
+  <RamRoleName>RamRoleTest</RamRoleName>
 </AttachInstanceRamRoleResponse>
 ```
 
- **JSON format** 
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"TotalCount":1,
+	"RequestId":"D9553E4C-6C3A-4D66-AE79-9835AF705639",
+	"AttachInstanceRamRoleResults":{
+		"AttachInstanceRamRoleResult":[
+			{
+				"Message":"success",
+				"InstanceId":"i-instance1",
+				"Code":"200"
+			}
+		]
+	},
+	"RamRoleName":"RamRoleTest",
+	"FailCount":0
+}
 ```
 
-    "RequestId": "D9553E4C-6C3A-4D66-AE79-9835AF705639",
-    "AttachInstanceRamRoleResults": {
-        "AttachInstanceRamRoleResult": [
-            
-                "Message": "success",
-                "InstanceId": "i-instance1",
-                "Code": "200"
-            
-        
-    
-    "TotalCount": 1,
-    "FailCount": 0,
-    "RamRoleName": "RamRoleTest"
+## Error codes { .section}
 
-```
+|HTTP status code|Error code|Error message|Description|
+|----------------|----------|-------------|-----------|
+|404|InvalidRamRole.NotEcsRole|The specified ram role is not authorized for ecs, please check your role policy.|The error message returned when the specified RAM role is not authorized to access ECS.|
 
-## Error codes {#ErrorCode .section}
-
-Error codes specific to this interface are as follows. For more information, see [API Error Center](https://error-center.alibabacloud.com/status/product/Ecs).
-
-|Error code|Error message |HTTP status code|Meaning|
-|:---------|:-------------|:---------------|:------|
-|InvalidInstanceIds.Malformed|The specified InstanceIds is not valid.|400|The specified InstanceIds is invalid.|
-|MissingParameter.InstanceIds|The input parameter InstanceIds that is mandatory for processing this request is missing.|400|The required InstanceIds parameter is missing.|
-|MissingParameter.RamRoleName|The input parameter RamRoleName that is mandatory for processing this request is missing.|400|The required RamRoleName parameter is missing.|
-|MissingParameter.RegionId|The input parameter RegionId that is mandatory for processing this request is missing.|400|The required RegionId parameter is missing.|
-|InvalidNetworkType.MismatchRamRole|Ram role cannot be attached to instances of Classic network type.|403|RAM roles cannot be attached to instances of classic network type.|
-|InvalidUser.PassRoleForbidden|The RAM user does not have the privilege to pass a role.|403|The RAM user does not have the privilege to pass a role.|
-|InvalidInstanceId.NotFound|The specified InstanceId does not exist.|404|The specified InstanceId does not exist.|
-|InvalidRamRole.NotFound|The specified RamRoleName does not exist.|404|The specified RamRoleName does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ecs)
 

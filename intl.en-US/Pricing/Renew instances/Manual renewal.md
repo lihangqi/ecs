@@ -2,34 +2,35 @@
 
 ## Introduction {#section_tl3_rmf_zdb .section}
 
-Manual renewal only applies to instances in **Subscription** mode.
+Manual renewal only applies to instances that use the **Subscription** billing method.
 
-When your instances in Subscription mode are in the **Expired** status or **shut down**, You can manually renew them. You can manually renew your instance for a month or a year. Therefore, if you want to modify the service duration of your subscription-mode instances, you can choose manual renewal.
+You can manually renew your **Subscription** instances when they are inan**Expired** status or are shut down. You can manually renew your instance for a month or a year. Therefore, if you want to modify the service duration of your Subscriptioninstances, you can choose manual renewal.
 
--   Your instance will still work normally when the instance is in the **Expired**  status. If the manual renewal is successfully completed within 15 days after expiration, your instance will go into the next billing cycle from the day of expiration.
+-   Your instance will still work normally when the instance is in an**Expired**status. If manual renewal is successfully completed within 15 days of the instance expiring, the start of the next billing cycle will be the day the instance expired.
 
-    For example, if your instance expired at 00:00:00 on April 25, 2016, but you successfully renewed it for one month on May 9, 2016, the billing cycle for this renewal was from April 25, 2016 to 00:00:00 on May 25, 2016.
+    For example, if your instance expired at 00:00:00 on April 25, 2016, but you successfully renewed it for one month on May 9, 2016, the billing cycle for this renewal is from April 25, 2016 to 00:00:00 on May 25, 2016.
 
--   If the instance fails to be renewed within 15 days after expiration, the instance will be shut down. Your instance will stop providing services, but Alibaba Cloud will still keep the data for you.
+-   If the instance fails to be renewed within 15 days of expiration, the instance will be shut down.
 
--   After the instance is shut down,
+-   After the instance is shut down:
 
-    -   If the renewal is successful within 15 days, your instance will go into the new billing cycle from the day of renewal.
+    -   Your instance will stop providing services, but your data will be retained for a further 15 days.
+    -   If the instance is renewed within 15 days of the instance being shut down \(within 30 days of the instance expiring\), your instance will enterthenew billing cycle from the day of renewal, and your data will be retained for the new cycle.
 
         For example, if your instance was shut down at 00:00:00 on May 10, 2016, but you successfully renewed it for one month at 08:09:35 on May 23, 2016, the billing cycle for this renewal is from 08:09:35 on May 23, 2016 to 00:00:00 on June 24, 2016.
 
-    -   If the renewal fails within 15 days, your instance will be automatically released on the 15th day and the data will not be restored.
+    -   If the instance is not renewed within 15 days of the instance being shut down \(within 30 days of the instance expiring\), your instance will be automatically released on the 15th day. Your data will be deleted and cannot be restored.
 
 ## Procedure {#section_wl3_rmf_zdb .section}
 
-You can manually renew your instance with the following steps.
+To manually renew your instance, follow these steps:
 
-1.  Log on to the [ECS console](https://ecs.console.aliyun.com/#/home).
+1.  Log on to the [ECS console](https://partners-intl.console.aliyun.com/#/ecs).
 2.  In the left-side navigation pane, click **Instances**.
 3.  On the Instance List page, select the expected region and locate the ECS instance by the instance name, instance ID, or status \( **Expired**\).
 4.  In the **Actions** column, click **Renew**.
 5.  On the renewal page,
     1.  Confirm the instance configuration.
-    2.  Select the expected renewal length, 1 Month or 1 Year, and click Place Order.
+    2.  Select the expected renewal length, which can be**1 Month** or **1 Year**, and click **Place Order**.
 6.  On the Pay page, confirm the order information and click **Pay** to complete the renewal operation.
 

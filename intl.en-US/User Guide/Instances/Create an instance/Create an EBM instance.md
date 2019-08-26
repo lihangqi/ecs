@@ -1,11 +1,10 @@
 # Create an EBM instance {#concept_lwh_gt1_ydb .concept}
 
-You can see [create an ECS instance](../intl.en-US/Quick Start for Entry-Level Users/Step 2. Create an instance.md#) to create an EBM instance. When creating an EBM instance, consider the following:
+Follow the steps in [creating an instance by using the wizard](reseller.en-US/User Guide/Instances/Create an instance/Create an instance by using the wizard.md#) to create an EBM instance. However, the following configurations are recommended:
 
--   **Billing Method**:  Currently, only **Subscription**is supported.
--   **Region**: Currently, EBM instances are available in the following regions and zones: **China East 2 \(Shanghai\), Zone D**, **China North 2 \(Beijing\), Zone C**, **China East 1 \(Hangzhou\), Zone G**, **China South 1 \(Shenzhen\), Zone D**.
--   **Instance Type**: Currently, only the ebmg5 and ebmhfg5 type families are available.  For more information about instance types, see[Instance type families](../intl.en-US/Product Introduction/Instance type families.md#).
--   **Image**: Only the following public images are supported.
+-   **Region**: Currently, EBM instances are available in the following regions and zones: **China East 2 \(Shanghai\), Zone D**, **China North 2 \(Beijing\), Zone C**, **China East 1 \(Hangzhou\), Zone G**, and **China South 1 \(Shenzhen\), Zone D**.
+-   **Instance Type**: In ebmhfg5, ebmc4, and ebmg5 type families are available. For more information about instance types, see [instance type families](../../../../reseller.en-US/Product Introduction/Instance type families.md#).
+-   **Image**: The following public images are supported.
 
     |Operating system|Image|
     |:---------------|:----|
@@ -22,6 +21,6 @@ You can see [create an ECS instance](../intl.en-US/Quick Start for Entry-Level U
     -   2012 R2 Data Center Edition 64-bit English Edition
  |
 
--   **Storage**: EBM instances support up to 16 data disks. You can add a data disk here, or you can  [add a disk](intl.en-US/User Guide/Cloud disks/Create a cloud disk.md#) after the instance has been created, and [mount the data disk](intl.en-US/User Guide/Cloud disks/Attach a cloud disk.md#).
--   **Network**: Supports VPC only.
+-   **Storage**: EBM instances support up to 16 data disks. You can add a data disk during or after instance creation, and then [mount the data disk](reseller.en-US/User Guide/Cloud disks/Attach a cloud disk.md#).
+-   **Network**: Only VPC is supported.
 
