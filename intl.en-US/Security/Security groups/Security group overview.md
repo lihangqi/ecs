@@ -19,9 +19,9 @@ Security groups have the following limits:
 
 ## Security group types {#section_m4b_bdb_3gb .section}
 
-Security groups can be divided into basic security group and advanced security group. The following table provides information about these two security group types. For more information, see [Overview of advanced security group](intl.en-US/Security/Security groups/Advanced security group overview.md#).
+Security groups can be divided into basic security group and advanced security group. The following table provides information about these two security group types. For more information, see [Overview of advanced security group](reseller.en-US/Security/Security groups/Advanced security group overview.md#).
 
-**Note:** The advanced security group type is in the beta testing phase in China North 5 \(Hohhot\) and US West 1 \(Silicon Valley\). You can [open a ticket](https://workorder-intl.console.aliyun.com/#/ticket/createIndex) to apply for a free trial.
+**Note:** The advanced security group type is in the beta testing phase in China \(Hohhot\) and US \(Silicon Valley\). You can open a ticket to apply for a free trial.
 
 |Security group type|Security group rule type|Security group rule priority|Inbound rule|Outbound rule|Scenario|
 |:------------------|:-----------------------|:---------------------------|:-----------|:------------|:-------|
@@ -32,7 +32,7 @@ Security groups can be divided into basic security group and advanced security g
 
 \*When you create a security group in the ECS console, you can select Web Server Linux, Web Server Windows, and a custom security group template.
 
-\*\*For more information, see [Add security group rules](intl.en-US/Security/Security groups/Add security group rules.md#) and [Scenarios](intl.en-US/Security/Security groups/Scenarios.md#).
+\*\*For more information, see [Add security group rules](reseller.en-US/Security/Security groups/Add security group rules.md#) and [Scenarios](reseller.en-US/Security/Security groups/Scenarios.md#).
 
 ## Default security group {#section_8iv_qrx_d6c .section}
 
@@ -68,9 +68,9 @@ For basic security groups, the ENI settings of security group rules vary dependi
 
 ## Workflow {#section_vkd_4kv_vgb .section}
 
-The following figure shows the workflow of basic security groups. For information about the workflow of advanced security groups, see [Overview of advanced security group](intl.en-US/Security/Security groups/Advanced security group overview.md#).
+The following figure shows the workflow of basic security groups. For information about the workflow of advanced security groups, see [Overview of advanced security group](reseller.en-US/Security/Security groups/Advanced security group overview.md#).
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9569/156290232242063_en-US.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9569/156688375842063_en-US.png)
 
 ## Usage notes {#section_f2k_nmf_4gb .section}
 
@@ -84,5 +84,5 @@ When you use security groups, we recommend that you:
 -   Do not use one security group to manage all applications because isolation requirements are different at different layers.
 -   Add instances with the same security requirements to the same security group. Do not set a separate security group for each instance.
 -   Set simple security group rules. If you add an ECS instance to multiple security groups, hundreds of rules may apply to the instance. Any changes to these rules may cause connection errors.
--   Clone an active security group and modify the cloned copy. Modifying the cloned copy allows you to avoid interruptions to your application. After you modify the copy, you can delete the original security group and activate the new copy. For more information, see [Manage security groups](intl.en-US/Security/Security groups/Manage security groups.md#).
+-   Clone an active security group and modify the cloned copy. Modifying the cloned copy allows you to avoid interruptions to your application. After you modify the copy, you can delete the original security group and activate the new copy. For more information, see [Manage security groups](reseller.en-US//Manage security groups.md#).
 

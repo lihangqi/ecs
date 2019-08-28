@@ -85,7 +85,7 @@
  |
 |InstanceChargeType|String|否|PrePaid|实例的计费方式。取值范围：
 
- -   PrePaid：预付费，包年包月。选择该类计费方式时，您必须确认自己的账号支持余额支付和信用支付，否则将返回`InvalidPayMethod`的错误提示。
+ -   PrePaid：包年包月。选择该类计费方式时，您必须确认自己的账号支持余额支付和信用支付，否则将返回`InvalidPayMethod`的错误提示。
 -   PostPaid：按量付费。
 
  |

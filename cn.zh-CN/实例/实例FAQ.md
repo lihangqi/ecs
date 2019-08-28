@@ -107,6 +107,7 @@
     -   [如何升级ECS资源？](#section_grz_gr2_rve)
     -   [为什么降配时实例预计退款为0？](#section_wrl_689_36t)
     -   [为什么升级实例配置后没有效果？](#section_jsb_os8_bbb)
+    -   [升级包年包月实例带宽，为什么提示按使用流量计费的带宽不支持带宽临时升级？](#section_8de_1dx_l78)
 -   管理实例问题
     -   [ECS实例长时间为Starting状态，且AliyunService被禁用或被删除怎么办？](#section_3kd_bat_4p4)
     -   [如何通过ECS服务器让OSS支持HTTPS访问？](#section_0mh_dus_4lh)
@@ -127,8 +128,8 @@
     -   [购买ECS实例后可以更换地域吗？](#section_wm7_rby_mij)
     -   [可以调整已购磁盘的分区大小吗？](#section_nih_446_koq)
     -   [如何将实例的固定公网IP更换为其它EIP？](#section_grq_3gj_n2r)
-    -   [如何查看同一地域下的预付费实例？](#section_bud_chq_gek)
-    -   [如何查看同一账号下所有地域的预付费实例？](#section_s5o_w6z_95z)
+    -   [如何查看同一地域下的包年包月实例？](#section_bud_chq_gek)
+    -   [如何查看同一账号下所有地域的包年包月实例？](#section_s5o_w6z_95z)
     -   [什么时候可以强制停止实例？有什么后果？](#section_nlp_9qg_6gq)
     -   [为什么会重开机失败？](#section_vk6_sjc_agd)
     -   [使用弹性伸缩功能时，伸缩组内ECS实例开启了释放保护，为什么仍然被自动释放了？](#section_so8_gdz_2i5)
@@ -157,7 +158,6 @@
 -   中国大陆用户购买其他国家或地区实例资源问题
     -   [中国大陆用户购买其它国家或地区资源可以享受与阿里云中国大陆资源相同的品质和服务吗？](#section_16z_pn3_0qf)
     -   [是否可以通过镜像复制功能将中国大陆的ECS转移到其它国家或地区？](#section_50j_2mc_pdr)
-    -   [为什么日本（东京）地域的Windows实例要比Linux实例贵，而在中国大陆地域两者价格一样？](#section_o2e_baz_lvj)
     -   [我是非中国大陆的用户，能否使用其他币种线上支付？](#section_lwb_bgi_n6q)
     -   [中国大陆以外地域的实例与中国大陆地域实例有什么区别？怎么判断哪个国家或地区的地域适合我？](#section_jxf_qpr_bbi)
     -   [在中国大陆以外地域购买的实例，能互换Linux系统和Windows系统吗？](#section_1dv_ju1_xq6)
@@ -175,15 +175,15 @@
     -   [中国大陆以外地域是否都可以提供经典网络和专有网络的类型呢？网络类型是否可以变更呢？](#section_2z3_zvk_4tu)
 -   实例计费问题
     -   [按量付费ECS实例停机或欠费停机后，会产生费用吗？](#section_bll_9fl_9qs)
-    -   [按量付费转预付费时下单失败如何处理？](#section_ye3_pyk_bzl)
-    -   [支付完成后多久能完成按量付费转预付费？](#section_07w_jp4_rlu)
-    -   [按量付费转预付费失败时如何处理？](#section_ulz_fn2_oxb)
-    -   [按量付费转预付费之后带宽计费方式是否发生变化？](#section_4lm_u5o_2my)
-    -   [我有一个按量付费转预付费订单，但是还没有支付，这时我升级了实例的配置，转换订单还有效吗？](#section_tih_umb_qaz)
-    -   [预付费转按量付费失败时如何处理？](#section_xqt_ua4_1cf)
-    -   [新创建的预付费实例在5天内转为按量付费，属于5天无理由退款吗？](#section_kfr_lv0_ois)
+    -   [按量付费转包年包月时下单失败如何处理？](#section_ye3_pyk_bzl)
+    -   [支付完成后多久能完成按量付费转包年包月？](#section_07w_jp4_rlu)
+    -   [按量付费转包年包月失败时如何处理？](#section_ulz_fn2_oxb)
+    -   [按量付费转包年包月之后带宽计费方式是否发生变化？](#section_4lm_u5o_2my)
+    -   [我有一个按量付费转包年包月订单，但是还没有支付，这时我升级了实例的配置，转换订单还有效吗？](#section_tih_umb_qaz)
+    -   [包年包月转按量付费失败时如何处理？](#section_xqt_ua4_1cf)
+    -   [新创建的包年包月实例在5天内转为按量付费，属于5天无理由退款吗？](#section_kfr_lv0_ois)
     -   [为什么更改硬盘收费方式提示三次机会已用完？](#section_bxy_dkr_1f9)
-    -   [为什么无法将按量付费实例转为预付费实例？](#section_vlz_58s_9es)
+    -   [为什么无法将按量付费实例转为包年包月实例？](#section_vlz_58s_9es)
     -   [如何查询实例到期时间？](#section_8hf_t8x_5n3)
 
 ## 如何查看某个地域或可用区是否能购买实例？ {#section_dxe_iha_q0o .section}
@@ -202,7 +202,7 @@
 
 您也可以使用到货通知功能：
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156620901948634_zh-CN.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156688441448634_zh-CN.png)
 
 ## 如何选择适合我业务的ECS实例？ {#section_j8t_fwz_mjf .section}
 
@@ -236,7 +236,7 @@
 
 ## 为什么购买实例时看不到按量付费资源？ {#section_ls5_e9e_kt3 .section}
 
-16核及以上实例规格可能存在按量高配限制。如果您在购买实例时能看到预付费资源，但是看不到按量付费资源，请[提交工单](https://selfservice.console.aliyun.com/ticket/createIndex)确认当前账号是否已经获得购买该实例规格按量高配资源的授权。
+16核及以上实例规格可能存在按量高配限制。如果您在购买实例时能看到包年包月资源，但是看不到按量付费资源，请[提交工单](https://selfservice.console.aliyun.com/ticket/createIndex)确认当前账号是否已经获得购买该实例规格按量高配资源的授权。
 
 如果已获得授权，仍然看不到按量资源，可能是当前地域下库存不足，请参见[购买实例时，资源已经售罄怎么办？](#section_lxw_bwz_qgb)。
 
@@ -371,7 +371,7 @@ SCC实例支持包年包月和按周付费。
 
 创建SCC实例时，选择SCC定制版的系统镜像，该镜像支持RDMA RoCE驱动和OFED堆栈。您可以通过IB verbs编程使用RDMA功能或者通过MPI进行RDMA通讯。
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156620902050536_zh-CN.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156688441550536_zh-CN.png)
 
 ## 我没有欠费，为什么抢占式实例被释放了？ {#section_0ns_pj7_dxg .section}
 
@@ -455,7 +455,7 @@ SCC实例支持包年包月和按周付费。
 
 ## 什么是预留实例券？ {#section_et2_64u_fmh .section}
 
-预留实例券是一种抵扣券，可以抵扣按量付费实例（不含抢占式实例）的账单，也能够预留实例资源。相比预付费实例，预留实例券与按量付费实例这种组合模式可以兼顾灵活性和成本，比预付费方式的包月价格更优惠。
+预留实例券是一种抵扣券，可以抵扣按量付费实例（不含抢占式实例）的账单，也能够预留实例资源。相比包年包月实例，预留实例券与按量付费实例这种组合模式可以兼顾灵活性和成本，比包年包月方式的包月价格更优惠。
 
 ## 预留实例券能否提供库存预留？ {#section_5g6_eu4_b0f .section}
 
@@ -656,7 +656,7 @@ SCC实例支持包年包月和按周付费。
 
 ## 我能升级包年包月ECS实例规格和配置吗？ {#section_5ap_zkp_361 .section}
 
-可以，请参见[预付费实例升级配置](cn.zh-CN/实例/升降配实例/升配预付费实例/预付费实例升级配置.md#)。
+可以，请参见[包年包月实例升级配置](cn.zh-CN/实例/升降配实例/升配包年包月实例/包年包月实例升级配置.md#)。
 
 ## 我能升级按量付费ECS实例规格和配置吗？ {#section_472_rev_qvi .section}
 
@@ -692,6 +692,12 @@ SCC实例支持包年包月和按周付费。
 
 升级实例配置后，需要在控制台[重启实例](cn.zh-CN/实例/管理实例/重启实例.md#)。
 
+## 升级包年包月实例带宽，为什么提示按使用流量计费的带宽不支持带宽临时升级？ {#section_8de_1dx_l78 .section}
+
+公网带宽计费方式分为按固定带宽和按使用流量。
+
+包年包月实例的带宽按使用流量计费时，不支持临时升级带宽，但您可以通过升级配置功能升级基础带宽。具体操作，请参见[包年包月实例升级配置](cn.zh-CN/实例/升降配实例/升配包年包月实例/包年包月实例升级配置.md#)。
+
 ## ECS实例长时间为Starting状态，且AliyunService被禁用或被删除怎么办？ {#section_3kd_bat_4p4 .section}
 
 问题描述：启动云服务器ECS实例后，ECS实例长时间处于Starting状态，然后自动关机。登录系统查看系统服务，发现AliyunService被删除或禁用。
@@ -717,7 +723,7 @@ SCC实例支持包年包月和按周付费。
 
 假设您持有以下OSS Bucket，要通过域名www.example.com实现HTTPS访问。
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156620902043179_zh-CN.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156688441543179_zh-CN.png)
 
 1.  创建一台和Bucket位于相同地域的ECS实例。
 
@@ -789,15 +795,15 @@ SCC实例支持包年包月和按周付费。
 
 1.  连接FTP服务。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156620902043224_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156688441543224_zh-CN.png)
 
 2.  进入正确的目录，Windows系统无需切换，Linux系统切换至htdocs。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156620902049119_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156688441549119_zh-CN.png)
 
 3.  运行put命令上传。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156620902149120_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156688441649120_zh-CN.png)
 
 
 方式二：通过第三方工具上传
@@ -807,11 +813,11 @@ SCC实例支持包年包月和按周付费。
 3.  填写FTP的服务器IP、用户名和密码；协议选择标准（FTP），端口选择默认21（或更改为其您所使用的端口），不选择SSH密匙。
 4.  单击**连接**。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156620902143228_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156688441643228_zh-CN.png)
 
 5.  在右侧选择要上传的目录（Windows不需要选择目录，Linux主机选择htdocs目录），然后在左边窗口选择要上传的文件，单击上传即可。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156620902143230_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156688441643230_zh-CN.png)
 
     **说明：** 若安装Yummy FTP时系统提示：您的安全性偏好设置仅允许安装来自Mac App Store和被认可的开发者的应用程序，按以下步骤设置您的电脑。
 
@@ -820,7 +826,7 @@ SCC实例支持包年包月和按周付费。
     3.  在**允许从以下位置下载的应用程序**菜单中，选择**任何来源**。
     设置后即可正常安装该软件。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156620902143238_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156688441643238_zh-CN.png)
 
 
 如问题还未解决，请[提交工单](https://selfservice.console.aliyun.com/ticket/createIndex)。
@@ -912,18 +918,18 @@ Linux操作系统的云服务器和Windows操作系统的云服务器都可以�
 
 如果您在购买服务器时选择了固定带宽，并且已经购买了新EIP，请按以下步骤操作：
 
-1.  先将固定带宽转换为按量带宽。
-2.  [将固定公网IP转换为EIP](../../../../../cn.zh-CN/用户指南/申请EIP/ECS固定公网IP转换为EIP.md#)。
-3.  [解绑转换的得到的EIP](../../../../../cn.zh-CN/用户指南/解绑EIP.md#)。
-4.  [绑定新的EIP](../../../../../cn.zh-CN/用户指南/绑定云资源/绑定ECS实例.md#)。
+1.  将固定带宽转换为按量带宽，具体操作请参见[变更计费方式](../cn.zh-CN/产品定价/公网带宽计费.md#section_nxl_ntk_zdb)。
+2.  将固定公网IP转换为EIP，具体操作请参见[ECS固定公网IP转换为EIP](../../../../../cn.zh-CN/用户指南/申请EIP/ECS固定公网IP转换为EIP.md#)。
+3.  解绑转换得到的EIP，具体操作请参见[解绑EIP](../../../../../cn.zh-CN/用户指南/解绑EIP.md#)。
+4.  绑定新的EIP，具体操作请参见[绑定ECS实例](../../../../../cn.zh-CN/用户指南/绑定云资源/绑定ECS实例.md#)。
 
-## 如何查看同一地域下的预付费实例？ {#section_bud_chq_gek .section}
+## 如何查看同一地域下的包年包月实例？ {#section_bud_chq_gek .section}
 
-您可以使用资源概览功能查看同一个地域下的预付费实例，详细步骤请参见[查看资源概览](../cn.zh-CN/标签与资源/查看资源概览.md#)。
+您可以使用资源概览功能查看同一个地域下的包年包月实例，详细步骤请参见[查看资源概览](../cn.zh-CN/标签与资源/查看资源概览.md#)。
 
-## 如何查看同一账号下所有地域的预付费实例？ {#section_s5o_w6z_95z .section}
+## 如何查看同一账号下所有地域的包年包月实例？ {#section_s5o_w6z_95z .section}
 
-您可以前往续费管理页面查看所有地域下的预付费实例。
+您可以前往续费管理页面查看所有地域下的包年包月实例。
 
 1.  登录[ECS管理控制台](https://ecs.console.aliyun.com)。
 2.  在顶部状态栏处，选择**费用** \> **续费管理**。
@@ -977,7 +983,7 @@ AliVulfix进程是云盾进行漏洞检测的程序，用于扫描云服务器�
     #netstat -nltp //查看服务器80端口是否处于监听状态
     ```
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156620902241861_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156688441741861_zh-CN.png)
 
 2.  如果未显示80端口信息，说明网站服务没有启动，运行命令手动开启网站服务及相关服务。
 
@@ -1104,10 +1110,6 @@ ECS实例可以访问亚马逊网站，确保您的ECS实例可以正常访问�
 
 可以。
 
-## 为什么日本（东京）地域的Windows实例要比Linux实例贵，而在中国大陆地域两者价格一样？ {#section_o2e_baz_lvj .section}
-
-因为阿里云针对中国大陆地域下Windows系统License费用做了补贴，所以Windows价格和Linux一样，但是日本所属文化和监管环境有所不同，Windows需要收取License费用，所以Windows价格比Linux价格贵。
-
 ## 我是非中国大陆的用户，能否使用其他币种线上支付？ {#section_lwb_bgi_n6q .section}
 
 目前阿里云中国站只支持人民币支付。
@@ -1185,7 +1187,7 @@ ECS实例可以访问亚马逊网站，确保您的ECS实例可以正常访问�
 -   专有网络：可以设置为实例停机不收费，即开通实例停机不收费功能后，专有网络按量付费实例从创建开始计费，实例处于**已停止**状态时停止计费，实例启动后又重新计费。实例停机不收费功能只适用于实例的计算资源（即vCPU和内存）和公网IP地址，但云盘仍旧计费。详情请参见[按量付费实例停机不收费](../cn.zh-CN/产品定价/按量付费实例停机不收费.md#)。
 -   经典网络：进入**已停止**状态后仍然正常计费。
 
-## 按量付费转预付费时下单失败如何处理？ {#section_ye3_pyk_bzl .section}
+## 按量付费转包年包月时下单失败如何处理？ {#section_ye3_pyk_bzl .section}
 
 以下情况都会造成下单失败：
 
@@ -1197,23 +1199,23 @@ ECS实例可以访问亚马逊网站，确保您的ECS实例可以正常访问�
 
 如果出现以上错误提示，请根据错误提示调整实例。
 
-## 支付完成后多久能完成按量付费转预付费？ {#section_07w_jp4_rlu .section}
+## 支付完成后多久能完成按量付费转包年包月？ {#section_07w_jp4_rlu .section}
 
 支付完成后，会有异步任务执行转换操作。目前同时转换1~20个实例的计费方式所需时间为1~4秒。转换完成后，您可以在控制台上看到实例的计费方式已经更新为**包年包月**。
 
-## 按量付费转预付费失败时如何处理？ {#section_ulz_fn2_oxb .section}
+## 按量付费转包年包月失败时如何处理？ {#section_ulz_fn2_oxb .section}
 
 请[提交工单](https://selfservice.console.aliyun.com/ticket/createIndex?spm=a2c4g.11186623.2.7.8oI1Ug)。
 
-## 按量付费转预付费之后带宽计费方式是否发生变化？ {#section_4lm_u5o_2my .section}
+## 按量付费转包年包月之后带宽计费方式是否发生变化？ {#section_4lm_u5o_2my .section}
 
 不变。按量付费转包年包月功能只支持转换实例和云盘的计费方式，带宽计费方式的变更方法请参见[变更公网带宽计费方式](cn.zh-CN/实例/升降配实例/升降配方式汇总.md#ChangeBilling)。
 
-## 我有一个按量付费转预付费订单，但是还没有支付，这时我升级了实例的配置，转换订单还有效吗？ {#section_tih_umb_qaz .section}
+## 我有一个按量付费转包年包月订单，但是还没有支付，这时我升级了实例的配置，转换订单还有效吗？ {#section_tih_umb_qaz .section}
 
-按量付费转预付费时会创建一个新购订单，您必须支付该订单才能正常完成转换。如果您在未支付订单时升级了实例配置，由于实例组件已经发生变化，原订单的金额已经无法满足转换要求，此时订单会被禁止支付。如果您仍然需要转换实例的计费方式，必须先作废当前未支付订单，再执行新的转换操作。
+按量付费转包年包月时会创建一个新购订单，您必须支付该订单才能正常完成转换。如果您在未支付订单时升级了实例配置，由于实例组件已经发生变化，原订单的金额已经无法满足转换要求，此时订单会被禁止支付。如果您仍然需要转换实例的计费方式，必须先作废当前未支付订单，再执行新的转换操作。
 
-## 预付费转按量付费失败时如何处理？ {#section_xqt_ua4_1cf .section}
+## 包年包月转按量付费失败时如何处理？ {#section_xqt_ua4_1cf .section}
 
 以下情况都会造成转换失败：
 
@@ -1223,15 +1225,15 @@ ECS实例可以访问亚马逊网站，确保您的ECS实例可以正常访问�
 
 如果出现以上明确的错误提示，建议您根据错误提示调整实例。如果问题仍旧存在，请[提交工单](https://selfservice.console.aliyun.com/ticket/createIndex)。
 
-## 新创建的预付费实例在5天内转为按量付费，属于5天无理由退款吗？ {#section_kfr_lv0_ois .section}
+## 新创建的包年包月实例在5天内转为按量付费，属于5天无理由退款吗？ {#section_kfr_lv0_ois .section}
 
-不属于。预付费转按量付费后您依旧在使用实例。关于5天无理由退款的规则请参见[5天无理由退款说明（ECS）](https://help.aliyun.com/knowledge_detail/37096.html)。
+不属于。包年包月转按量付费后您依旧在使用实例。关于5天无理由退款的规则请参见[5天无理由退款说明（ECS）](https://help.aliyun.com/knowledge_detail/37096.html)。
 
 ## 为什么更改硬盘收费方式提示三次机会已用完？ {#section_bxy_dkr_1f9 .section}
 
-每个预付费ECS实例最多只能执行3次实时降配操作。实时降配操作包括：实例规格配置、降低带宽配置、云盘付费方式转按量付费。
+每个包年包月ECS实例最多只能执行3次实时降配操作。实时降配操作包括：实例规格配置、降低带宽配置、云盘付费方式转按量付费。
 
-## 为什么无法将按量付费实例转为预付费实例？ {#section_vlz_58s_9es .section}
+## 为什么无法将按量付费实例转为包年包月实例？ {#section_vlz_58s_9es .section}
 
 待转换的ECS实例需要满足以下条件：
 
@@ -1253,9 +1255,9 @@ ECS实例可以访问亚马逊网站，确保您的ECS实例可以正常访问�
 
 ## 如何查询实例到期时间？ {#section_8hf_t8x_5n3 .section}
 
-您可以在ECS控制台实例列表页面的**付费方式**列查看预付费实例的到期时间。
+您可以在ECS控制台实例列表页面的**付费方式**列查看包年包月实例的到期时间。
 
-**说明：** 如果没有**付费方式**列，则在页面右上方单击![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156620902253726_zh-CN.png)按钮，勾选**付费方式**，并单击**确定**。
+**说明：** 如果没有**付费方式**列，则在页面右上方单击![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156688441753726_zh-CN.png)按钮，勾选**付费方式**，并单击**确定**。
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156620902253728_zh-CN.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/130429/156688441753728_zh-CN.png)
 

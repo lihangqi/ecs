@@ -16,15 +16,15 @@
 |Action|String|否|DescribeBandwidthLimitation|系统规定参数。取值：DescribeBandwidthLimitation
 
  |
-|InstanceChargeType|String|否|PrePaid|实例的计费方式。更多详情，请参见 [计费概述](~~25398~~)。取值范围：
+|InstanceChargeType|String|否|PrePaid|实例的计费方式。更多详情，请参见[计费概述](~~25398~~)。取值范围：
 
- -   PrePaid：预付费（包年包月）
+ -   PrePaid：包年包月
 -   PostPaid：按量付费
 
  默认值：PostPaid
 
  |
-|InstanceType|String|否|ecs.g5.large|实例规格。更多详情，请参见 [实例规格族](~~25378~~)，也可以调用 [DescribeInstanceTypes](~~25620~~) 接口获得最新的规格表。
+|InstanceType|String|否|ecs.g5.large|实例规格。更多详情，请参见[实例规格族](~~25378~~)，也可以调用[DescribeInstanceTypes](~~25620~~)接口获得最新的规格表。
 
  |
 |OperationType|String|否|Upgrade|查询不同操作方式的带宽规格限制。取值范围：
@@ -36,13 +36,10 @@
  默认值：Create
 
  |
-|OwnerAccount|String|否|ECSforCloud@Alibaba.com|RAM 用户的账号登录名称。
+|ResourceId|String|否|s-946ntx4xx|资源ID。当您将参数OperationType设置为Upgrade或者Downgrade时，参数ResourceId为必需参数。
 
  |
-|ResourceId|String|否|s-946ntx4xx|资源 ID。当您将参数 OperationType 设置为 Upgrade 或者 Downgrade 时，参数 ResourceId 为必需参数。
-
- |
-|SpotStrategy|String|否|NoSpot|按量付费实例的q抢占策略。取值范围：
+|SpotStrategy|String|否|NoSpot|按量付费实例的抢占策略。取值范围：
 
  -   NoSpot：正常按量付费实例
 -   SpotWithPriceLimit：设置上限价格的抢占式实例
@@ -50,7 +47,7 @@
 
  默认值：NoSpot
 
- 当参数 InstanceChargeType 取值为 PostPaid 时，参数 SpotStrategy 才有效。
+ 当参数InstanceChargeType取值为PostPaid时，参数SpotStrategy才有效。
 
  |
 
@@ -58,7 +55,7 @@
 
 |名称|类型|示例值|描述|
 |--|--|---|--|
-|Bandwidths| | |数据中心信息组成的集合
+|Bandwidths| | |数据中心信息组成的集合。
 
  |
 |InternetChargeType|String|PayByTraffic|带宽的计费方式。取值范围：
@@ -67,16 +64,16 @@
 -   PayByTraffic：按流量计费
 
  |
-|Max|Integer|100|带宽最大值，该参数值为空时不返回
+|Max|Integer|100|带宽最大值，该参数值为空时不返回。
 
  |
-|Min|Integer|0|带宽最小值，该参数值为空时不返回
+|Min|Integer|0|带宽最小值，该参数值为空时不返回。
 
  |
-|Unit|String|Mbps|带宽单位，该参数值为空时不返回
+|Unit|String|Mbps|带宽单位，该参数值为空时不返回。
 
  |
-|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求ID。
 
  |
 

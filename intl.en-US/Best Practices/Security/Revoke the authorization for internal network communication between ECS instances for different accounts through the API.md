@@ -4,7 +4,7 @@ If you have authorized internal network communication between ECS instances for 
 
 Alibaba Cloud CLI is used to call ECS APIs. Make sure that you have installed Alibaba Cloud CLI. For more information, see [Alibaba Cloud CLI Installation Guide](../../../../intl.en-US/Installation Guide/Overview.md#).
 
-As specified in this topic, you can call [../../../../dita-oss-bucket/SP\_2/DNA0011860945/EN-US\_TP\_9919.md\#](../../../../intl.en-US/API Reference/Security groups/RevokeSecurityGroup.md#) to revoke an authorized security group rule. You must prepare the following items:
+As specified in this topic, you can call [RevokeSecurityGroup](../../../../intl.en-US/API Reference/Security groups/RevokeSecurityGroup.md#) to revoke an authorized security group rule. You must prepare the following items:
 
 -   Account name: the name of the account that you use to log on to the ECS console.
 -   Security group ID for the ECS instance: the ID of the security group to which the instance involved belongs. You can view this item in the ECS console or by calling [DescribeSecurityGroupReferences](../../../../intl.en-US/API Reference/Security groups/DescribeSecurityGroupReferences.md#).

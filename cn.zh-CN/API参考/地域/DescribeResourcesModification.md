@@ -2,9 +2,9 @@
 
 调用DescribeResourcesModification查询升级和降配实例规格或者系统盘时，某一可用区的可用资源信息。
 
-## 调试 {#apiExplorer .section}
+## 调试 {#api_explorer .section}
 
-前往【[API Explorer](https://api.aliyun.com/#product=Ecs&api=DescribeResourcesModification)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ecs&api=DescribeResourcesModification&type=RPC&version=2014-05-26)
 
 ## 请求参数 {#parameters .section}
 
@@ -49,7 +49,7 @@
 -   专有网络VPC类型实例：对于[已停售的实例规格](~~55263~~)，非I/O优化实例变配到I/O优化实例时，云服务器磁盘设备名和软件授权码会发生变化。Linux实例的普通云盘（cloud）会被识别为xvda或者xvdb等，高效云盘（cloud\_efficiency）和SSD云盘（cloud\_ssd）会被识别为vda或者vdb等。
 
  |
-|OperationType|String|否|Upgrade|更改预付费（包年包月）配置的操作类型。取值范围：
+|OperationType|String|否|Upgrade|更改包年包月资源配置的操作类型。取值范围：
 
  -   Upgrade：升级资源
 -   Downgrade：降级资源
@@ -67,19 +67,19 @@
 |AvailableZones| | |数据中心信息AvailableZoneType组成的集合。
 
  |
-|AvailableResources| | |可供创建的具体资源组成的数组
+|AvailableResources| | |可供创建的具体资源组成的数组。
 
  |
-|SupportedResources| | |支持的可供创建的具体资源组成的数组
+|SupportedResources| | |支持的可供创建的具体资源组成的数组。
 
  |
-|Max|Integer|2|资源规格的最大值，该参数值为空时不返回
+|Max|Integer|2|资源规格的最大值，该参数值为空时不返回。
 
  |
-|Min|Integer|1|资源规格的最小值，该参数值为空时不返回
+|Min|Integer|1|资源规格的最小值，该参数值为空时不返回。
 
  |
-|Status|String|Available|资源状态，返回值：
+|Status|String|Available|资源状态。返回值：
 
  -   Available：资源充足
 -   SoldOut：资源已售罄
@@ -92,10 +92,10 @@
 -   WithoutStock：库存告罄
 
  |
-|Unit|String|null|资源规格单位，该参数值为空时不返回
+|Unit|String|null|资源规格单位，该参数值为空时不返回。
 
  |
-|Value|String|ecs.sn1ne.xlarge|资源值
+|Value|String|ecs.sn1ne.xlarge|资源值。
 
  |
 |Type|String|InstanceType|资源类型。返回值：
@@ -108,10 +108,10 @@
 -   Network：网络类型
 
  |
-|RegionId|String|cn-hangzhou|地域ID
+|RegionId|String|cn-hangzhou|地域ID。
 
  |
-|Status|String|Available|资源状态，返回值：
+|Status|String|Available|资源状态。返回值：
 
  -   Available：资源充足
 -   SoldOut：资源已售罄
@@ -124,10 +124,10 @@
 -   WithoutStock：库存告罄
 
  |
-|ZoneId|String|cn-hangzhou-e|可用区ID
+|ZoneId|String|cn-hangzhou-e|可用区ID。
 
  |
-|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求ID
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求ID。
 
  |
 
@@ -154,227 +154,226 @@ https://ecs.aliyuncs.com/?Action=DescribeResourcesModification
 
 ``` {#xml_return_success_demo}
 <DescribeResourcesModificationResponse>
-  <RequestId>994F2B60-B050-49E3-9283-44655FAC7A4X</RequestId>
-  <AvailableZones>
-    <AvailableZone>
-      <Status>Available</Status>
-      <RegionId>cn-hangzhou-dg-a01</RegionId>
-      <AvailableResources>
-        <AvailableResource>
-          <Type>InstanceType</Type>
-          <SupportedResources>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.g5.xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-lc1m2.large</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-c1m4.2xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.c5.xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.hfg5.large</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.hfc5.3xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.hfg5.4xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.hfg5.6xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.c5.4xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-c1m2.xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-c1m1.2xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.ic5.xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-lc1m4.large</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.hfg5.3xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-c1m2.4xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.ic5.3xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.g5.6xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.ic5.large</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.ic5.2xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.hfc5.large</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.r5.large</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.g5.large</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.hfg5.xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.r5.4xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.hfc5.xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.hfc5.4xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-lc1m2.small</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-c1m1.large</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.g5.2xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.r5.6xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-c1m2.2xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.g5.3xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-c1m1.xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.hfc5.6xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-c1m4.xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.hfg5.2xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.hfc5.2xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.c5.large</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.c5.6xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-c1m4.large</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.r5.2xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.r5.xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.c5.3xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.ic5.4xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-lc1m1.small</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.c5.2xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-c1m1.4xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-lc2m1.nano</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.g5.4xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.r5.3xlarge</Value>
-            </SupportedResource>
-            <SupportedResource>
-              <Status>Available</Status>
-              <Value>ecs.t5-c1m2.large</Value>
-            </SupportedResource>
-          </SupportedResources>
-        </AvailableResource>
-      </AvailableResources>
-      <ZoneId>cn-hangzhou-h</ZoneId>
-    </AvailableZone>
-  </AvailableZones>
+	  <RequestId>994F2B60-B050-49E3-9283-44655FAC7A4X</RequestId>
+	  <AvailableZones>
+		    <AvailableZone>
+			      <Status>Available</Status>
+			      <RegionId>cn-hangzhou-dg-a01</RegionId>
+			      <AvailableResources>
+				        <AvailableResource>
+					          <Type>InstanceType</Type>
+					          <SupportedResources>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.g5.xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-lc1m2.large</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-c1m4.2xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.c5.xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.hfg5.large</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.hfc5.3xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.hfg5.4xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.hfg5.6xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.c5.4xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-c1m2.xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-c1m1.2xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.ic5.xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-lc1m4.large</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.hfg5.3xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-c1m2.4xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.ic5.3xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.g5.6xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.ic5.large</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.ic5.2xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.hfc5.large</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.r5.large</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.g5.large</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.hfg5.xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.r5.4xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.hfc5.xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.hfc5.4xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-lc1m2.small</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-c1m1.large</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.g5.2xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.r5.6xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-c1m2.2xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.g5.3xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-c1m1.xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.hfc5.6xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-c1m4.xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.hfg5.2xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.hfc5.2xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.c5.large</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.c5.6xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-c1m4.large</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.r5.2xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.r5.xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.c5.3xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.ic5.4xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-lc1m1.small</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.c5.2xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-c1m1.4xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-lc2m1.nano</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.g5.4xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.r5.3xlarge</Value>
+						            </SupportedResource>
+						            <SupportedResource>
+							              <Status>Available</Status>
+							              <Value>ecs.t5-c1m2.large</Value>
+						            </SupportedResource>
+					          </SupportedResources>
+				        </AvailableResource>
+			      </AvailableResources>
+			      <ZoneId>cn-hangzhou-h</ZoneId>
+		    </AvailableZone>
+	  </AvailableZones>
 </DescribeResourcesModificationResponse>
-
 ```
 
 `JSON` 格式

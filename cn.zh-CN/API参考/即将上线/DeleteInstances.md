@@ -1,11 +1,10 @@
 # DeleteInstances {#doc_api_Ecs_DeleteInstances .reference}
 
-调用DeleteInstances释放一台或多台按量付费ECS实例或者到期的预付费（包年包月）ECS实例。
+调用DeleteInstances释放一台或多台按量付费ECS实例或者到期的包年包月ECS实例。
 
 ## 接口说明 {#description .section}
 
 -   释放实例时，实例被[安全控制](~~25695~~)并且其`OperationLocks`中标记了`"LockReason" : "security"`的锁定状态，即使云盘的`DeleteWithInstance`的属性为`False`，系统会忽略这个属性而释放挂载在实例上的云盘。
--   指定了多台ECS实例时，如果其中有一台ECS实例无法被成功释放，则任务状态（`TaskStatus`）显示为失败（`Failed`）。您可以调用[DescribeTaskAttribute](~~25623~~)并根据返回的`TaskId`查看任务状态（`TaskStatus`）信息。
 -   释放后，实例所使用的物理资源都被回收，相关数据全部丢失且不可恢复。挂载在实例上 `DeleteWithInstance=True`属性的云盘被释放，云盘的快照仍旧保留。云盘的自动快照的保留和释放跟随云盘的`DeleteAutoSnapshot`属性，如果为`DeleteAutoSnapshot=false`时，保留自动快照，如果为`DeleteAutoSnapshot=true`，释放自动快照。
 
 ## 调试 {#api_explorer .section}
@@ -22,7 +21,7 @@
 |Action|String|否|DeleteInstances|系统规定参数。对于您自行拼凑HTTP/HTTPS URL发起的API请求，`Action`为必选参数。取值：DeleteInstances
 
  |
-|TerminateSubscription|Boolean|否|false|是否释放已到期的预付费（包年包月）实例。
+|TerminateSubscription|Boolean|否|false|是否释放已到期的包年包月实例。
 
  默认值：false。
 
@@ -88,7 +87,7 @@ https://ecs.aliyuncs.com/?Action=DeleteInstances
 |403|InvalidOperation.DeletionProtection|%s|实例被删除保护了。|
 |403|IncorrectInstanceStatus|%s|实例当前的状态不支持该操作。|
 |403|IncorrectInstanceStatus|The current status of the resource does not support this operation.|该资源目前的状态不支持此操作。|
-|500|InternalError|The request processing has failed due to some unknown error.|内部错误，请重试。如果多次尝试失败，请提交工单|
+|500|InternalError|The request processing has failed due to some unknown error.|内部错误，请重试。如果多次尝试失败，请提交工单。|
 |500|InternalError|%s|内部错误。|
 |403|InstanceLockedForSecurity|The specified operation is denied as your instance is locked for security reasons.|实例被安全锁定，指定的操作无法完成。|
 |400|DependencyViolation.SLBConfiguring|Specified operation is denied as your instance is using by another product.|实例被SLB引用，且SLB正在配置。|

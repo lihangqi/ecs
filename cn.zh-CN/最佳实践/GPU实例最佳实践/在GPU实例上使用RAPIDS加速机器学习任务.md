@@ -14,7 +14,11 @@ Dask是一款轻量级大数据框架，可以提升并行计算效率。
 
 本文提供了一套基于NVIDIA的RAPIDS Demo代码及数据集修改的示例代码，演示了在GPU实例上使用RAPIDS加速一个从ETL到ML Training端到端任务的过程。其中，ETL时使用RAPIDS的cuDF，ML Training时使用XGBoost。本文示例代码基于轻量级大数据框架Dask运行，为一套单机运行的代码。
 
-**说明：** NVIDIA官方RAPIDS Demo代码请参见[Mortgage Demo](https://github.com/rapidsai/notebooks)。
+**说明：** NVIDIA官方RAPIDS Demo代码请参见[Mortgage Demo](https://github.com/rapidsai/notebooks-contrib)。
+
+RAPIDS预装镜像已经发布到阿里云镜像市场，创建GPU实例时，您可以在镜像市场中搜索NVIDIA RAPIDS并使用RAPIDS预装镜像。
+
+**说明：** 该RAPIDS预装镜像使用Ubuntu 16.04 64-bit操作系统。
 
 gn5优惠活动详情请参见[异构计算GPU实例活动页](https://promotion.aliyun.com/ntms/act/gpufreetier.html)。
 
@@ -32,33 +36,43 @@ gn5优惠活动详情请参见[异构计算GPU实例活动页](https://promotion
 
     5.  复制API Key并保存到本地。
 
-        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712246989_zh-CN.png)
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687533546989_zh-CN.png)
 
+
+## 操作步骤 {#section_4st_emv_868 .section}
+
+如果您创建GPU实例时使用了RAPIDS预装镜像，只需运行RAPIDS Demo，从[启动JupyterLab服务](#section_jlv_sqz_hzk)开始操作即可。
+
+如果您创建GPU实例时没有使用RAPIDS预装镜像，按照以下步骤使用RAPIDS加速机器学习任务：
+
+1.  [获取RAPIDS镜像下载命令](#section_6nn_fh6_3ro)。
+2.  [部署RAPIDS环境](#section_4tf_rho_1gy)。
+3.  [运行RAPIDS Demo](#section_jlv_sqz_hzk)。
 
 ## 步骤一：获取RAPIDS镜像下载命令 {#section_6nn_fh6_3ro .section}
 
 1.  登录[NGC网站](https://ngc.nvidia.com/signin/email)。
 2.  打开MACHINE LEARNING页面，单击**RAPIDS**镜像。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712246841_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687533546841_zh-CN.png)
 
 3.  获取docker pull命令。
 
-    本文示例代码基于RAPIDS 0.6版本镜像编写，因此在运行本示例代码时，使用Tag为0.6版本的镜像。实际操作时，请选择您匹配的版本。
+    本文示例代码基于RAPIDS 0.8版本镜像编写，因此在运行本示例代码时，使用Tag为0.8版本的镜像。实际操作时，请选择您匹配的版本。
 
     1.  选择Tags页签。
 
-        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712247242_zh-CN.png)
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687533747242_zh-CN.png)
 
-    2.  找到并复制Tag信息。本示例中，选择`0.6-cuda10.0-runtime-ubuntu16.04-gcc5-py3.6`。
+    2.  找到并复制Tag信息。本示例中，选择`0.8-cuda10.0-runtime-ubuntu16.04-gcc5-py3.6`。
 
-        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712347223_zh-CN.png)
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687533747223_zh-CN.png)
 
-    3.  返回页面顶部，复制**Pull Command**中的命令到文本编辑器，将镜像版本替换为对应的Tag信息，并保存。 本示例中，将`cuda9.2-runtime-ubuntu16.04`替换为`0.6-cuda10.0-runtime-ubuntu16.04-gcc5-py3.6`。
+    3.  返回页面顶部，复制**Pull Command**中的命令到文本编辑器，将镜像版本替换为对应的Tag信息，并保存。 本示例中，将`cuda9.2-runtime-ubuntu16.04`替换为`0.8-cuda10.0-runtime-ubuntu16.04-gcc5-py3.6`。
 
         保存的docker pull命令用于在[步骤二](#section_4tf_rho_1gy)中下载RAPIDS镜像。
 
-        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712346842_zh-CN.png)
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687533746842_zh-CN.png)
 
 
 ## 步骤二：部署RAPIDS环境 {#section_4tf_rho_1gy .section}
@@ -70,7 +84,7 @@ gn5优惠活动详情请参见[异构计算GPU实例活动页](https://promotion
     -   **实例**：RAPIDS仅适用于特定的GPU型号（采用NVIDIA Pascal及以上架构），因此您需要选择GPU型号符合要求的实例规格，目前有gn6i、gn6v、gn5和gn5i，详细的GPU型号请参见[实例规格族](../../../../cn.zh-CN/实例/实例规格族.md#)。建议您选择显存更大的gn6i、gn6v或gn5实例。本示例中，选用了显存为16 GB的GPU实例。
     -   **镜像**：在镜像市场中搜索并使用`NVIDIA GPU Cloud VM Image`。
 
-        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712346839_zh-CN.png)
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687533846839_zh-CN.png)
 
     -   **公网带宽**：选择**分配公网IPv4地址**或者在实例创建成功后[绑定EIP地址](../../../../cn.zh-CN/网络/弹性网卡/绑定弹性网卡.md#)。
     -   **安全组**：选择的安全组需要开放以下端口：
@@ -83,7 +97,7 @@ gn5优惠活动详情请参见[异构计算GPU实例活动页](https://promotion
 
 3.  输入NGC API Key后按回车键，登录NGC容器环境。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712346840_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687533846840_zh-CN.png)
 
 4.  （可选）运行nvidia-smi查看GPU型号、GPU驱动版本等GPU信息。
 
@@ -92,7 +106,7 @@ gn5优惠活动详情请参见[异构计算GPU实例活动页](https://promotion
 5.  运行在[步骤一](#section_6nn_fh6_3ro)中获取的docker pull命令下载RAPIDS镜像。
 
     ``` {#codeblock_rcd_vmp_ael}
-    docker pull nvcr.io/nvidia/rapidsai/rapidsai:0.6-cuda10.0-runtime-ubuntu16.04-gcc5-py3.6
+    docker pull nvcr.io/nvidia/rapidsai/rapidsai:0.8-cuda10.0-runtime-ubuntu16.04-gcc5-py3.6
     ```
 
 6.  （可选）查看下载的镜像。
@@ -111,7 +125,7 @@ gn5优惠活动详情请参见[异构计算GPU实例活动页](https://promotion
             -p 8888:8888 \
             -p 8787:8787 \
             -p 8786:8786 \
-            nvcr.io/nvidia/rapidsai/rapidsai:0.6-cuda10.0-runtime-ubuntu16.04-gcc5-py3.6
+            nvcr.io/nvidia/rapidsai/rapidsai:0.8-cuda10.0-runtime-ubuntu16.04-gcc5-py3.6
     ```
 
 
@@ -120,53 +134,45 @@ gn5优惠活动详情请参见[异构计算GPU实例活动页](https://promotion
 1.  在GPU实例上下载数据集和Demo文件。
 
     ``` {#codeblock_0rf_yf8_v2q}
-    # 获取apt源地址并下载脚本（脚本功能：下载训练数据、notebook、utils）
-    $ source_address=$(curl http://100.100.100.200/latest/meta-data/source-address|head -n 1)
-    $ source_address="${source_address}/opsx/ecs/linux/binary/machine_learning/"
-    $ wget $source_address/rapids_notebooks_v0.6/utils/download_v0.6.sh
-    # 执行下载脚本
-    $ sh ./download_v0.6.sh
-    # 切换到下载目录查看下载文件
-    $ apt update
-    $ apt install tree
-    $ tree /rapids/rapids_notebooks_v0.6/
+    # Get apt source address and download demos.
+    source_address=$(curl http://100.100.100.200/latest/meta-data/source-address|head -n 1)
+    source_address="${source_address}/opsx/ecs/linux/binary/machine_learning/"
+    cd /rapids
+    wget $source_address/rapids_notebooks_v0.8.tar.gz
+    tar -xzvf rapids_notebooks_v0.8.tar.gz
+    cd /rapids/rapids_notebooks_v0.8/xgboost
+    wget $source_address/data/mortgage/mortgage_2000_1gb.tgz
     ```
-
-    下载成功后的文件结构如下图，共5个文件夹、16个文件：
-
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712346844_zh-CN.png)
 
 2.  在GPU实例上启动JupyterLab服务。
 
     推荐直接使用命令启动。
 
     ``` {#codeblock_c8o_gs1_8lq}
-    # 切换到工作目录
-    $ cd /rapids/rapids_notebooks_v0.6/xgboost
-    # 启动jupyter-lab，直接使用命令启动，并设置登录密码
-    $ jupyter-lab --allow-root --ip=0.0.0.0 --no-browser --NotebookApp.token='登录密码'
-    # 退出
-    $ sh ../utils/stop-jupyter.sh
+    # Run the following command to start JupyterLab and set the password.
+    cd /rapids/rapids_notebooks_v0.8/xgboost
+    jupyter-lab --allow-root --ip=0.0.0.0 --no-browser --NotebookApp.token='YOUR PASSWORD'
+    # Exit JupyterLab.
+    sh ../utils/stop-jupyter.sh
     ```
 
-    -   除使用命令外，您也可以执行脚本`$ sh ../utils/start-jupyter.sh`启动jupyter-lab，此时无法设置登录密码。
-    -   您也可以连续按两次`Ctrl+C`退出。
+    -   除使用命令外，您也可以执行脚本`sh ../utils/start-jupyter.sh`启动jupyter-lab，此时无法设置登录密码。
+    -   您也可以连续按两次`Ctrl+C`退出JupyterLab服务。
 3.  打开浏览器，在地址栏输入`http://您的GPU实例IP地址:8888`远程访问JupyterLab 。
 
     **说明：** 推荐使用Chrome浏览器。
 
     如果您在启动JupyterLab服务时设置了登录密码，会跳转到密码输入界面。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712446852_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687534146852_zh-CN.png)
 
 4.  运行NoteBook代码。
 
     该案例是一个抵押贷款回归的任务，详细信息请参见[代码执行过程](#section_88w_0mw_i43)。登录成功后，可以看到NoteBook代码的代码包括以下内容：
 
-    -   mortgage\_2000\_1gb文件夹：存储解压后的训练数据。该文件夹下包含：acq文件夹、perf文件夹和names.csv文件。
     -   xgboost\_E2E.ipynb文件： XGBoost Demo文件。双击文件可以查看文件详情，单击下图中的执行按钮可以逐步执行代码，每次执行一个Cell。
 
-        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712446845_zh-CN.png)
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687534346845_zh-CN.png)
 
     -   mortgage\_2000\_1gb.tgz文件： 2000年的抵押贷款回归训练数据（1G分割的perf文件夹下的文件不会大于1G，使用1G分割的数据可以更有效的利用GPU显存）。
 
@@ -182,13 +188,13 @@ NoteBook代码的执行过程如下：
 
 1.  准备数据集。
 
-    本案例的Shell脚本会默认下载2000年的抵押贷款回归训练数据（mortgage\_2000\_1gb.tgz），并解压到mortgage\_2000\_1gb文件夹。
+    本案例的Shell脚本会默认下载2000年的抵押贷款回归训练数据（mortgage\_2000\_1gb.tgz）。
 
     如果您想获取更多数据用于XGBoost模型训练，可以设定参数download\_url指定下载路径，具体下载地址请参见[Mortgage Data](https://docs.rapids.ai/datasets/mortgage-data)。
 
     示例效果如下 ：
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712446846_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687534446846_zh-CN.png)
 
 2.  设定相关参数。
 
@@ -202,15 +208,15 @@ NoteBook代码的执行过程如下：
 
     示例效果如下：
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712446847_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687534546847_zh-CN.png)
 
 3.  启动Dask服务。
 
-    代码会启动Dask Scheduler，并根据gpu\_count参数启动worker用于ETL和模型训练。
+    代码会启动Dask Scheduler，并根据gpu\_count参数启动worker用于ETL和模型训练。启动Dask服务后，您也可以通过Dask Dashboard直观地监控任务，打开方法请参见[Dask Dashboard](#section_x15_g1t_2f7)。
 
     示例效果如下：
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712546848_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687534746848_zh-CN.png)
 
 4.  启动ETL。
 
@@ -218,7 +224,7 @@ NoteBook代码的执行过程如下：
 
     示例效果如下：
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712546849_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687534846849_zh-CN.png)
 
 5.  启动Data Conversion。
 
@@ -226,7 +232,7 @@ NoteBook代码的执行过程如下：
 
     示例效果如下：
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712546850_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687535146850_zh-CN.png)
 
 6.  启动ML Training。
 
@@ -234,8 +240,16 @@ NoteBook代码的执行过程如下：
 
     示例效果如下：
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156643712546851_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/216663/156687535646851_zh-CN.png)
 
+
+## Dask Dashboard {#section_x15_g1t_2f7 .section}
+
+Dask Dashboard支持任务进度跟踪、任务性能问题识别和故障调试。
+
+Dask服务启动后，在浏览器地址栏中访问`http://您的GPU实例IP地址:8787/status`即可进入Dashboard主界面。
+
+![](images/57733_zh-CN.gif)
 
 ## 相关函数 {#section_whh_v8f_nnc .section}
 
@@ -269,4 +283,8 @@ NoteBook代码的执行过程如下：
 -   def last\_mile\_cleaning\(df, \*\*kwargs\):
 
  |
+
+## 更多信息 {#section_2v1_q0o_h4k .section}
+
+GPU实例和RAPIDS组合适用于加速更多类型的任务，请参见[在GPU实例上使用RAPIDS加速图像搜索任务](cn.zh-CN/最佳实践/GPU实例最佳实践/在GPU实例上使用RAPIDS加速图像搜索任务.md#)。
 

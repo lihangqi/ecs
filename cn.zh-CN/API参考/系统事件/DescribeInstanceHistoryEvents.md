@@ -2,9 +2,9 @@
 
 调用DescribeInstanceHistoryEvents查询指定实例的系统事件信息，默认查询处于非活跃状态的历史系统事件。您最多可以查询最近一周的历史系统事件。通过指定InstanceEventCycleStatus参数，可以查询处于Scheduled（计划中）和Executing（执行中）状态的系统事件。
 
-## 调试 {#apiExplorer .section}
+## 调试 {#api_explorer .section}
 
-前往【[API Explorer](https://api.aliyun.com/#product=Ecs&api=DescribeInstanceHistoryEvents)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ecs&api=DescribeInstanceHistoryEvents&type=RPC&version=2014-05-26)
 
 ## 请求参数 {#parameters .section}
 
@@ -26,7 +26,7 @@
 -   Failed
 
  |
-|EventId.N|RepeatList|否|e-2ze9yxxxxwtqcvai68rl|一个或者多个系统事件ID。N的取值范围：1~100，多个取值使用重复列表的形式。
+|EventId.N|RepeatList|否|e-2ze9y\*\*\*\*wtqcvai68rl|一个或者多个系统事件ID。N的取值范围：1~100，多个取值使用重复列表的形式。
 
  |
 |EventPublishTime.End|String|否|2017-12-01T06:32:31Z|查询系统事件发布时间的结束时间。按照[ISO8601](~~25696~~)标准表示，并需要使用UTC +0时间，格式为yyyy-MM-ddTHH:mm:ssZ。
@@ -41,8 +41,8 @@
 -   SystemFailure.Reboot：因系统错误实例重启
 -   SystemFailure.Delete：因实例创建失败实例释放
 -   InstanceFailure.Reboot：因实例错误实例重启
--   InstanceExpiration.Stop：因预付费期限到期，实例停止
--   InstanceExpiration.Delete：因预付费期限到期，实例释放
+-   InstanceExpiration.Stop：因包年包月期限到期，实例停止
+-   InstanceExpiration.Delete：因包年包月期限到期，实例释放
 -   AccountUnbalanced.Stop：因账号欠费，按量付费实例停止
 -   AccountUnbalanced.Delete：因账号欠费，按量付费实例释放
 
@@ -63,8 +63,8 @@
 -   SystemFailure.Reboot：因系统错误实例重启
 -   SystemFailure.Delete：因实例创建失败实例释放
 -   InstanceFailure.Reboot：因实例错误实例重启
--   InstanceExpiration.Stop：因预付费期限到期，实例停止
--   InstanceExpiration.Delete：因预付费期限到期，实例释放
+-   InstanceExpiration.Stop：因包年包月期限到期，实例停止
+-   InstanceExpiration.Delete：因包年包月期限到期，实例释放
 -   AccountUnbalanced.Stop：因账号欠费，按量付费实例停止
 -   AccountUnbalanced.Delete：因账号欠费，按量付费实例释放
 
@@ -126,10 +126,10 @@
 |ExtendedAttribute| | |事件扩展属性。
 
  |
-|Device|String|/dev/vda|本地盘磁盘设备名。
+|Device|String|/dev/vda|本地盘设备名。
 
  |
-|DiskId|String|d-diskid1|本地盘磁盘ID。
+|DiskId|String|d-diskid1|本地盘ID。
 
  |
 |InstanceId|String|i-myInstance|实例ID。
@@ -147,7 +147,7 @@
 |RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求ID。
 
  |
-|TotalCount|Integer|2|实例状态总个数。
+|TotalCount|Integer|2|实例总个数。
 
  |
 
@@ -159,7 +159,7 @@
 https://ecs.aliyuncs.com/?Action=DescribeInstanceHistoryEvents
 &RegionId=cn-hangzhou
 &InstanceId=i-myInstance
-&EventId.1=e-2ze9yxxxxwtqcvai6***
+&EventId.1=e-2ze9y****wtqcvai6***
 &InstanceEventCycleStatus.1=Executed
 &EventCycleStatus=Executed
 &InstanceEventType.1=SystemMaintenance.Reboot
@@ -179,44 +179,43 @@ https://ecs.aliyuncs.com/?Action=DescribeInstanceHistoryEvents
 
 ``` {#xml_return_success_demo}
 <DescribeInstanceHistoryEventsResponse>
-  <InstanceSystemEventSet>
-    <InstanceSystemEventType>
-      <InstanceId>i-2ze3tphuqvc93ci****3</InstanceId>
-      <EventId>e-2ze9y****wtqcvai68rl</EventId>
-      <EventType>
-        <Code>1</Code>
-        <Name>SystemMaintenance.Reboot</Name>
-      </EventType>
-      <EventCycleStatus>
-        <Code>0</Code>
-        <Name>Executed</Name>
-      </EventCycleStatus>
-      <EventPublishTime>2017-11-30T06:32:31Z</EventPublishTime>
-      <NotBefore>2017-12-01T06:32:31Z</NotBefore>
-      <EventFinishTime>2017-12-01T06:35:31Z</EventFinishTime>
-    </InstanceSystemEventType>
-    <InstanceSystemEventType>
-      <InstanceId>i-2ze3tphuqvc93ci****3</InstanceId>
-      <EventId>e-2ze9y****wtqcvai68r3</EventId>
-      <EventType>
-        <Code>34</Code>
-        <Name>InstanceExpiration.Stop</Name>
-      </EventType>
-      <EventCycleStatus>
-        <Code>8</Code>
-        <Name>Avoided</Name>
-      </EventCycleStatus>
-      <EventPublishTime>2017-11-29T06:32:31Z</EventPublishTime>
-      <NotBefore>2017-12-06T00:00:00Z</NotBefore>
-      <EventFinishTime>2017-12-05T12:35:31Z</EventFinishTime>
-    </InstanceSystemEventType>
-  </InstanceSystemEventSet>
-  <PageSize>10</PageSize>
-  <PageNumber>1</PageNumber>
-  <TotalCount>2</TotalCount>
-  <RequestId>02EA76D3-5A2A-44EB-XXXX-8901881D8707</RequestId>
+      <InstanceSystemEventSet>
+            <InstanceSystemEventType>
+                  <InstanceId>i-2ze3tphuqvc93ci****3</InstanceId>
+                  <EventId>e-2ze9y****wtqcvai68rl</EventId>
+                  <EventType>
+                        <Code>1</Code>
+                        <Name>SystemMaintenance.Reboot</Name>
+                  </EventType>
+                  <EventCycleStatus>
+                        <Code>0</Code>
+                        <Name>Executed</Name>
+                  </EventCycleStatus>
+                  <EventPublishTime>2017-11-30T06:32:31Z</EventPublishTime>
+                  <NotBefore>2017-12-01T06:32:31Z</NotBefore>
+                  <EventFinishTime>2017-12-01T06:35:31Z</EventFinishTime>
+            </InstanceSystemEventType>
+            <InstanceSystemEventType>
+                  <InstanceId>i-2ze3tphuqvc93ci****3</InstanceId>
+                  <EventId>e-2ze9y****wtqcvai68r3</EventId>
+                  <EventType>
+                        <Code>34</Code>
+                        <Name>InstanceExpiration.Stop</Name>
+                  </EventType>
+                  <EventCycleStatus>
+                        <Code>8</Code>
+                        <Name>Avoided</Name>
+                  </EventCycleStatus>
+                  <EventPublishTime>2017-11-29T06:32:31Z</EventPublishTime>
+                  <NotBefore>2017-12-06T00:00:00Z</NotBefore>
+                  <EventFinishTime>2017-12-05T12:35:31Z</EventFinishTime>
+            </InstanceSystemEventType>
+      </InstanceSystemEventSet>
+      <PageSize>10</PageSize>
+      <PageNumber>1</PageNumber>
+      <TotalCount>2</TotalCount>
+      <RequestId>02EA76D3-5A2A-44EB-XXXX-8901881D8707</RequestId>
 </DescribeInstanceHistoryEventsResponse>
-
 ```
 
 `JSON` 格式

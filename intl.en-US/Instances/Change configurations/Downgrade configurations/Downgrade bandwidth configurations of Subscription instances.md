@@ -17,7 +17,7 @@ You can use the bandwidth configuration downgrade function to perform the follow
 
 ## Limits {#section_olg_wp1_1gb .section}
 
--   Some accounts support this feature \(based on your ECS usage\).
+-   Whether the bandwidth of a Subscription instance can be downgraded is determined by your ECS instance usage.
 -   You can downgrade bandwidth configurations of only one instance at a time.
 -   You can only downgrade the bandwidth configurations of each instance a maximum of three times. Configuration downgrade operations include instance configuration downgrades, bandwidth configuration downgrades, and cloud disk billing method adjustments.
 -   The time interval between two downgrade operations must be at least 5 minutes.
@@ -33,14 +33,10 @@ The configurations of an instance can be downgraded only if the instance meets t
 
 ## Procedure {#section_htb_zp1_1gb .section}
 
-1.  Log on to the ECS console.
+1.  Find the target instance and click **Change Configuration** in the **Actions** column.
+2.  In the displayed dialog box, select **Configuration downgrade** and **Bandwidth Configuration**.
+3.  Set the bandwidth and read and confirm that you agree with the *ECS Service Terms* .
 
-2.  Find the target instance and click **Change Configuration** in the **Action** column.
-
-3.  In the displayed dialog box, select **Configuration downgrade** and **Bandwidth Configuration**.
-
-4.  Set the bandwidth and read and confirm that you agree with the *ECS Service Terms* .
-
-5.  Click **Downgrade Now**.
+4.  Click **Downgrade Now**.
 
 

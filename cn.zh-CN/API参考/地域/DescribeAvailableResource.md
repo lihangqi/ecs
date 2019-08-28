@@ -6,13 +6,13 @@
 
 调用该接口时，您需要注意：
 
--   不指定参数ZoneId时，返回该地域（RegionId）下所有可用区的符合其他条件的目标资源。
--   您可以通过指定参数DestinationResource查询不同类型的资源列表，再指定其他参数细化资源条件。参数DestinationResource的各个可选取值有不同的逻辑与要求。在下列两个顺序列表中，排在越后面的参数其逻辑与苛刻程度越高。
-    -   顺序：（Zone）\> IoOptimized \> InstanceType \> SystemDisk \> DataDisk
+-   不指定参数`ZoneId`时，返回该地域（`RegionId`）下所有可用区的符合其他条件的目标资源。
+-   您可以通过指定参数`DestinationResource`查询不同类型的资源列表，再指定其他参数细化资源条件。参数`DestinationResource`的各个可选取值有不同的逻辑与要求。在下列两个顺序列表中，排在越后面的参数其逻辑与苛刻程度越高。
+    -   顺序：（`Zone`）\> `IoOptimized` \> `InstanceType` \> `SystemDisk` \> `DataDisk`
     -   取值示例：
-        -   若参数DestinationResource取值为SystemDisk，则必须传入参数IoOptimized和InstanceType。
-        -   若参数DestinationResource取值为InstanceType，则必须传入参数IoOptimized。
-        -   若参数DestinationResource取值为DataDisk，则必须传入参数IoOptimized、InstanceType和SystemDiskCategory。
+        -   若参数`DestinationResource`取值为`SystemDisk`，则必须传入参数`IoOptimized`和`InstanceType`。
+        -   若参数`DestinationResource`取值为`InstanceType`，则必须传入参数`IoOptimized`。
+        -   若参数`DestinationResource`取值为`DataDisk`，则必须传入参数`IoOptimized`、`InstanceType`和`SystemDiskCategory`。
 
 ## 调试 {#api_explorer .section}
 
@@ -57,7 +57,7 @@
  |
 |InstanceChargeType|String|否|PrePaid|资源的计费方式。更多详情，请参见[计费概述](~~25398~~)。取值范围：
 
- -   PrePaid：预付费（包年包月）
+ -   PrePaid：包年包月
 -   PostPaid：按量付费
 
  默认值：PostPaid。
@@ -73,7 +73,9 @@
  -   none：非I/O优化实例
 -   optimized：I/O优化实例
 
- 若参数DestinationResource取值为SystemDisk、InstanceType或者DataDisk时，参数IoOptimized不是必需参数，默认值：optimized。
+ 若参数DestinationResource取值为SystemDisk、InstanceType或者DataDisk时，参数IoOptimized不是必需参数。
+
+ 默认值：optimized。
 
  |
 |Memory|Float|否|8.0|实例规格的内存大小，单位为GiB。取值参见[实例规格族](~~25378~~)。
@@ -114,7 +116,9 @@
 -   ephemeral\_ssd：本地SSD盘
 -   cloud\_essd：ESSD云盘
 
- 若参数DestinationResource取值为SystemDisk、InstanceType或者DataDisk时，参数SystemDiskCategory不是必需参数，默认值：cloud\_efficiency。
+ 若参数DestinationResource取值为SystemDisk、InstanceType或者DataDisk时，参数SystemDiskCategory不是必需参数。
+
+ 默认值：cloud\_efficiency。
 
  |
 |ZoneId|String|否|cn-hangzhou-e|可用区ID。

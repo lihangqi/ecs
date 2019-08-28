@@ -10,16 +10,16 @@ If you configure automatic installation of the GPU driver, the following limits 
 -   Automatic installation of the GPU driver takes 4 to 10 minutes, depending on the intranet bandwidth and the CPU count of different instance types. During automatic installation, GPU cannot be used, the instance cannot be operated, and other GPU software cannot be installed. Otherwise, the automatic installation fails and the instance becomes unavailable.
 -   If you change the operating system after you create a GPU instance, you must make sure that you use the same image or [Images that support automatic installation of the GPU driver](#section_gbb_nxz_xdb). Otherwise, automatic installation of the GPU driver fails.
 
-**Note:** You can [connect to the target instance](reseller.en-US/Instances/Connect to instances/Overview.md#) and check the installation progress and result by using the installation log.
+**Note:** You can [connect to the target instance](intl.en-US/Instances/Connect to instances/Overview.md#) and check the installation progress and result by using the installation log.
 
 -   If you select **Auto-install GPU Driver**, the installation log is stored in the /root/nvidia\_install.log directory.
 -   If you configure the nvidia\_install\_v2.0 installation script in **User Data**, the installation log is stored in the /root/nvidia/nvidia\_install.log directory.
 
 ## Procedure {#section_v1b_nxz_xdb .section}
 
-The following procedure describes how to configure a GPU instance. For information on how to configure general instances, see [Create an instance](reseller.en-US/Instances/Create an instance/Create an instance by using the wizard.md#).
+The following procedure describes how to configure a GPU instance. For information on how to configure general instances, see [Create an instance](intl.en-US/Instances/Create an instance/Create an instance by using the wizard.md#).
 
-1.  Go to the [ECS purchase page](https://ecs-buy-intl4service.aliyun.com/#/postpay).
+1.  Go to the [ECS purchase page](https://ecs-buy.aliyun.com/wizard/#/).
 2.  Complete the following Basic Configurations.
     -   **Region**: Select the target region. For information about regions and zones, see [Regions and zones that provide GPU instances](#section_e2n_pnb_ygb). If the regions and zones listed in this table are different from those displayed on the Basic Configurations page, the regions and zones displayed on the page are the actual regions and zones available.
     -   **Instance Type**: Choose **Heterogeneous Computing** \> **Compute Optimized Type with GPU**, and then select an instance type as needed.
@@ -27,24 +27,24 @@ The following procedure describes how to configure a GPU instance. For informati
 
         If you select an image that supports automatic installation of the preceding drivers, select **Auto-install GPU driver**, and select a GPU driver version. If you want to use the GPU instance for a new service system, we recommend that you select the latest GPU driver version.
 
-        If you do not select **Auto-install GPU driver**, or if the selected image does not support automatic installation of the GPU driver, you need to configure the installation script in **User Data**, or [Install the GPU driver](reseller.en-US/Instances/Instance type families/Compute optimized type family with GPU/Install the GPU driver.md#) after you install the GPU instance. For information on how to configure the installation script, see [Script version](#section_xcj_1s5_xgb).
+        If you do not select **Auto-install GPU driver**, or if the selected image does not support automatic installation of the GPU driver, you need to configure the installation script in **User Data**, or [Install the GPU driver](intl.en-US/Instances/Instance type families/Compute optimized type family with GPU/Install the GPU driver.md#) after you install the GPU instance. For information on how to configure the installation script, see [Script version](#section_xcj_1s5_xgb).
 
-        **Note:** If you call the [RunInstances](../../../../reseller.en-US/API Reference/Instances/RunInstances.md#) API action to create a GPU instance, you need to use the UserData parameter to upload the installation script, which must be Base64-encoded.
+        **Note:** If you call the [RunInstances](../../../../intl.en-US/API Reference/Instances/RunInstances.md#) API action to create a GPU instance, you need to use the UserData parameter to upload the installation script, which must be Base64-encoded.
 
-        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9632/156636449739823_en-US.png)
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9632/156679891539823_en-US.png)
 
 3.  Complete the Networking configurations as follows:
     -   **Network Type**: Select **VPC**.
     -   **Network Billing Method**: Select a bandwidth as needed.
 
-        **Note:** If you select Windows 2008 R2 or an earlier image on the **Basic Configurations** page, the GPU instance cannot be accessed by using the [Management Terminal](reseller.en-US/Instances/Connect to instances/Connect to Linux instances/Connect to an instance by using the Management Terminal.md#) after the GPU driver takes effect after installation. To resolve this issue, you must select **Assign Public IP**, or [bind EIP](../../../../reseller.en-US/User Guide/Associate an EIP with a cloud instance/Associate an EIP with an ECS instance.md#) after you create the instance. In this way, you can connect to the instance by using other protocols, such as RDP, PCOIP, and XenDeskop HDX 3D. However, RDP does not support such applications as DirectX or OpenGL. If you require RDP to be the protocol, you must install the VNC service and the VNC client.
+        **Note:** If you select Windows 2008 R2 or an earlier image on the **Basic Configurations** page, the GPU instance cannot be accessed by using the [Management Terminal](intl.en-US/Instances/Connect to instances/Connect to Linux instances/Connect to a Linux instance by using the Management Terminal.md#) after the GPU driver takes effect after installation. To resolve this issue, you must select **Assign Public IP**, or [bind EIP](../../../../intl.en-US/User Guide/Associate an EIP with a cloud instance/Associate an EIP with an ECS instance.md#) after you create the instance. In this way, you can connect to the instance by using other protocols, such as RDP, PCOIP, and XenDeskop HDX 3D. However, RDP does not support such applications as DirectX or OpenGL. If you require RDP to be the protocol, you must install the VNC service and the VNC client.
 
 4.  Complete the System Configurations as follows:
     -   **Log on Credentials**: Select **Key Pair** or **Password**. If you select **Set Later**, you must associate an SSH key pair or reset your password when you log on to the instance by using the Management Terminal, and then restart the instance to make the settings take effect. If the GPU driver is not installed completely, the restart operation will result in installation failure.
     -   **User Data**:
         -   If you select **Auto-install GPU Driver** in the **Image** area on the Basic Configurations page, the Shell script and the precautionary information regarding the installation of the CUDA Toolkit and the GPU driver are displayed in this area.
 
-            ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9632/156636449739825_en-US.png)
+            ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9632/156679891639825_en-US.png)
 
         -   If you do not select **Auto-install GPU Driver**, you can configure the installation script in the **User Data** area. For an installation script example, see [User Data installation script](#section_bl2_k23_ygb).
 5.  Complete the Grouping configurations and confirm your order on the Preview page.
@@ -73,7 +73,7 @@ The following table describes the regions and zones where GPU instance type fami
 -   Germany \(Frankfurt\) zone A
 
  |
-|gn5 \(NGC environment\)|The instance type family gn5 does not fully support the NVIDIA GPU CLOUD \(NGC\) environment. For more information, see [Deploy an NGC on gn5 instances](reseller.en-US/Best Practices/GPU instances/Deploy an NGC on gn5 instances.md#).|
+|gn5 \(NGC environment\)|The instance type family gn5 does not fully support the NVIDIA GPU CLOUD \(NGC\) environment. For more information, see [Deploy an NGC on gn5 instances](intl.en-US/Best Practices/GPU instances/Deploy an NGC on gn5 instances.md#).|
 |gn5i| -   China \(Beijing\) zones C, E, and A
 -   China \(Hangzhou\) zone B, China \(Shanghai\) zones D and B
 -   China \(Shenzhen\) zone A
@@ -634,8 +634,8 @@ reboot
 
 ## What to do next {#section_o3f_dch_ygb .section}
 
--   If you do not configure automatic installation of the GPU driver when you create the GPU instance, you must install it manually. For more information, see [Install the GPU driver](reseller.en-US/Instances/Instance type families/Compute optimized type family with GPU/Install the GPU driver.md#).
--   If the selected gn5, gn5i, gn6v, vgn5i, or gn6i type instance need to support OpenGL, you must install the GRID driver. For more information, see [Install the GRID driver on a gn5/gn5i/gn6v instance](reseller.en-US/Instances/Instance type families/Compute optimized type family with GPU/Install a GRID driver in a GPU-equipped ECS instance (Linux).md#).
--   You can uninstall the GPU driver and the CUDA Toolkit. For more information, see [Uninstall the GPU driver](reseller.en-US/Instances/Instance type families/Compute optimized type family with GPU/Uninstall the GPU driver.md#).
--   You can view GPU monitoring data by using the CloudMonitor console or call the API. For more information, see [GPU monitoring](../../../../reseller.en-US/User Guide/Host monitoring/GPU monitoring.md#).
+-   If you do not configure automatic installation of the GPU driver when you create the GPU instance, you must install it manually. For more information, see [Install the GPU driver](intl.en-US/Instances/Instance type families/Compute optimized type family with GPU/Install the GPU driver.md#).
+-   If the selected gn5, gn5i, gn6v, vgn5i, or gn6i type instance need to support OpenGL, you must install the GRID driver. For more information, see [Install the GRID driver on a gn5/gn5i/gn6v instance](intl.en-US/Instances/Instance type families/Compute optimized type family with GPU/Install a GRID driver in a GPU-equipped ECS instance (Linux).md#).
+-   You can uninstall the GPU driver and the CUDA Toolkit. For more information, see [Uninstall the GPU driver](intl.en-US/Instances/Instance type families/Compute optimized type family with GPU/Uninstall the GPU driver.md#).
+-   You can view GPU monitoring data by using the CloudMonitor console or call the API. For more information, see [GPU monitoring](../../../../intl.en-US/User Guide/Host monitoring/GPU monitoring.md#).
 
