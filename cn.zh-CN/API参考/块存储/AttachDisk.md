@@ -6,10 +6,10 @@
 
 调用该接口时，您需要注意：
 
--   待挂载的ECS实例的状态必须为运行中（Running）或者已停止（Stopped）。
--   挂载数据盘时，云盘的状态必须为待挂载（Available）。
+-   待挂载的ECS实例的状态必须为**运行中**（Running）或者**已停止**（Stopped）。
+-   挂载数据盘时，云盘的状态必须为`待挂载`（Available）。
 -   被[安全控制](~~25695~~)的ECS实例的`OperationLocks`不能标记为`"LockReason" : "security"`。
--   即使您在挂载云盘时，将DeleteWithInstance置为false，一旦ECS实例被安全控制，且 OperationLocks中标记了"LockReason" : "security"，释放ECS实例时会忽略云盘的DeleteWithInstance属性而被同时释放。
+-   即使您在挂载云盘时，将`DeleteWithInstance`置为`false`，一旦ECS实例被安全控制，且`OperationLocks`中标记了`"LockReason" : "security"`，释放ECS实例时会忽略云盘的`DeleteWithInstance`属性而被同时释放。
 
 ## 调试 {#api_explorer .section}
 
@@ -34,6 +34,8 @@
 
  |
 |Device|String|否|/dev/xvda|云盘设备名称。
+
+ **说明：** 该参数即将被弃用，为提高兼容性，建议您尽量使用其他参数。
 
  |
 
@@ -93,7 +95,7 @@ https://ecs.aliyuncs.com/?Action=AttachDisk
 |400|IncorrectInstanceStatus|The current status of the resource does not support this operation.|该资源目前的状态不支持此操作。|
 |403|DiskError|IncorrectDiskStatus.|指定的磁盘状态不合法。|
 |403|DiskError|IncorrectDiskStatus|指定的磁盘状态不合法。|
-|500|InternalError|The request processing has failed due to some unknown error.|内部错误，请重试。如果多次尝试失败，请提交工单|
+|500|InternalError|The request processing has failed due to some unknown error.|内部错误，请重试。如果多次尝试失败，请提交工单。|
 |400|InvalidParameter|The input parameter is mandatory for processing this request is empty.|参数不能为空。|
 |403|DiskId.ValueNotSupported|The specified parameter diskid is not supported.|当前磁盘类型不支持此操作|
 |403|DiskId.StatusNotSupported|The specified disk status is not supported.|不支持指定的磁盘状态。|

@@ -74,7 +74,7 @@ gn5优惠活动详情请参见[异构计算GPU实例活动页](https://promotion
 
             **说明：** 如果调用RunInstances接口创建GPU计算型实例，必须通过UserData参数上传安装脚本，脚本内容需要采用Base64方式编码。
 
-            ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9632/156678251839823_zh-CN.png)
+            ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9632/156697181439823_zh-CN.png)
 
         -   镜像市场提供经严格审核的优质镜像，预装操作系统、应用环境和各类软件，无需配置即可一键部署云服务器。目前镜像市场提供了支持深度学习和机器学习的镜像：
             -   如果GPU计算型实例用于深度学习，您可以选择预装深度学习框架的镜像。在镜像市场搜索关键字深度学习并选择可用的镜像，目前仅支持CentOS 7.3。
@@ -94,7 +94,7 @@ gn5优惠活动详情请参见[异构计算GPU实例活动页](https://promotion
     -   **实例自定义数据**：
         -   如果您在基础配置页面的**镜像**中选择了**自动安装GPU驱动**，此处会显示自动安装CUDA和GPU驱动的注意事项和Shell脚本内容。
 
-            ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9632/156678251939825_zh-CN.png)
+            ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9632/156697181439825_zh-CN.png)
 
         -   如果您未选择**自动安装GPU驱动**，可以在**实例自定义数据**处配置安装脚本，脚本示例请参见[自动安装脚本v2.1](#section_bl2_k23_ygb)。
 5.  根据需要完成分组设置并确认订单，完成创建GPU计算型实例。 

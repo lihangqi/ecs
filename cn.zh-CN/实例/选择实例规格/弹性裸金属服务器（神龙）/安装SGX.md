@@ -8,7 +8,7 @@ SGX利用新增的处理器指令，在内存中分配一部分区域 EPC（Encl
 
 实际应用中，您可以把隐私数据加密后以密文形式传递至云上的围圈中，并通过远程证明把对应的秘钥也传入围圈。然后在CPU的加密保护下利用数据进行运算，结果会以密文形式返回给您。这种模式下，您既可以利用云计算强大的计算力，又不用担心数据泄漏。
 
-![安装SGX-SGX架构](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/123390/156689981538658_zh-CN.png)
+![安装SGX-SGX架构](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/123390/156698101838658_zh-CN.png)
 
 EDL（Enclave Definition Language）是SGX编程的核心，其中定义了所有围圈里对外读写、处理数据的函数。在编译阶段，SDK提供的Edger8r 工具会根据EDL中定义的函数生成围圈和普通内存的桥接函数，并做相应的安全检测。
 

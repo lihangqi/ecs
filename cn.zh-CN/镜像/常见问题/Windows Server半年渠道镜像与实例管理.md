@@ -19,20 +19,20 @@ Windows Server半年渠道实例不再包含资源管理器、控制面板、Win
 
 PowerShell依赖于.NET Framework实现了强大的面向对象的脚本，可以做到SSH功能一样远程管理Windows实例。我们假设您的实例公网IP为172.16.1XX.183，您可以按以下步骤实现PowerShell远程管理。
 
-1.  远程连接Windows实例。详情请参见[在本地客户端上连接Windows实例](../../../../../cn.zh-CN/实例/连接实例/连接Windows实例/在本地客户端上连接Windows实例.md#)。
+1.  远程连接Windows实例。具体操作，请参见[在本地客户端上连接Windows实例](../../../../cn.zh-CN/实例/连接实例/连接Windows实例/在本地客户端上连接Windows实例.md#)。
 2.  在命令行里输入`PowerShell`打开PowerShell。
 3.  在实例PowerShell中运行以下命令：
 
-    ```
+    ``` {#codeblock_0xi_hdb_dar}
     Enable-PSRemoting -Force
     Set-NetFirewallRule -Name "WINRM-HTTP-In-TCP-PUBLIC" -RemoteAddress Any
     ```
 
-4.  在实例所在安全组中添加规则放行HTTP 5985端口和HTTPS 5986端口。详情请参见[添加安全组规则](../../../../../cn.zh-CN/安全/安全组/添加安全组规则.md#)。
+4.  在实例所在安全组中添加规则放行HTTP 5985端口和HTTPS 5986端口。添加安全组规则的具体操作，请参见[添加安全组规则](../../../../cn.zh-CN/安全/安全组/添加安全组规则.md#)。
 5.  在客户端计算机命令行里输入`PowerShell`打开PowerShell。
 6.  在客户端PowerShell中运行以下命令：
 
-    ```
+    ``` {#codeblock_ug6_p6j_ydw}
     Set-Item WSMan:localhost\client\trustedhosts -value 172.16.1XX.183 -Force
     ```
 
@@ -46,43 +46,43 @@ PowerShell依赖于.NET Framework实现了强大的面向对象的脚本，可�
 
 Windows Admin Center是一个基于浏览器的图形管理工具，可以在Server Core运行环境中取代服务器管理和MMC。我们假设您的实例公网IP为172.16.1XX.183，您可以按以下任一方法安装Windows Admin Center。
 
--   **通过命令行安装Windows Admin Center**
-    1.  远程连接Windows实例。详情请参见[在本地客户端上连接Windows实例](../../../../../cn.zh-CN/实例/连接实例/连接Windows实例/在本地客户端上连接Windows实例.md#)。
-    2.  在实例所在安全组中添加规则放行HTTP 5985端口和HTTPS 5986端口。详情请参见[添加安全组规则](../../../../../cn.zh-CN/安全/安全组/添加安全组规则.md#)。
+-   **通过命令行安装Windows Admin Center** 
+    1.  远程连接Windows实例。详情请参见[在本地客户端上连接Windows实例](../../../../cn.zh-CN/实例/连接实例/连接Windows实例/在本地客户端上连接Windows实例.md#)。
+    2.  在实例所在安全组中添加规则放行HTTP 5985端口和HTTPS 5986端口。详情请参见[添加安全组规则](../../../../cn.zh-CN/安全/安全组/添加安全组规则.md#)。
     3.  在命令行里输入`PowerShell`打开PowerShell。
-    4.  在实例PowerShell中运行以下命令：
+    4.  在实例PowerShell中运行以下命令。
 
-        ```
+        ``` {#codeblock_tcc_kho_qzv}
         Enable-PSRemoting -Force
         Set-NetFirewallRule -Name "WINRM-HTTP-In-TCP-PUBLIC" -RemoteAddress Any
         ```
 
     5.  运行以下命令下载Windows Admin Center。
 
-        ```
+        ``` {#codeblock_ktb_vdd_o3s}
         wget -Uri http://download.microsoft.com/download/E/8/A/E8A26016-25A4-49EE-8200-E4BCBF292C4A/HonoluluTechnicalPreview1802.msi -UseBasicParsing -OutFile c:\HonoluluTechnicalPreview1802.msi
         msiexec /i c:\HonoluluTechnicalPreview1802.msi /qn /L*v log.txt SME_PORT=443 SSL_CERTIFICATE_OPTION=generate
         ```
 
     6.  运行`cat log.txt`命令查看下载进度，当日志文件出现下列信息，说明Windows Admin Center已经成功安装。
 
-        ```
+        ``` {#codeblock_rxn_gxu_e90}
         MSI (s) (14:44) [09:48:37:885]: Product: Project 'Honolulu'(技术预览版) -- Installation completed successfully. 
         MSI (s) (14:44) [09:48:37:885]: Windows Installer 已安装产品。产品名称: Project 'Honolulu'(技术预览版)。产品版本: 1.1.10326.0。产品语言: 1033。制造商: Microsoft Corporation。安装成功或错误状态: 0。
         ```
 
--   **通过浏览器安装Windows Admin Center**
+-   **通过浏览器安装Windows Admin Center** 
 
     **前提条件**
 
-    通过浏览器安装Windows Admin Center需要在客户端计算中完成，请确保您已经通过配置PowerShell管理实例。更多详情，请参见[PowerShell 远程管理](#section_et5_g14_hhb)。
+    通过浏览器安装Windows Admin Center需要在客户端计算机中完成，请确保您已经通过配置PowerShell管理实例。更多详情，请参见[PowerShell 远程管理](#section_et5_g14_hhb)。
 
     **操作步骤**
 
     1.  [下载](https://docs.microsoft.com/windows-server/manage/windows-admin-center/understand/windows-admin-center)并安装Windows Admin Center。
     2.  完成安装后，打开[https://localhost/](https://localhost/?spm=a2c4g.11186623.2.32.3da666b5wlBkBq)。
     3.  单击**添加**，在弹窗中添加实例的IP地址。
-    现在，您可以通过Microsoft Edge或者Chrome使用Windows Admin Center的客户端计算机管理实例。
+    现在，您可以通过Microsoft Edge或者Chrome使用Windows Admin Center管理实例。
 
 
 ## 常见问题 {#section_lpv_hg4_hhb .section}
@@ -92,7 +92,7 @@ Windows Admin Center是一个基于浏览器的图形管理工具，可以在Ser
 假设需要复制的文件在您的客户端计算机上，并且您已经配置了PowerShell远程管理或者已安装Windows Admin Center。
 
 -   通过RDP应用
-    1.  远程连接Windows实例。详情请参见[在本地客户端上连接Windows实例](../../../../../cn.zh-CN/实例/连接实例/连接Windows实例/在本地客户端上连接Windows实例.md#)。
+    1.  远程连接Windows实例。详情请参见[在本地客户端上连接Windows实例](../../../../cn.zh-CN/实例/连接实例/连接Windows实例/在本地客户端上连接Windows实例.md#)。
     2.  在客户端计算机上，复制目标文件。
     3.  在实例CMD环境中输入`notepad`。
     4.  单击**文件** \> **打开**，在打开对话框里，选择文件要复制的目标目录，右键单击选择**粘贴**。
@@ -102,7 +102,7 @@ Windows Admin Center是一个基于浏览器的图形管理工具，可以在Ser
     3.  通过PowerShell远程管理目标实例。详情请参见[PowerShell远程管理](#section_et5_g14_hhb)。
     4.  在客户端计算机上运行以下命令：
 
-        ```
+        ``` {#codeblock_icl_w9f_4of}
         $session = New-PSSession -ComputerName 172.16.1XX.183
         Copy-Item -ToSession $session -Path C:\1.txt -Destination c:\2.txt
         ```
@@ -117,14 +117,14 @@ Windows Admin Center是一个基于浏览器的图形管理工具，可以在Ser
 **如何从内部关闭或者重启Windows Server半年渠道实例？**
 
 -   通过RDP应用
-    1.  远程连接Windows实例。详情请参见[在本地客户端上连接Windows实例](../../../../../cn.zh-CN/实例/连接实例/连接Windows实例/在本地客户端上连接Windows实例.md#)。
+    1.  远程连接Windows实例。详情请参见[在本地客户端上连接Windows实例](../../../../cn.zh-CN/实例/连接实例/连接Windows实例/在本地客户端上连接Windows实例.md#)。
     2.  在CMD中输入`sconfig`，根据需要选择`13`重启实例或者`14`停止实例并回车。
 -   通过PowerShell
-    1.  远程连接Windows实例。详情请参见[在本地客户端上连接Windows实例](../../../../../cn.zh-CN/实例/连接实例/连接Windows实例/在本地客户端上连接Windows实例.md#)。
+    1.  远程连接Windows实例。详情请参见[在本地客户端上连接Windows实例](../../../../cn.zh-CN/实例/连接实例/连接Windows实例/在本地客户端上连接Windows实例.md#)。
     2.  在CMD中输入`PowerShell`进入PowerShell。
     3.  选择并输入以下命令行重启或者停止实例。
 
-        ```
+        ``` {#codeblock_hyt_9ea_q9i}
         shutdown -r -t 00 ::命令行 在0秒后重启
         shutdown -s -t 00 ::命令行 在0秒后关机
         Stop-Computer -Force # Powershell 立即关机
@@ -137,7 +137,7 @@ Windows Admin Center是一个基于浏览器的图形管理工具，可以在Ser
     3.  通过PowerShell远程管理目标实例。详情请参见[PowerShell远程管理](#section_et5_g14_hhb)。
     4.  在客户端计算机上选择性运行以下PowerShell命令：
 
-        ```
+        ``` {#codeblock_z30_kig_tl7}
         Enter-PsSession –ComputerName 172.16.1XX.183
         Restart-Computer -Force #重启
         Stop-Computer -Force #关机
@@ -152,11 +152,11 @@ Windows Admin Center是一个基于浏览器的图形管理工具，可以在Ser
 
 -   通过RDP应用
 
-    1.  远程连接Windows实例。详情请参见[在本地客户端上连接Windows实例](../../../../../cn.zh-CN/实例/连接实例/连接Windows实例/在本地客户端上连接Windows实例.md#)。
+    1.  远程连接Windows实例。详情请参见[在本地客户端上连接Windows实例](../../../../cn.zh-CN/实例/连接实例/连接Windows实例/在本地客户端上连接Windows实例.md#)。
     2.  在CMD中输入`PowerShell`进入PowerShell。
     3.  运行以下命令安装IIS：
 
-        ```
+        ``` {#codeblock_8oh_6qh_qcz}
         Import-Module ServerManager
         Add-WindowsFeature Web-Server, Web-CGI, Web-Mgmt-Console
         ```
@@ -168,7 +168,7 @@ Windows Admin Center是一个基于浏览器的图形管理工具，可以在Ser
     3.  通过PowerShell远程管理目标实例，详情请参见[PowerShell远程管理](#section_et5_g14_hhb)。
     4.  在客户端计算机上运行以下PowerShell命令：
 
-        ```
+        ``` {#codeblock_b8x_y20_23g}
         Enter-PsSession –ComputerName 172.16.1XX.183
         Import-Module ServerManager
         Add-WindowsFeature Web-Server, Web-CGI, Web-Mgmt-Console

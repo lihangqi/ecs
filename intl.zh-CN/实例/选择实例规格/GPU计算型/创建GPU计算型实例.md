@@ -72,14 +72,10 @@ GPU计算型实例必须安装GPU驱动才可以使用。您可以在创建实�
 
             **说明：** 如果调用RunInstances接口创建GPU计算型实例，必须通过UserData参数上传安装脚本，脚本内容需要采用Base64方式编码。
 
-            ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9632/156679892639823_zh-CN.png)
+            ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9632/156697232539823_zh-CN.png)
 
         -   镜像市场提供经严格审核的优质镜像，预装操作系统、应用环境和各类软件，无需配置即可一键部署云服务器。目前镜像市场提供了支持深度学习和机器学习的镜像：
             -   如果GPU计算型实例用于深度学习，您可以选择预装深度学习框架的镜像。在镜像市场搜索关键字深度学习并选择可用的镜像，目前仅支持CentOS 7.3。
-            -   如果GPU计算型实例用于机器学习，您可以选择预装RAPIDS加速库的镜像，在镜像市场搜索关键字RAPIDS并选择可用的镜像。目前仅支持Ubuntu16.04。更多信息，请参见[在GPU实例上使用RAPIDS加速图像搜索任务](../../../../intl.zh-CN/最佳实践/GPU实例最佳实践/在GPU实例上使用RAPIDS加速图像搜索任务.md#)。
-
-                **说明：** 镜像中预装了NVIDIA RAPIDS机器学习加速库以及TensorFlow、Keras开源深度学习框架，您可以快速使用RAPIDS加速数据准备、机器学习和图像分析任务，并结合深度学习框架进行深度学习训练和推理。
-
             -   NVIDIA GPU Cloud VM Image（虚拟机镜像）是运行针对NVIDIA GPU优化的深度学习框架和HPC应用程序容器的优化环境。gn5、gn5i、gn6v、gn6i均支持NGC，更多信息，请参见[在gn5实例上部署NGC环境](../../../../intl.zh-CN/最佳实践/GPU实例最佳实践/在gn5实例上部署NGC环境.md#)。
 3.  完成网络和安全组配置。在选择配置时，请注意： 
     -   **网络**：选择**专有网络**。
@@ -92,7 +88,7 @@ GPU计算型实例必须安装GPU驱动才可以使用。您可以在创建实�
     -   **实例自定义数据**：
         -   如果您在基础配置页面的**镜像**中选择了**自动安装GPU驱动**，此处会显示自动安装CUDA和GPU驱动的注意事项和Shell脚本内容。
 
-            ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9632/156679892739825_zh-CN.png)
+            ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9632/156697232639825_zh-CN.png)
 
         -   如果您未选择**自动安装GPU驱动**，可以在**实例自定义数据**处配置安装脚本，脚本示例请参见[自动安装脚本v2.1](#section_bl2_k23_ygb)。
 5.  根据需要完成分组设置并确认订单，完成创建GPU计算型实例。 
