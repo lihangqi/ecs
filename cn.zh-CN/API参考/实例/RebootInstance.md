@@ -1,6 +1,6 @@
 # RebootInstance {#doc_api_Ecs_RebootInstance .reference}
 
-当一台ECS实例处于已停止（Stopped）状态时，调用RebootInstance可以重启这台实例。
+当一台ECS实例处于运行中（Running）状态时，调用RebootInstance可以重启这台实例。
 
 ## 接口说明 {#description .section}
 

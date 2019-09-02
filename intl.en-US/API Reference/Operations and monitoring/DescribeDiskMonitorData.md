@@ -67,10 +67,10 @@ You can use [API Explorer](https://api.aliyun.com/#product=Ecs&api=DescribeDiskM
 |└ IOPSWrite|Integer|0| The system disk write I/O operations. Unit: times/s.
 
  |
-|└LatencyRead|Integer|0| The read latency of the disk. Unit: Byte/s.
+|└LatencyRead|Integer|0| The read latency of the disk. Unit: μs.
 
  |
-|└LatencyWrite|Integer|0| The write latency of the disk. Unit: Byte/s.
+|└LatencyWrite|Integer|0| The write latency of the disk. Unit: μs.
 
  |
 |└TimeStamp|String|2014-07-23T12:07:00Z| The time of the data query. The time format follows the [ISO 8601](~~25696~~) standard and uses UTC time. The format is yyyy-MM-ddTHH:mm:ssZ.

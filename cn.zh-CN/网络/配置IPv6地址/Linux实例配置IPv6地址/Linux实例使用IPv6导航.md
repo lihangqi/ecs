@@ -2,13 +2,13 @@
 
 本文介绍了如何为Linux系统的ECS实例使用和配置IPv6的大致流程，供您参考。
 
-ECS实例的网络类型必须是专有网络VPC。在分配IPv6地址前，请先了解[IPv6地址](cn.zh-CN/网络/实例IP地址介绍/IPv6地址.md#)。
+ECS实例的网络类型必须是专有网络VPC。在分配IPv6地址前，请先了解IPv6地址。详情请参见[IPv6地址](cn.zh-CN/网络/实例IP地址介绍/IPv6地址.md#)。
 
 ## 使用导航 {#section_jep_xe1_529 .section}
 
 使用IPv6的流程图如下所示：
 
-![使用IPv6的流程图](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/82533/156585026235066_zh-CN.png)
+![使用IPv6的流程图](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/82533/156706735935066_zh-CN.png)
 
 使用IPv6的步骤如下所示：
 

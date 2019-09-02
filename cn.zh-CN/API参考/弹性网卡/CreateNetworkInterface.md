@@ -1,6 +1,6 @@
 # CreateNetworkInterface {#doc_api_Ecs_CreateNetworkInterface .reference}
 
-创建一个弹性网卡（ENI）。
+调用CreateNetworkInterface创建一个弹性网卡（ENI）。
 
 ## 接口说明 {#description .section}
 
@@ -10,9 +10,9 @@
 -   弹性网卡重新附加到另一台实例时，其属性不变，网络流量也会重定向到新的实例。
 -   一个账号在一个阿里云地域内默认最多可创建100个弹性网卡。如果需要更多，请 [提交工单](https://selfservice.console.aliyun.com/ticket/createIndex.htm) 申请。
 
-## 调试 {#apiExplorer .section}
+## 调试 {#api_explorer .section}
 
-前往【[API Explorer](https://api.aliyun.com/#product=Ecs&api=CreateNetworkInterface)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ecs&api=CreateNetworkInterface&type=RPC&version=2014-05-26)
 
 ## 请求参数 {#parameters .section}
 
@@ -30,7 +30,7 @@
 |Action|String|否|CreateNetworkInterface|系统规定参数。取值：CreateNetworkInterface
 
  |
-|ClientToken|String|否|123e4567-e89b-12d3-a456-426655440000|保证请求幂等性。从您的客户端生成一个参数值，确保不同请求间该参数值唯一。只支持ASCII字符，且不能超过64个字符。更多详情，请参阅 [如何保证幂等性](~~25693~~)。
+|ClientToken|String|否|123e4567-e89b-12d3-a456-426655440000|保证请求幂等性。从您的客户端生成一个参数值，确保不同请求间该参数值唯一。**ClientToken**只支持ASCII字符，且不能超过64个字符。更多详情，请参见[如何保证幂等性](~~25693~~)。
 
  |
 |Description|String|否|test|弹性网卡的描述信息。长度为2~256个英文或中文字符，不能以 http:// 和 https:// 开头。
@@ -43,7 +43,7 @@
  默认值：空。
 
  |
-|PrimaryIpAddress|String|否|172.17.XX.XXX|弹性网卡的主私有IP地址。指定IP必须是在所属交换机的地址段内的空闲地址，不指定则默认随机分配该交换机中的空闲地址。
+|PrimaryIpAddress|String|否|172.17.\*\*.\*\*\*|弹性网卡的主私有IP地址。指定IP必须是在所属交换机的地址段内的空闲地址，不指定则默认随机分配该交换机中的空闲地址。
 
  |
 |ResourceGroupId|String|否|rg-resourcegroupid1|资源组ID。
@@ -56,7 +56,7 @@
 
  |
 
-## 返回参数 {#resultMapping .section}
+## 返回数据 {#resultMapping .section}
 
 |名称|类型|示例值|描述|
 |--|--|---|--|
@@ -74,12 +74,12 @@
 ``` {#request_demo}
 https://ecs.aliyuncs.com/?Action=CreateNetworkInterface
 &RegionId=cn-hangzhou
-&SecurityGroupId=sg-c0003exxxxx
+&SecurityGroupId=sg-c0003e*****
 &VSwitchId=[vswitchid]
 &Tag.1.Key=test
 &Tag.1.Value=api
 &ResourceGroupId=rg-resourcegroupid1
-&PrimaryIpAddress=172.17.XX.XXX
+&PrimaryIpAddress=172.17.**.***
 &NetworkInterfaceName=eni-eniname1
 &Description=test
 &ClientToken=xxxxx
@@ -92,10 +92,9 @@ https://ecs.aliyuncs.com/?Action=CreateNetworkInterface
 
 ``` {#xml_return_success_demo}
 <CreateNetworkInterfaceResponse>
-  <RequestId>04F0F334-1335-436C-A1D7-6C044FExxxxx</RequestId>
-  <NetworkInterfaceId>eni-eniIxxxxx</NetworkInterfaceId>
+      <RequestId>04F0F334-1335-436C-A1D7-6C044FExxxxx</RequestId>
+      <NetworkInterfaceId>eni-eniIxxxxx</NetworkInterfaceId>
 </CreateNetworkInterfaceResponse>
-
 ```
 
 `JSON` 格式
@@ -124,7 +123,7 @@ https://ecs.aliyuncs.com/?Action=CreateNetworkInterface
 |400|InvalidOperation.DetachPrimaryEniNotAllowed|%s|不允许分离主网卡。|
 |404|InvalidEcsId.NotFound|%s|指定的实例ID不存在。|
 |404|InvalidEniId.NotFound|%s|指定的网卡ID不存在。|
-|404|InvalidVSwitchId.NotFound|%s|指定的交换机ID。|
+|404|InvalidVSwitchId.NotFound|%s|指定的交换机ID不存在。|
 |404|InvalidSecurityGroupId.NotFound|%s|指定的安全组ID不存在。|
 |403|EniPerInstanceLimitExceeded|%s|弹性网卡的数量超过了指定实例类型允许的最大值。|
 |403|InvalidOperation.AvailabilityZoneMismatch|%s|指定的VPC交换机ID、弹性网卡和实例ID不在同一个可用区。|
@@ -134,7 +133,7 @@ https://ecs.aliyuncs.com/?Action=CreateNetworkInterface
 |403|InvalidOperation.InvalidEniType|%s|当前弹性网卡类型不支持该操作。|
 |403|InvalidVSwitchId.IpNotEnough|%s|指定的交换机内ip数量不足。|
 |403|InvalidVSwitchId.IpInvalid|%s|指定的私网ip不合法。|
-|400|Forbidden.RegionId|%s|前区域暂不支持此功能。|
+|400|Forbidden.RegionId|%s|当前区域暂不支持此功能。|
 
-[查看本产品错误码](https://error-center.aliyun.com/status/product/Ecs)
+访问[错误中心](https://error-center.aliyun.com/status/product/Ecs)查看更多错误码。
 

@@ -49,10 +49,10 @@ gn6i的特点如下：
 -   基于X-Dragon神龙新一代计算架构，性能更优
 -   GPU加速器：T4
     -   创新的Turing架构
-    -   多达320个Turing Tensorcore
-    -   2560个CUDA Cores
+    -   单GPU显存16 GB（GPU显存带宽320 GB/s）
+    -   单GPU 2560个CUDA Cores
+    -   单GPU多达320个Turing Tensor Cores
     -   可变精度Tensor Cores支持65 TFlops FP16、130 INT8 TOPS、260 INT4 TOPS
-    -   GPU显存16 GB（GPU显存带宽320 GB/s）
 -   实例网络性能与计算规格对应（规格越高网络性能越强）
 -   适用场景：
     -   AI（DL/ML）推理，适合计算机视觉、语音识别、语音合成、NLP、机器翻译、推荐系统
@@ -90,10 +90,9 @@ gn6v的特点如下：
 -   处理器：2.5 GHz主频的Intel ® Xeon ® Platinum 8163（Skylake）
 -   GPU加速器：V100（SXM2封装）
     -   创新的Volta架构
-    -   GPU显存16 GB HBM2
-    -   CUDA Cores 5120
-    -   Tensor Cores 640
-    -   GPU显存带宽900 GB/s
+    -   单GPU显存16 GB HBM2（GPU显存带宽900 GB/s）
+    -   单GPU 5120个CUDA Cores
+    -   单GPU 640个Tensor Cores
     -   支持6个NVLink链路，每个25 GB/s，总共300 GB/s
 -   实例网络性能与计算规格对应（规格越高网络性能越强）
 -   适用场景：

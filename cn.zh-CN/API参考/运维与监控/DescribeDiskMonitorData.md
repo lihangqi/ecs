@@ -7,7 +7,8 @@
 调用该接口时，您需要注意：
 
 -   只能查询状态为使用中（In\_Use）的云盘使用信息。更多详情，请参见[普通云盘状态表](~~25689~~)。
--   一次最多返回400条数据，即指定的（EndTime–StartTime）/Peroid需要小于等于400。
+-   一次最多返回400条数据，即指定的（EndTime–StartTime）/Peroid不能超过400。
+-   一次最多能查询近30天内的监控信息，即指定的参数`StartTime`不能超过30天。
 
 ## 调试 {#api_explorer .section}
 
@@ -197,5 +198,5 @@ https://ecs.aliyuncs.com/?Action=DescribeDiskMonitorData
 |400|InvalidParameter.EndTime|The specified parameter EndTime is earlier than StartTime.|结束时间不得早于开始时间。|
 |500|InternalError|The request processing has failed due to some unknown error, exception or failure.|发生未知错误。|
 
-访问[错误中心](https://error-center.aliyun.com/status/product/Ecs)查看更多错误码。
+访问[错误中心](https://error-center.alibabacloud.com/status/product/Ecs)查看更多错误码。
 

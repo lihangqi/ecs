@@ -1,183 +1,168 @@
 # 搭建Joomla基础管理平台 {#concept_an2_t25_2fb .concept}
 
-Joomla是一套知名的内容管理系统。Joomla是使用PHP语言加上Mysql数据开发的软件系统，Joomla的最新版本是3.x，这一版本实现了许多技术上的优化调整，是目前的稳定版本。
-
-本文主要说明如何在阿里云ECS上搭建Joomla基础管理平台。使用的操作系统为Linux CentOS 6.5 64位。
+Joomla是一套知名的内容管理系统。Joomla是使用PHP语言和MySQL数据库所开发的软件系统，Joomla的最新版本是3.x，这一版本实现了许多技术上的优化，是目前的稳定版本。本教程主要介绍如何在阿里云服务器ECS上搭建Joomla基础管理平台。
 
 ## 适用对象 {#section_ftm_bg5_2fb .section}
 
-适用于熟悉 ECS，熟悉 Linux 系统， ECS 实例搭建刚开始使用阿里云进行建站的用户。
+适用于熟悉ECS、熟悉Linux系统， 刚开始使用阿里云ECS实例进行建站的用户。
+
+## 前提条件 {#section_mu3_b03_8c5 .section}
+
+使用本教程进行操作前，请确保您已经注册了阿里云账号。如还未注册，请先完成[账号注册](https://account.aliyun.com/register/register.htm?)。
+
+## 项目配置 {#section_9dd_7d8_ud2 .section}
+
+本教程示例步骤中使用的操作系统为CentOS 6.5 64位。
 
 ## 基本流程 {#section_gtq_cg5_2fb .section}
 
-使用云服务器 ECS 搭建 Joomla 平台的操作步骤如下：
+购买ECS实例，如果需要备案网站，计费方式请选择包年包月。对于个人使用的小型网站，一台云服务器ECS实例可以满足需求。
 
-购买 ECS 实例，如果需要备案网站，请选择包年包月付费模式。对于个人使用的小型网站，一台云服务器 ECS 实例可以满足需求。
+如果您已有包含Joomla环境的自定义镜像，可以使用该镜像创建实例。本节只介绍在新购ECS实例上使用云市场镜像搭建Joomla平台的操作步骤。
 
-这里只介绍新购实例。如果您有镜像，可以使用自定义镜像创建实例。
+**说明：** 本教程示例步骤中使用的云市场Joomla镜像，目前仅支持CentOS、Ubuntu和Aliyun Linux。
 
-**说明：** 这个文档中描述的实例将结合 云市场 的 joomla 镜像 使用，而这个产品目前仅支持 CentOS、Ubuntu 和 Aliyun Linux。
+ **操作步骤** 
 
-**操作步骤**
+1.  登录[ECS管理控制台](https://ecs.console.aliyun.com)。
+2.  在左侧导航栏，选择**实例与镜像** \> **实例**。
+3.  在实例列表页面，单击**创建实例**。
+4.  在自定义购买页面，完成以下配置。
+    1.  选择**计费方式**。如果您需要备案网站，请选择**包年包月**。
 
-1.  登录 [云服务器管理控制台](https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fecs.console.aliyun.com%2F#/home)。如果尚未注册，单击 **免费注册**。
-2.  选择 **云服务器ECS** \> **实例**。单击 **创建实例**。
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172712405_zh-CN.png)
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813612404_zh-CN.png)
+    2.  选择**地域**。地域是指实例所在的地理位置。您可以根据所在的地理位置选择地域。地域与用户距离越近，延迟相对越少，下载速度相对越快。
 
-3.  选择付费方式：包年包月或按量付费。因为目前只有包年包月的 ECS 可以备案，如果您需要备案网站，请选择 **包年包月**。
+        例如，如果您的网站访问者都分布在北京地区，则可以选择**华北 2（北京）**。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813612405_zh-CN.png)
+        **说明：** 
 
-4.  选择地域。所谓地域，是指实例所在的地理位置。您可以根据所在的地理位置选择地域。地域与用户距离越近，延迟相对越少，下载速度相对越快。
+        -   实例创建完成后，不支持更换地域。
+        -   不同地域提供的可用区数量、实例系列、存储类型、实例价格等也会有所差异。请根据您的业务需求进行选择。
+    3.  选择**实例**，根据您网站的访问量选择实例规格（vCPU、内存），设置**购买实例数量**。对于个人网站，1vCPU 2GiB或2vCPU 4GiB一般能够满足需求。实例规格详情，请参见[实例规格族](../cn.zh-CN/实例/实例规格族.md#)。
 
-    例如，如果您的网站访问者都分布在北京地区，则可以选择 华北 2。
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172712407_zh-CN.png)
 
-    **说明：** 
+    4.  选择**镜像**。单击**镜像市场**，然后单击**从镜像市场获取更多选择（含操作系统）**。在镜像市场对话框，搜索[Joomla!建站系统](https://market.aliyun.com/products/53616009/jxsc000035.html?spm=5176.730005.0.0.AoD4Vi)，然后单击**使用**。
 
-    -   实例创建完成后，不支持更换地域。
-    -   不同地域提供的可用区数量、实例系列、存储类型、实例价格等也会有所差异。请根据您的业务需求进行选择。
-5.  选择网络类型。对于建站的用户，选择 **经典网络** 即可。然后选择安全组。
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172712410_zh-CN.png)
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813612406_zh-CN.png)
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172712411_zh-CN.png)
 
-6.  选择实例，根据您网站的访问量选择实例规格（CPU、内存）。对于个人网站，1 核 2GB 或 2 核 4GB 一般能够满足需求。关于实例规格的详细介绍，请参考实例规格族。实例系列 II 是实例系列 I 的升级版，提供更高的性能，推荐使用。
+    5.  选择**系统盘**和**数据盘**。您可以创建全新的磁盘作为数据盘，也可以选择**用快照创建磁盘**，将快照的数据直接复制到磁盘中作为数据盘。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813612407_zh-CN.png)
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172712412_zh-CN.png)
 
-7.  选择网络带宽。因为创建的实例需要访问公网，如果选择 0 Mbps，则不分配公网 IP，实例将无法访问公网，所以，无论是 按固定带宽 还是 按使用流量 付费，带宽都不能选择 0 Mbps。
-    -   按固定带宽付费。
+    6.  选择网络类型。对于建站的用户，选择**专有网络**，然后选择专有网络VPC、交换机。
 
-        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813612408_zh-CN.png)
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172758090_zh-CN.png)
 
-    -   按使用流量付费。
+    7.  选择**公网带宽**。因为创建的实例需要访问公网，选中**分配公网IPv4地址**，否则不分配公网IP，您需要绑定弹性公网IP地址。
 
-        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813612409_zh-CN.png)
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172758094_zh-CN.png)
 
-8.  选择镜像。您可以在镜像里面点击镜像市场，再点击从镜像市场选择，搜索 [Joomla!建站系统](https://market.aliyun.com/products/53616009/jxsc000035.html?spm=5176.730005.0.0.AoD4Vi)，然后点击使用就可以使用镜像。
+    8.  选择**安全组**。
+    9.  设置实例的**登录凭证**。如果使用自定义密码，请务必牢记密码。您也可以在创建完成后再设置密码。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813712410_zh-CN.png)
+        ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172712413_zh-CN.png)
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813712411_zh-CN.png)
+    10. 设置**购买时长**。
+5.  单击**确认下单**。
+6.  确认订单信息无误后，单击**确认支付**。
 
-9.  选择 **系统盘** 和 **数据盘**。您可以创建全新的磁盘作为数据盘，也可以选择 **用快照创建磁盘**，将快照的数据直接复制到磁盘中作为数据盘。
+## 部署Web环境 {#section_nwl_cd1_ffb .section}
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813712412_zh-CN.png)
+如果您已购买ECS实例，可以通过更换系统盘的方式，来更换所需要的镜像。本节选择PHP运行环境镜像（CentOS 64 位 | PHP 5.4|Nginx 1.4|Joomla）。镜像说明如下：
 
-10. 设置实例的登录密码和实例名称。请务必牢记密码。您也可以在创建完成后再设置密码。
+-   镜像版本说明操作系统：CentOS 6.5 64 位。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813712413_zh-CN.png)
+    镜像版本V1.0软件明细：Nginx1.4.7、PHP 5.4.27、MySQL5.5.37、FTP2.2.2、Joomla!3.3.3 1.2和镜像安装说明。
 
-11. 设置购买的时长和数量。
-12. 单击页面右侧价格下面的 **立即购买**。
-13. 确认订单并付款。
+-   镜像环境里相应软件的安装，是基于阿里云Linux版的一键安装包源码1.3.0版本，在此基础上修改、优化了相应功能，编译安装完成。
+-   在镜像环境中，/root/sh-1.3.0-centos-joomla.zip是安装镜像环境的脚本。您可以在CentOS 6.5系统中自行采用此脚本安装，安装后的环境跟镜像里初始化的环境一致。
 
-实例创建好之后，您会收到短信和邮件通知，告知您的实例名称、公网 IP 地址、内网 IP 地址等信息。您可以使用这些信息登录和管理实例。
+    **说明：** 如果使用此脚本安装镜像环境，需要运行chmod 777 -R sh-1.3.0-centos-joomla命令为脚本赋予777安装权限。
 
-很多重要的信息都是通过绑定手机的短信接收，并且重要的操作（如重启、停止等）都需要手机接收验证码，因此请务必保持绑定手机通信畅通。
+-   在镜像环境中出于安全考虑，Joomla默认设置页面只容许127.0.0.1访问，/root/目录下提供一个joomla\_opennet.sh的脚本 。用户运行此脚本后，可以通过外网访问Joomla的默认设置页面。
+-   在镜像环境中，/root/sh-1.3.0-centos-joomla是安装环境的主目录，镜像中的环境是在此目录下编译安装的。
 
-## 部署 Web 环境 {#section_nwl_cd1_ffb .section}
+## MySQL以及FTP密码 {#section_bqx_pd1_ffb .section}
 
-通过 ECS 更换系统盘，来更换所需要的镜像，这里选择 php 运行环境（centos 64 位 | php5.4|nginx1.4|joomla）。
+查看、修改密码的步骤如下：
 
--   镜像版本说明操作系统：centos 6.5 64 位。
+1.  密码存储位置： /alidata/account.log文件中。
+2.  进入服务器的系统后，可以在任意目录下，运行以下命令查看密码。
 
-    镜像版本 V1.0 软件明细：Nginx1.4.7-PHP 5.4.27-MySQL5.5.37-FTP2.2.2- Joomla!3.3.3 1.2、镜像安装说明。
-
--   镜像环境里相应软件的安装，是基于阿里云 linux 版的一键安装包源码 1.3.0 版本，在此基础上修改、优化了相应功能，编译安装完成。
--   在镜像环境中，/root/sh-1.3.0-centos-joomla.zip 是安装镜像环境的脚本。您可以在 centos 6.5 系统中自行采用此脚本安装，安装后的环境跟镜像里初始化的环境一致。
-
-    **说明：** 如果采用此脚本安装镜像环境，需要 chmod 777 -R sh-1.3.0-centos-joomla 赋予 777 安装权限。
-
--   在镜像环境中出于安全考虑，joomla 默认设置页面只容许 127.0.0.1 访问，/root/目录下提供一个 joomla\_opennet.sh 的脚本 。用户运行此脚本后，可以通过外网访问 joomla 的默认设置页面。
--   在镜像环境中，/root/sh-1.3.0-centos-joomla 是安装环境的主目录，镜像中的环境是在此目录下编译安装的。
-
-## mysql 以及 ftp 的密码 {#section_bqx_pd1_ffb .section}
-
-1.  密码存储位置： /alidata/account.log 文件中。
-2.  查看密码.
-
-    ```
-    进入服务器的系统中，可以在任意的目录下，执行以下命令
+    ``` {#codeblock_b98_c29_oqu}
     cat /alidata/account.log
     ```
 
-    **说明：** cat 后有空格。
+3.  使用root用户登录系统后，运行以下命令修改FTP密码。
 
-3.  修改 ftp 的密码。
-
-    用 root 用户登录系统，然后执行下面命令。
-
-    ```
-    passwd www 然后输入您的 ftp 新密码。
+    ``` {#codeblock_fxk_bbl_xnt}
+    passwd www 
     ```
 
-4.  修改 mysql 的密码。
+4.  运行以下命令修改MySQL的密码。
 
+    ``` {#codeblock_31z_6cw_0g9}
+    mysqladmin -uroot -p旧密码 password 新密码
     ```
-    mysqladmin -uroot -p 旧密码 password 新密码
-    ```
 
-    **说明：** -p 和旧密码之间没有空格，password 和新密码之间有空格。
+    **说明：** -p和旧密码之间没有空格，password和新密码之间有空格。
 
 
-## 软件目录及配置列表 {#section_j3c_yd1_ffb .section}
+## 软件目录说明及命令汇总 {#section_j3c_yd1_ffb .section}
 
-软件的主目录：/alidata
+软件主目录及配置主目录：
 
-web 主目录：/alidata/www
-
-ftp 主目录：/alidata/www
-
-nginx 主目录：/alidata/server/nginx
-
-nginx 配置文件主目录：/alidata/server/nginx/conf
-
-php 主目录：/alidata/ server/php
-
-php 配置文件主目录：/alidata/ server/php/etc
-
-mysql 主目录：/alidata/server/mysql
-
-mysql 配置文件：/etc/my.cnf
-
-joomla 中文支持包存放目录：/alidata/res
+-   软件的主目录：/alidata
+-   Web主目录：/alidata/www
+-   FTP主目录：/alidata/www
+-   Nginx主目录：/alidata/server/nginx
+-   Nginx配置文件主目录：/alidata/server/nginx/conf
+-   PHP主目录：/alidata/ server/php
+-   PHP配置文件主目录：/alidata/ server/php/etc
+-   MySQL主目录：/alidata/server/mysql
+-   MySQL配置文件：/etc/my.cnf
+-   Joomla中文支持包存放目录：/alidata/res
 
 日志目录：
 
-/alidata/log/nginx 为 nginx 存放日志主目录
+-   Nginx存放日志主目录：/alidata/log/nginx
+-   PHP存放日志主目录：/alidata/log/php
+-   MySQL存放日志主目录：/alidata/log/mysql
+-   init目录：/alidata/init。
 
-/alidata/log/php 为 php 存放日志主目录
+    当用户用镜像创建系统后，当且仅当用户在第一次启动系统的时候，调用此目录下的脚本来初始化FTP及MySQL的密码（随机密码）。
 
-/alidata/log/mysql 为 mysql 存放日志主目录 init 目录
 
-/alidata/init 为当用户用镜像创建系统后，当且仅当用户在第一次启动系统的时候，调用此目录下的脚本来初始化 ftp 及 mysql 的密码（随机密码）。
+软件操作命令汇总：
 
-## 软件操作命令汇总 {#section_zkn_j21_ffb .section}
-
-/etc/init.d/mysqld start|stop|restart
-
-/etc/init.d/php-fpm start|stop|restart
-
-/etc/init.d/vsftpd start|stop|restart
-
-/etc/init.d/nginx start|stop|restart
+-   /etc/init.d/mysqld start|stop|restart
+-   /etc/init.d/php-fpm start|stop|restart
+-   /etc/init.d/vsftpd start|stop|restart
+-   /etc/init.d/nginx start|stop|restart
 
 ## 关于卸载 {#section_bn4_k21_ffb .section}
 
-关于卸载镜像环境中安装的软件，可以参考如下命令。
+卸载镜像环境中安装的软件，可以参见如下命令。
 
-```
+``` {#codeblock_03v_amh_8jw}
 cd /root/sh-1.3.0-centos-joomla
+```
+
+``` {#codeblock_kc0_k9q_ge9}
 ./uninstall.sh
 ```
 
 **说明：** 
 
--   执行以上操作会清理环境的 /alidata 目录，请卸载前自行备份好相应数据。
--   如果不小心删除了 /root/sh-1.3.0-centos-joomla,可以解压缩 /root/sh-1.3.0-centos-joomla.zip 参考以下命令。
+-   执行以上操作会清理环境的/alidata目录，卸载前请自行备份好相应数据。
+-   如果不小心删除了/root/sh-1.3.0-centos-joomla,可以参见以下命令解压缩/root/sh-1.3.0-centos-joomla.zip。
 
-    ```
+    ``` {#codeblock_qzx_upv_0fe}
     cd
     unzip sh-1.3.0-centos-joomla.zip
     chmod 777 -R sh-1.3.0-centos-joomla
@@ -186,84 +171,122 @@ cd /root/sh-1.3.0-centos-joomla
     ```
 
 
-## 在 centos6.5 系统中自行安装 {#section_g5y_421_ffb .section}
+## 在CentOS 6.5系统中自行安装 {#section_g5y_421_ffb .section}
 
-/root/sh-1.3.0-centos-joomla.zip 是安装镜像环境的脚本。值得注意的是，如果采用此脚本安装镜像环境，需要 chmod 777 -R sh-1.3.0-centos-joomla 赋予 777 安装权限,然后cd sh-1.3.0-centos-joomla目录下执行 ./install 开始安装。
+完成以下操作，在CentOS 6.5系统中，通过安装镜像环境的脚本/root/sh-1.3.0-centos-joomla.zip自行安装Joomla。
 
-根据提示输入 y。
+1.  解压缩安装脚本/root/sh-1.3.0-centos-joomla.zip。
+2.  运行以下命令为脚本授予777安装权限。
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813712414_zh-CN.png)
+    ``` {#codeblock_12d_wrj_8z8}
+    chmod 777 -R sh-1.3.0-centos-joomla
+    ```
 
-持续安装中。
+3.  运行以下命令进入安装目录。
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813712415_zh-CN.png)
+    ``` {#codeblock_v9x_tes_cai}
+    cd sh-1.3.0-centos-joomla
+    ```
 
-安装结束出现以下界面。
+4.  运行以下命令开始安装。
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813712416_zh-CN.png)
+    ``` {#codeblock_8k8_bkn_th3}
+    ./install
+    ```
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813712417_zh-CN.png)
+5.  根据界面提示，输入y。
 
-80、21、9000、3306 等端口都已开启。
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172712414_zh-CN.png)
 
-## **配置外网访问** {#section_n55_t21_ffb .section}
+    以下界面表示，持续安装中。
 
-在镜像环境中处于安全考虑，joomla 默认页面只允许 127.0.0.1 访问，/root/ 目录下提供了一个 joomla\_opennet.sh 的脚本。用户运行之后，可通过外网访问 joomla 的默认设置页面。
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172712415_zh-CN.png)
 
-运行脚本文件。
+    出现以下界面，表示安装结束。
 
-```
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172712416_zh-CN.png)
+
+6.  运行以下命令检查端口是否开启。
+
+    ``` {#codeblock_wg5_m8o_jnz}
+    netstat -luntp
+    ```
+
+    出现以下界面，表示端口80、21、9000、3306等都已开启。
+
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172812417_zh-CN.png)
+
+
+## 配置外网访问 {#section_n55_t21_ffb .section}
+
+在镜像环境中出于安全考虑，Joomla默认页面只允许127.0.0.1访问。如需通过外网访问Joomla的默认设置页面，执行以下命令运行/root/joomla\_opennet.sh脚本。
+
+``` {#codeblock_nfo_qgh_z1b}
 /root/joomla_opennet.sh
 ```
 
-## 配置joomla {#section_ajm_w21_ffb .section}
+## 配置Joomla {#section_ajm_w21_ffb .section}
 
-初次使用镜像，运行 /root/joomla\_opennet.sh 文件，在游览器中输入 http://ip，回车即可看到 joomla 的初始化界面。
+完成以下步骤，配置Joomla。
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813712418_zh-CN.png)
+1.  初次使用镜像，运行以下命令。
 
-选择语言，并填写相关内容，单击 **下一步**。
+    ``` {#codeblock_wui_ubr_7wh}
+    /root/joomla_opennet.sh
+    ```
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813712419_zh-CN.png)
+2.  在浏览器地址栏中输入`http://ECS实例公网IP地址`，回车即可看到Joomla的初始化界面。
+3.  选择**语言**，并填写相关内容，单击**下一步**。
 
-选择mysql数据库，填写相关权限后，单击 **下一步**。
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172812418_zh-CN.png)
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813712420_zh-CN.png)
+4.  选择**MySQL**，填写相关权限后，单击**下一步**。
 
-查看相关配置是否符合，确认完毕单击 **安装**。
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172812419_zh-CN.png)
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813712421_zh-CN.png)
+5.  查看相关配置是否符合，确认完毕后，单击**安装**。
+
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172812420_zh-CN.png)
+
+    出现以下界面，表示安装完成。
+
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172812421_zh-CN.png)
+
 
 ## 安装完毕 {#section_zbz_3f1_ffb .section}
 
-进入服务器 /alidata/www/default 目录下删除 installation 目录。
+依次运行以下命令进入服务器/alidata/www/default目录下删除installation目录。
 
-```
+``` {#codeblock_qli_xvf_r6q}
 cd /alidata/www/default
+```
+
+``` {#codeblock_m0s_ype_ztq}
 rm -rf installation/
 ```
 
-至此，joomla 搭建完成。
+至此，Joomla搭建完成。Joomla访问方式如下：
 
-访问前端网站 http://ip，访问后台管理 http://ip/administrator。
+-   访问前端网站：`http://ECS实例公网IP地址`
+-   访问后台管理：`http://ECS实例公网IP地址/administrator`
 
-关于 Joomla 支持中文。
+关于Joomla支持中文：
 
-Joomla 安装完成之后默认前台后台都是英文界面，中文语言需要手动安装。登陆 Joomla 之后在 **Extensions（扩展）** \> **Extension Manager（扩展管理）** 打开扩展配置页面后，上传简体中文包，中文包在服务器的/alidata/res目中，将中文包下载到本地后上传。
+Joomla安装完成之后默认前台后台都是英文界面，中文语言需要手动安装。登录Joomla之后在**Extensions（扩展）** \> **Extension Manager（扩展管理）**打开扩展配置页面后，上传简体中文包，中文包在服务器的/alidata/res目中，将中文包下载到本地后上传。
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813712422_zh-CN.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172812422_zh-CN.png)
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813712423_zh-CN.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172812423_zh-CN.png)
 
-单击 **Update & Install** 上传。
+单击**Update & Install**上传。
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813812424_zh-CN.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172812424_zh-CN.png)
 
-在 **Extensions（扩展）** \> **Language Manager（语言管理）** 中，设置前端后台的默认语言，设置完后并单击右上角 **Logout** 重新登陆。
+在**Extensions（扩展）** \> **Language Manager（语言管理）**中，设置前端后台的默认语言，设置完后并单击右上角**Logout**重新登录。
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813912425_zh-CN.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172812425_zh-CN.png)
 
-登陆后就能进入中文界面了。
+登录后就能进入中文界面了。
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/154045813912426_zh-CN.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/9784/156705172812426_zh-CN.png)
 

@@ -13,7 +13,7 @@
 
 ECS API is an open-source remote procedure call \(RPC\) API that provides API services to Alibaba Cloud users. You can use this API to manage and use ECS instances. The following figure shows the path along which a request is forwarded to call an API. For more information about how to use the ECS API, see [Quick start for ECS APIs](reseller.en-US/API Reference/Quick start for ECS APIs.md#).
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/614896/156695916649776_en-US.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/614896/156715219049776_en-US.png)
 
 ## Error code InvalidDataDiskCategory.NotSupported is returned when I try to create an ECS instance. What can I do? {#section_rqe_51b_fkf .section}
 
@@ -73,7 +73,7 @@ ECS API is an open-source remote procedure call \(RPC\) API that provides API se
 
 You can call the [EN-US\_TP\_9937.md\#](reseller.en-US/API Reference/Networks/ModifyInstanceNetworkSpec.md#) operation to modify the public bandwidth configurations of your ECS instance. The new bandwidth configurations take effect on the instance immediately after the modification is completed. If you only want to temporarily modify the bandwidth configurations of your instance, set StartTime and EndTime to define an effective period of time.
 
-If you are using an Elastic IP Address, you can call the [ModifyEipAddressAttribute](../../../../reseller.en-US/API reference/EIP/ModifyEipAddressAttribute.md#) operation to make the modification but you cannot specify an effective period of time.
+If you are using an Elastic IP Address, you can call the [../../../../dita-oss-bucket/SP\_22/DNVPC11886329/EN-US\_TP\_2493.md\#](../../../../reseller.en-US/API reference/EIP/ModifyEipAddressAttribute.md#) operation to make the modification but you cannot specify an effective period of time.
 
 ## Why can't all the security group rules in a security group be displayed when I use an ECS API operation or ECS SDK to query the details of the security group? {#section_0gg_gvb_36g .section}
 
